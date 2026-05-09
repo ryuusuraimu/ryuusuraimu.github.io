@@ -200,6 +200,11 @@ main {
   font-size: 1.35rem;
 }
 
+.socials svg {
+  width: 36px;
+  height: 36px;
+}
+
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
