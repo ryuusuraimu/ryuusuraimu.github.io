@@ -10,27 +10,21 @@
     />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ffffff'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fff4c6'/%3E%3Cpath d='M14 38 30 12h8L28 30h15L25 54l6-16H14Z' fill='%230b1326'/%3E%3C/svg%3E"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=Noto+Sans+JP:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=helpfeel1" />
+    <link rel="stylesheet" href="./styles.css?v=toon2" />
   </head>
   <body>
-    <div class="ambient" aria-hidden="true">
-      <span class="ambient-shadow ambient-shadow-a"></span>
-      <span class="ambient-shadow ambient-shadow-b"></span>
-      <span class="ambient-shadow ambient-shadow-c"></span>
-    </div>
-
     <header class="site-header">
+      <a class="logo-pill" href="#top">Hello, portfolio!</a>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="#work">Work</a>
-        <a href="#philosophy">Philosophy</a>
         <a href="#method">Method</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
@@ -38,267 +32,148 @@
     </header>
 
     <main id="top">
-      <section class="hero">
-        <div class="hero-copy">
-          <p class="kicker">AI Product / UX / Web Operations</p>
-          <h1><span>方向を見極め、</span><span>AIで形にする。</span></h1>
-          <p class="hero-lead">
-            中邨 隆之介。向かう先を決めてから動くことにこだわりながら、
-            AIを使ってブランド設計、アプリ企画、EC改善、ドキュメント整備まで手を動かしてきました。
-          </p>
-          <p class="philosophy-line">Life is a journey of research, challenge, and direction.</p>
-          <div class="hero-actions">
-            <a class="button primary" href="#work">ケーススタディを見る</a>
-            <a class="button secondary" href="#contact">連絡する</a>
-          </div>
+      <section class="hero" aria-label="Introduction">
+        <div>
+          <p class="sticker tilt-left">AI Product / UX / Web</p>
+          <h1>RYUNOSUKE<br /><span>NAKAMURA</span></h1>
+          <p class="subtitle">Engineer, researcher, and maker with AI.</p>
         </div>
-
-        <aside class="hero-panel" aria-label="Portfolio highlights">
-          <div class="panel-topline">
-            <span>Portfolio signal</span>
-            <strong>2026</strong>
-          </div>
-          <div class="signal-stack">
-            <article>
-              <span>01</span>
-              <p>Moftailでは、服ではなく Balance of Life という状態価値を設計。</p>
-            </article>
-            <article>
-              <span>02</span>
-              <p>Anchorでは、声が出なくなる瞬間のために Shield とQRを構想。</p>
-            </article>
-            <article>
-              <span>03</span>
-              <p>思想を、商品ページ、広告、仕様書、運用ドキュメントまで落とし込む。</p>
-            </article>
-          </div>
-        </aside>
-      </section>
-
-      <section class="summary-section">
-        <div class="summary-card">
-          <span>Focus</span>
-          <strong>Direction before effort</strong>
-        </div>
-        <div class="summary-card">
-          <span>Work style</span>
-          <strong>Observe. Frame. Validate. Document.</strong>
-        </div>
-        <div class="summary-card">
-          <span>Domains</span>
-          <strong>Brand OS, iOS, EC, calm UX</strong>
+        <div class="socials" aria-label="Social links">
+          <a href="mailto:ryu.nakamura.dev@gmail.com" aria-label="Email">＠</a>
+          <a href="https://github.com/ryuusuraimu" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
+          <a href="#contact" aria-label="Contact">✦</a>
         </div>
       </section>
 
-      <section class="evidence-section" aria-label="Documented thinking">
-        <article class="evidence-card">
-          <img class="evidence-mark moftail-mark" src="./assets/Moftail-logo.png" alt="Moftail logo" />
-          <span>Moftail Brand OS</span>
-          <h2>思想を、売れる順序へ落とす。</h2>
-          <p>
-            Balance of Life、Enso、Still Fox、365 Zen Momentsを軸に、
-            ブランド哲学、商品戦略、広告、SNS、Shopify改善をObsidianで整理。
-          </p>
+      <section class="bento-grid" aria-label="Portfolio overview">
+        <article class="card intro-card pastel-pink">
+          <figure class="photo-frame">
+            <img src="./assets/365Zen-Image.jpg" alt="Moftail Still Fox Tee visual" />
+            <figcaption>@Moftail</figcaption>
+          </figure>
+          <h2>This is my work!</h2>
+          <p>思想を先に決めて、AIで形にして、実際に運用できるところまで持っていきます。</p>
         </article>
-        <article class="evidence-card warm">
-          <img class="evidence-mark anchor-mark" src="./assets/Anchor-Appicon.jpg" alt="Anchor app icon" />
-          <span>Anchor Product Spec</span>
-          <h2>声が出ない瞬間に、<br>代わりに伝える。</h2>
-          <p>
-            Panic時の認知負荷を前提に、Shield、Offline-first QR、Shortcuts、
-            高コントラストUIを設計したSwiftUIアプリ。
-          </p>
+
+        <article class="card adventure-card pastel-blue">
+          <div class="section-label">▣ Latest Build!</div>
+          <figure class="wide-frame">
+            <img src="./assets/Anchor-Screens.jpg" alt="Anchor app screens" />
+            <figcaption>Calm Tech</figcaption>
+          </figure>
+          <h2>Anchor: 声が出ない瞬間に、代わりに伝える。</h2>
+          <p>パニック時の認知負荷を前提に、Shield、Offline-first QR、Shortcutsを設計したiOSアプリ。</p>
+        </article>
+
+        <article class="card talks-card pastel-green" id="method">
+          <div class="section-label">▤ My Method</div>
+          <p class="scribble">needs to be tested in the real world</p>
+          <ul class="talk-list">
+            <li>
+              <strong>Observe</strong>
+              <span>違和感を先に言語化する</span>
+            </li>
+            <li>
+              <strong>Frame</strong>
+              <span>AIで視点を増やす</span>
+            </li>
+            <li>
+              <strong>Ship</strong>
+              <span>使える形へ落とす</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card knowledge-card" aria-label="Obsidian style knowledge network">
+          <div class="section-label">◌ About the Work</div>
+          <div class="knowledge-net" aria-hidden="true">
+            <svg class="knowledge-edges" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+              <line x1="40" y1="45" x2="14" y2="25" />
+              <line x1="40" y1="45" x2="77" y2="40" />
+              <line x1="40" y1="45" x2="10" y2="73" />
+              <line x1="40" y1="45" x2="35" y2="82" />
+              <line x1="40" y1="45" x2="65" y2="87" />
+              <line x1="40" y1="45" x2="8" y2="48" />
+              <line x1="40" y1="45" x2="74" y2="14" />
+              <line x1="14" y1="25" x2="8" y2="48" />
+              <line x1="14" y1="25" x2="35" y2="82" />
+              <line x1="77" y1="40" x2="65" y2="87" />
+              <line x1="10" y1="73" x2="35" y2="82" />
+              <line x1="35" y1="82" x2="65" y2="87" />
+              <line x1="74" y1="14" x2="77" y2="40" />
+            </svg>
+            <span class="node node-core"><i></i><b>AI Product Portfolio</b></span>
+            <span class="node node-moftail"><i></i><b>Moftail Brand OS</b></span>
+            <span class="node node-anchor"><i></i><b>Anchor Shield UX</b></span>
+            <span class="node node-shopify"><i></i><b>Shopify Debugging</b></span>
+            <span class="node node-zen"><i></i><b>365 Zen Moments</b></span>
+            <span class="node node-ai"><i></i><b>ChatGPT活用領域マップ</b></span>
+            <span class="node node-doc"><i></i><b>Obsidian Documentation</b></span>
+            <span class="node node-strategy"><i></i><b>Hero Product Strategy</b></span>
+          </div>
+        </article>
+
+        <article class="card plate-card pastel-purple">
+          <div class="paper-stack">
+            <img src="./assets/Anchor-Appicon.png" alt="Anchor app icon" />
+          </div>
+          <h2>MY APP IDEA ARRIVED!</h2>
+          <p>Family experience became a product spec.</p>
         </article>
       </section>
 
-      <section class="section philosophy-section" id="philosophy">
-        <div class="section-heading">
-          <p class="kicker">Philosophy</p>
-          <h2>Life is a journey of research and challenge.</h2>
-          <p>
-            学びも、制作も、事業も、結局は観察と仮説の繰り返しだと思っています。
-            AIはその速度を上げてくれますが、何を作るかの方向性は自分で決めないと意味がない。
-          </p>
-          <p class="philosophy-note">
-            最初から答えを持っているよりも、動かしながら修正していく方が自分には合っています。
-          </p>
-          <p class="strategy-message">
-            量より方向だと気づいたのはここ数年のことです。
-            限られた時間で何を先にやるか、何を捨てるか。その判断を考えるのが好きです。
-          </p>
-        </div>
-
-        <div class="journey-grid">
-          <article>
-            <span>01</span>
-            <h3>Learn</h3>
-            <p>情報工学を学びながら、AIやWeb、プロダクト設計を実際の制作に結びつける。</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Try</h3>
-            <p>PODブランド、Shopify改善、SNS運用、iOSアプリ企画を自分で動かして検証する。</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>Document</h3>
-            <p>考えたこと、失敗したこと、判断した理由をMarkdownや資料として残し、次の改善につなげる。</p>
-          </article>
-          <article>
-            <span>04</span>
-            <h3>Direction</h3>
-            <p>努力の量だけで勝負せず、向かう先を観察し、仮説を立て、進む順番を設計する。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="work">
-        <div class="section-heading">
-          <p class="kicker">Selected Work</p>
-          <h2>代表プロジェクト</h2>
-          <p>
-            どのプロジェクトも、思いつきで始めたものはありません。
-            思想から始めて、仮説を立て、実装・運用まで一本の流れで設計しています。
-          </p>
-        </div>
-
-        <div class="case-grid">
-          <button class="case-card primary-case" type="button" data-case="moftail">
-            <div class="case-media moftail-media">
-              <img src="./assets/365Zen-Image.jpg" alt="Moftail Still Fox Tee visual" />
-            </div>
-            <span class="case-number">01</span>
-            <span class="case-type">Brand OS / Shopify / Growth</span>
-            <h3>Moftail</h3>
-            <p>Balance of Lifeを核に、商品、広告、SNS、Shopify導線をつなぐPODブランド。</p>
-            <span class="case-cta">Read case study</span>
+      <section class="card projects-section pastel-lavender" id="work">
+        <div class="section-label label-pill">☃ Cool Projects</div>
+        <div class="project-layout">
+          <button class="project-photo" type="button" data-case="moftail">
+            <img src="./assets/365Zen-Image.jpg" alt="Moftail Still Fox Tee visual" />
+            <span>
+              <strong>Moftail</strong>
+              Balance of Lifeを核にしたPODブランド。
+            </span>
           </button>
-
-          <button class="case-card primary-case anchor-case" type="button" data-case="anchor">
-            <div class="case-media anchor-media">
-              <img src="./assets/Anchor-Screens.jpg" alt="Anchor app screens" />
+          <div class="terminal-card">
+            <div class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <p class="terminal-green">&gt; Starting thinking system...</p>
+            <p class="terminal-green">&gt; Scanning brand, EC, UX...</p>
+            <p>Hi! I'm Ryunosuke. I turn scattered ideas into working product direction.<span class="cursor"></span></p>
+            <div class="mini-actions">
+              <button type="button" data-case="anchor">Anchor</button>
+              <button type="button" data-case="shopify">Shopify</button>
+              <button type="button" data-case="zen">365 Zen</button>
             </div>
-            <span class="case-number">02</span>
-            <span class="case-type">iOS / Accessibility / Calm Tech</span>
-            <h3>Anchor</h3>
-            <p>パニック時に声の代わりとなる、オフライン完結の支援依頼カード。</p>
-            <span class="case-cta">Read case study</span>
-          </button>
-
-          <button class="case-card" type="button" data-case="shopify">
-            <div class="case-media shopify-media">
-              <img src="./assets/Shopify-Theme.png" alt="Build My POD logo" />
-            </div>
-            <span class="case-number">03</span>
-            <span class="case-type">Debugging / Documentation</span>
-            <h3>Shopify Theme Case</h3>
-            <p>挙動の違和感を再現手順と原因仮説に整理。</p>
-            <span class="case-cta">Read case study</span>
-          </button>
-
-          <button class="case-card" type="button" data-case="zen">
-            <div class="case-media zen-media">
-              <img src="./assets/365Zen-Image.jpg" alt="365 Zen Moments content visual" />
-            </div>
-            <span class="case-number">04</span>
-            <span class="case-type">SNS / Creative System</span>
-            <h3>365 Zen Moments</h3>
-            <p>ブランド世界観を継続投稿できるコンテンツシステムへ。</p>
-            <span class="case-cta">Read case study</span>
-          </button>
-        </div>
-      </section>
-
-      <section class="section method-section" id="method">
-        <div class="section-heading">
-          <p class="kicker">Method</p>
-          <h2>AIを使うときの判断軸</h2>
-        </div>
-        <div class="method-grid">
-          <article>
-            <span>Observe</span>
-            <h3>違和感を先に言語化する</h3>
-            <p>「デザインが悪い」で止めず、何が不安を生んでいるか、どこで価値が伝わっていないかを分解します。</p>
-          </article>
-          <article>
-            <span>Frame</span>
-            <h3>AIで視点を増やす</h3>
-            <p>顧客、採用担当者、PM、UXの視点で仮説を出し、反証可能性や検証方法まで確認します。</p>
-          </article>
-          <article>
-            <span>Ship</span>
-            <h3>実際に使える形へ落とす</h3>
-            <p>LP、PDP、広告コピー、FAQ、仕様書、SwiftUI構成など、必要な人が迷わず使える状態まで整えます。</p>
-          </article>
-          <article>
-            <span>Review</span>
-            <h3>大きすぎる言葉を削る</h3>
-            <p>AIの出力はそのまま使わず、事実性、ユーザー視点、ブランドとの整合性、実運用で使えるかを確認してから反映します。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section skills-section" id="skills">
-        <div class="section-heading">
-          <p class="kicker">Capabilities</p>
-          <h2>実践してきた領域</h2>
-        </div>
-        <div class="skill-columns">
-          <div>
-            <h3>Product</h3>
-            <ul>
-              <li>課題分解</li>
-              <li>MVP設計</li>
-              <li>情報設計</li>
-              <li>UX観点のレビュー</li>
-            </ul>
-          </div>
-          <div>
-            <h3>AI Workflow</h3>
-            <ul>
-              <li>ChatGPT / Claude / Gemini</li>
-              <li>Claude Code</li>
-              <li>画像生成プロンプト</li>
-              <li>Markdownナレッジ化</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Web / EC</h3>
-            <ul>
-              <li>Shopify改善</li>
-              <li>Liquid / CSS調査</li>
-              <li>Printify連携</li>
-              <li>FAQ / 配送説明設計</li>
-            </ul>
-          </div>
-          <div>
-            <h3>Content</h3>
-            <ul>
-              <li>Meta広告コピー</li>
-              <li>SNS投稿企画</li>
-              <li>ブランド文脈設計</li>
-              <li>キャプション作成</li>
-            </ul>
           </div>
         </div>
       </section>
 
-      <section class="contact-section" id="contact">
-        <p class="kicker">Contact</p>
+      <section class="skills-band" id="skills">
+        <article class="card skill-card">
+          <span>Product</span>
+          <strong>課題分解 / MVP設計 / 情報設計 / UXレビュー</strong>
+        </article>
+        <article class="card skill-card">
+          <span>AI Workflow</span>
+          <strong>ChatGPT / Claude / Gemini / Claude Code / Markdown</strong>
+        </article>
+        <article class="card skill-card">
+          <span>Web & EC</span>
+          <strong>Shopify改善 / Liquid調査 / Printify / FAQ設計</strong>
+        </article>
+      </section>
+
+      <section class="contact-card card" id="contact">
+        <p class="sticker">Let's build!</p>
         <h2>プロダクトやEC、業務の現場で、AIを使って実際に動くものを作りたいです。</h2>
-        <p class="contact-email">
-          <a href="mailto:ryu.nakamura.dev@gmail.com">ryu.nakamura.dev@gmail.com</a>
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="mailto:ryu.nakamura.dev@gmail.com">Mail app</a>
-          <button class="button secondary" type="button" data-copy-email="ryu.nakamura.dev@gmail.com">Copy email</button>
-          <a class="button secondary" href="https://github.com/ryuusuraimu" target="_blank" rel="noreferrer">GitHub</a>
+        <div class="contact-actions">
+          <a class="button dark" href="mailto:ryu.nakamura.dev@gmail.com">Mail app</a>
+          <button class="button light" type="button" data-copy-email="ryu.nakamura.dev@gmail.com">Copy email</button>
+          <a class="button light" href="https://github.com/ryuusuraimu" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </section>
     </main>
 
     <dialog class="case-dialog" id="case-dialog">
-      <button class="dialog-close" type="button" aria-label="閉じる">Close</button>
+      <button class="dialog-close" type="button" aria-label="閉じる">×</button>
       <figure class="dialog-banner" id="dialog-banner">
         <img id="dialog-image" src="" alt="" />
       </figure>
@@ -343,6 +218,6 @@
       </div>
     </dialog>
 
-    <script src="./script.js?v=helpfeel1"></script>
+    <script src="./script.js?v=toon2"></script>
   </body>
 </html>
