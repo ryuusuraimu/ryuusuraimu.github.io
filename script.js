@@ -1,5 +1,22 @@
 const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let spotlightFrame = null;
+let knowledgeGraphFrame = null;
+
+const knowledgeLinks = [
+  ["core", "moftail"],
+  ["core", "anchor"],
+  ["core", "shopify"],
+  ["core", "zen"],
+  ["core", "strategy"],
+  ["core", "ai"],
+  ["core", "doc"],
+  ["moftail", "ai"],
+  ["moftail", "zen"],
+  ["anchor", "strategy"],
+  ["shopify", "zen"],
+  ["zen", "strategy"],
+  ["doc", "anchor"],
+];
 
 function updateSpotlight() {
   spotlightFrame = null;
@@ -20,6 +37,54 @@ function updateSpotlight() {
 function requestSpotlightUpdate() {
   if (spotlightFrame !== null) return;
   spotlightFrame = window.requestAnimationFrame(updateSpotlight);
+}
+
+function drawKnowledgeGraph() {
+  knowledgeGraphFrame = null;
+
+  const net = document.querySelector(".knowledge-net");
+  const svg = document.querySelector(".knowledge-edges");
+  if (!net || !svg) return;
+
+  const netRect = net.getBoundingClientRect();
+  if (!netRect.width || !netRect.height) return;
+
+  svg.setAttribute("viewBox", `0 0 ${netRect.width} ${netRect.height}`);
+  svg.setAttribute("width", `${netRect.width}`);
+  svg.setAttribute("height", `${netRect.height}`);
+
+  const points = new Map();
+  document.querySelectorAll(".knowledge-net [data-node]").forEach((node) => {
+    const dot = node.querySelector("i");
+    if (!dot) return;
+
+    const dotRect = dot.getBoundingClientRect();
+    points.set(node.dataset.node, {
+      x: dotRect.left + dotRect.width / 2 - netRect.left,
+      y: dotRect.top + dotRect.height / 2 - netRect.top,
+    });
+  });
+
+  const fragment = document.createDocumentFragment();
+  for (const [from, to] of knowledgeLinks) {
+    const start = points.get(from);
+    const end = points.get(to);
+    if (!start || !end) continue;
+
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    line.setAttribute("x1", start.x.toFixed(1));
+    line.setAttribute("y1", start.y.toFixed(1));
+    line.setAttribute("x2", end.x.toFixed(1));
+    line.setAttribute("y2", end.y.toFixed(1));
+    fragment.append(line);
+  }
+
+  svg.replaceChildren(fragment);
+}
+
+function requestKnowledgeGraphDraw() {
+  if (knowledgeGraphFrame !== null) return;
+  knowledgeGraphFrame = window.requestAnimationFrame(drawKnowledgeGraph);
 }
 
 const caseStudies = {
@@ -270,5 +335,22 @@ dialog.addEventListener("click", (event) => {
 });
 
 window.addEventListener("scroll", requestSpotlightUpdate, { passive: true });
-window.addEventListener("resize", requestSpotlightUpdate);
+window.addEventListener("resize", () => {
+  requestSpotlightUpdate();
+  requestKnowledgeGraphDraw();
+});
+
+if ("ResizeObserver" in window) {
+  const knowledgeNet = document.querySelector(".knowledge-net");
+  if (knowledgeNet) {
+    new ResizeObserver(requestKnowledgeGraphDraw).observe(knowledgeNet);
+  }
+}
+
+if (document.fonts?.ready) {
+  document.fonts.ready.then(requestKnowledgeGraphDraw);
+}
+
+window.addEventListener("load", requestKnowledgeGraphDraw);
 updateSpotlight();
+requestKnowledgeGraphDraw();

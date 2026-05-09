@@ -418,10 +418,10 @@ figcaption {
   position: absolute;
   inset: -20%;
   background:
-    linear-gradient(22deg, transparent 39.7%, rgba(190, 190, 190, 0.08) 40%, transparent 40.35%),
-    linear-gradient(153deg, transparent 55.4%, rgba(190, 190, 190, 0.07) 55.7%, transparent 56.05%),
-    linear-gradient(176deg, transparent 47.2%, rgba(190, 190, 190, 0.06) 47.45%, transparent 47.75%);
-  opacity: 0.48;
+    linear-gradient(22deg, transparent 39.7%, rgba(190, 190, 190, 0.035) 40%, transparent 40.35%),
+    linear-gradient(153deg, transparent 55.4%, rgba(190, 190, 190, 0.03) 55.7%, transparent 56.05%),
+    linear-gradient(176deg, transparent 47.2%, rgba(190, 190, 190, 0.03) 47.45%, transparent 47.75%);
+  opacity: 0.35;
 }
 
 .knowledge-net::after {
@@ -432,18 +432,22 @@ figcaption {
 .knowledge-edges {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
 }
 
 .knowledge-edges line {
-  stroke: rgba(205, 205, 205, 0.34);
-  stroke-width: 0.18;
-  vector-effect: non-scaling-stroke;
+  stroke: rgba(235, 235, 235, 0.58);
+  stroke-linecap: round;
+  stroke-width: 1.2;
 }
 
 .node {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -453,6 +457,7 @@ figcaption {
   line-height: 1.22;
   white-space: nowrap;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.72);
+  transform: translate(-7px, -50%);
 }
 
 .node i {
@@ -461,7 +466,10 @@ figcaption {
   flex: 0 0 auto;
   border-radius: 999px;
   background: #bdbdbd;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 0 18px rgba(255, 255, 255, 0.16);
+  box-shadow:
+    0 0 0 4px rgba(32, 32, 32, 0.92),
+    0 0 0 5px rgba(255, 255, 255, 0.08),
+    0 0 18px rgba(255, 255, 255, 0.16);
 }
 
 .node b {
@@ -469,10 +477,11 @@ figcaption {
 }
 
 .node-core {
-  left: 39%;
-  top: 43%;
+  left: 48%;
+  top: 50%;
   color: #fff;
   font-size: clamp(0.98rem, 1.4vw, 1.28rem);
+  transform: translate(-10px, -50%);
 }
 
 .node-core i {
@@ -481,38 +490,38 @@ figcaption {
 }
 
 .node-moftail {
-  left: 10%;
-  top: 22%;
+  left: 14%;
+  top: 26%;
 }
 
 .node-anchor {
-  right: 7%;
-  top: 34%;
+  left: 63%;
+  top: 39%;
 }
 
 .node-shopify {
-  left: 5%;
-  bottom: 27%;
+  left: 10%;
+  top: 75%;
 }
 
 .node-zen {
-  left: 31%;
-  bottom: 18%;
+  left: 36%;
+  top: 84%;
 }
 
 .node-ai {
-  left: 3%;
-  top: 45%;
+  left: 7%;
+  top: 49%;
 }
 
 .node-doc {
-  right: 3%;
-  top: 10%;
+  left: 55%;
+  top: 14%;
 }
 
 .node-strategy {
-  right: 16%;
-  bottom: 13%;
+  left: 50%;
+  top: 90%;
 }
 
 .plate-card {
