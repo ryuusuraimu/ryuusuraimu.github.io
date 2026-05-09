@@ -446,6 +446,10 @@ figcaption {
 }
 
 .node {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
   position: absolute;
   z-index: 2;
   display: inline-flex;
@@ -458,6 +462,7 @@ figcaption {
   white-space: nowrap;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.72);
   transform: translate(-7px, -50%);
+  cursor: pointer;
 }
 
 .node i {
@@ -474,6 +479,21 @@ figcaption {
 
 .node b {
   font-weight: 500;
+}
+
+.node:hover,
+.node:focus-visible {
+  color: #ffffff;
+  outline: none;
+}
+
+.node:hover i,
+.node:focus-visible i {
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(32, 32, 32, 0.92),
+    0 0 0 6px rgba(255, 217, 31, 0.34),
+    0 0 24px rgba(255, 255, 255, 0.32);
 }
 
 .node-core {
