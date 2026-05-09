@@ -205,6 +205,11 @@ main {
   height: 36px;
 }
 
+.socials .gmail-mark {
+  width: 38px;
+  height: auto;
+}
+
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
