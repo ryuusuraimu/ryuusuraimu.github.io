@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=Noto+Sans+JP:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=product7" />
+    <link rel="stylesheet" href="./styles.css?v=product14" />
   </head>
   <body>
     <header class="site-header">
@@ -96,6 +96,14 @@
           </p>
         </article>
 
+        <article class="card plate-card pastel-purple">
+          <div class="paper-stack">
+            <img src="./assets/Anchor-Appicon.png" alt="Anchor app icon" />
+          </div>
+          <h2>HOW I WORK</h2>
+          <p>Problem framing / UX review / debugging / specs / testing ideas</p>
+        </article>
+
         <article class="card talks-card pastel-green" id="method">
           <div class="section-label">▤ My Method</div>
           <p class="scribble">needs to be tested in the real world</p>
@@ -115,79 +123,55 @@
           </ul>
         </article>
 
-        <article
-          class="card knowledge-card"
-          aria-label="Obsidian style knowledge network"
-        >
-          <div class="section-label obsidian-label">
-            <img src="./assets/obsidian-icon.svg" alt="" aria-hidden="true" />
-            About the Work
+        <section class="card ai-section" aria-labelledby="ai-title">
+          <div class="ai-header">
+            <div class="logo-pill ai-pill" id="ai-title">HOW I USE AI</div>
+            <p class="ai-lead">
+              複数のAIを使い分けながら、プロダクトを作る。<br />
+              「AIに任せる」ではなく、「AIに議論させて、自分で判断する」。
+            </p>
           </div>
-          <div class="knowledge-net">
-            <svg
-              class="knowledge-edges"
-              aria-hidden="true"
-              focusable="false"
-            ></svg>
-            <a class="node node-core" data-node="core" href="#top"
-              ><i></i><b>Product Portfolio</b></a
-            >
-            <button
-              class="node node-moftail"
-              data-node="moftail"
-              data-case="moftail"
-              type="button"
-            >
-              <i></i><b>Moftail Brand OS</b>
-            </button>
-            <button
-              class="node node-anchor"
-              data-node="anchor"
-              data-case="anchor"
-              type="button"
-            >
-              <i></i><b>Anchor Shield UX</b>
-            </button>
-            <button
-              class="node node-shopify"
-              data-node="shopify"
-              data-case="shopify"
-              type="button"
-            >
-              <i></i><b>Shopify Debugging</b>
-            </button>
-            <button
-              class="node node-zen"
-              data-node="zen"
-              data-case="zen"
-              type="button"
-            >
-              <i></i><b>365 Zen Moments</b>
-            </button>
-            <a class="node node-ai" data-node="ai" href="#method"
-              ><i></i><b>Workflow Map</b></a
-            >
-            <a class="node node-doc" data-node="doc" href="#work"
-              ><i></i><b>Obsidian Documentation</b></a
-            >
-            <button
-              class="node node-strategy"
-              data-node="strategy"
-              data-case="moftail"
-              type="button"
-            >
-              <i></i><b>Hero Product Strategy</b>
-            </button>
+          <div class="ai-phase-grid">
+            <article class="ai-phase-card">
+              <span class="ai-phase-number">01</span>
+              <h3>RESEARCH</h3>
+              <strong>問いを広げる</strong>
+              <p>
+                3つのAIに同じ問いを投げ、出力の違いを見る。
+              </p>
+              <code>// 現状はChatGPTが多い</code>
+            </article>
+            <article class="ai-phase-card">
+              <span class="ai-phase-number">02</span>
+              <h3>DEBATE</h3>
+              <strong>AIに議論させる</strong>
+              <p>
+                複数のAIに意見を出させ、判定者として見る。一つのモデルだけに依存しない。
+              </p>
+            </article>
+            <article class="ai-phase-card">
+              <span class="ai-phase-number">03</span>
+              <h3>DESIGN</h3>
+              <strong>UIから考える</strong>
+              <p>
+                画面を先に作り、流れと違和感を見る。StitchでUI案を磨く。
+              </p>
+            </article>
+            <article class="ai-phase-card">
+              <span class="ai-phase-number">04</span>
+              <h3>SHIP</h3>
+              <strong>仕様を渡して実装する</strong>
+              <p>
+                Claude Code / Codex に渡す前に、仕様MDとagent制御MDを用意する。
+              </p>
+              <code>// バイブコーディングを避けるための方法</code>
+            </article>
           </div>
-        </article>
-
-        <article class="card plate-card pastel-purple">
-          <div class="paper-stack">
-            <img src="./assets/Anchor-Appicon.png" alt="Anchor app icon" />
-          </div>
-          <h2>HOW I WORK</h2>
-          <p>Problem framing / UX review / debugging / specs / testing ideas</p>
-        </article>
+          <footer class="ai-footer">
+            <p>AIに答えを出させるんじゃなくて、AIに議論させて、自分で判断する。</p>
+            <span>— Don't let AI answer. Make AI debate. You judge. —</span>
+          </footer>
+        </section>
       </section>
 
       <section class="card projects-section pastel-lavender" id="work">
@@ -216,7 +200,7 @@
               <div class="mini-actions">
                 <button type="button" data-case="anchor">Anchor</button>
                 <button type="button" data-case="shopify">Shopify</button>
-                <button type="button" data-case="stockwise">Stockwise</button>
+                <button type="button" data-case="stockwise">StockWise</button>
                 <button type="button" data-case="zen">365 Zen</button>
               </div>
             </div>
@@ -229,7 +213,7 @@
                 </p>
               </button>
               <button class="work-highlight" type="button" data-case="stockwise">
-                <span>Stockwise</span>
+                <span>StockWise</span>
                 <strong>FAQ-style knowledge search app</strong>
                 <p>
                   PER、PBR、NISA、配当利回りなどをすぐ調べられる検索型FAQアプリ。React + TypeScriptで検索UIとFAQ構造を設計。
@@ -336,6 +320,6 @@
       </div>
     </dialog>
 
-    <script src="./script.js?v=product7"></script>
+    <script src="./script.js?v=product14"></script>
   </body>
 </html>

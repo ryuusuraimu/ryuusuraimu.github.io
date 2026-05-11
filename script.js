@@ -1,22 +1,5 @@
 const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let spotlightFrame = null;
-let knowledgeGraphFrame = null;
-
-const knowledgeLinks = [
-  ["core", "moftail"],
-  ["core", "anchor"],
-  ["core", "shopify"],
-  ["core", "zen"],
-  ["core", "strategy"],
-  ["core", "ai"],
-  ["core", "doc"],
-  ["moftail", "ai"],
-  ["moftail", "zen"],
-  ["anchor", "strategy"],
-  ["shopify", "zen"],
-  ["zen", "strategy"],
-  ["doc", "anchor"],
-];
 
 function updateSpotlight() {
   spotlightFrame = null;
@@ -37,54 +20,6 @@ function updateSpotlight() {
 function requestSpotlightUpdate() {
   if (spotlightFrame !== null) return;
   spotlightFrame = window.requestAnimationFrame(updateSpotlight);
-}
-
-function drawKnowledgeGraph() {
-  knowledgeGraphFrame = null;
-
-  const net = document.querySelector(".knowledge-net");
-  const svg = document.querySelector(".knowledge-edges");
-  if (!net || !svg) return;
-
-  const netRect = net.getBoundingClientRect();
-  if (!netRect.width || !netRect.height) return;
-
-  svg.setAttribute("viewBox", `0 0 ${netRect.width} ${netRect.height}`);
-  svg.setAttribute("width", `${netRect.width}`);
-  svg.setAttribute("height", `${netRect.height}`);
-
-  const points = new Map();
-  document.querySelectorAll(".knowledge-net [data-node]").forEach((node) => {
-    const dot = node.querySelector("i");
-    if (!dot) return;
-
-    const dotRect = dot.getBoundingClientRect();
-    points.set(node.dataset.node, {
-      x: dotRect.left + dotRect.width / 2 - netRect.left,
-      y: dotRect.top + dotRect.height / 2 - netRect.top,
-    });
-  });
-
-  const fragment = document.createDocumentFragment();
-  for (const [from, to] of knowledgeLinks) {
-    const start = points.get(from);
-    const end = points.get(to);
-    if (!start || !end) continue;
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    line.setAttribute("x1", start.x.toFixed(1));
-    line.setAttribute("y1", start.y.toFixed(1));
-    line.setAttribute("x2", end.x.toFixed(1));
-    line.setAttribute("y2", end.y.toFixed(1));
-    fragment.append(line);
-  }
-
-  svg.replaceChildren(fragment);
-}
-
-function requestKnowledgeGraphDraw() {
-  if (knowledgeGraphFrame !== null) return;
-  knowledgeGraphFrame = window.requestAnimationFrame(drawKnowledgeGraph);
 }
 
 const caseStudies = {
@@ -218,11 +153,12 @@ const caseStudies = {
   },
   stockwise: {
     kicker: "Case Study 05",
-    title: "Stockwise",
+    title: "StockWise",
     image:
-      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 760'%3E%3Crect width='1200' height='760' rx='56' fill='%230c172b'/%3E%3Cg fill='none' stroke='%2350f58d' stroke-width='18' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M150 540h900' opacity='.28'/%3E%3Cpath d='M190 520 350 390l130 70 210-240 130 120 190-190'/%3E%3C/g%3E%3Crect x='126' y='110' width='948' height='150' rx='28' fill='%23fff8e8' stroke='%230d1628' stroke-width='10'/%3E%3Ctext x='170' y='202' font-family='Inter,Arial,sans-serif' font-size='56' font-weight='900' fill='%230d1628'%3EFAQ search: PER / PBR / NISA%3C/text%3E%3Cg font-family='Inter,Arial,sans-serif' font-weight='900'%3E%3Crect x='150' y='315' width='260' height='88' rx='20' fill='%23ffd91f'/%3E%3Ctext x='190' y='372' font-size='38' fill='%230d1628'%3EDividend%3C/text%3E%3Crect x='450' y='315' width='210' height='88' rx='20' fill='%23ddf1ff'/%3E%3Ctext x='500' y='372' font-size='38' fill='%230d1628'%3ENISA%3C/text%3E%3Crect x='700' y='315' width='260' height='88' rx='20' fill='%23ffe3ea'/%3E%3Ctext x='755' y='372' font-size='38' fill='%230d1628'%3EPER/PBR%3C/text%3E%3C/g%3E%3C/svg%3E",
-    imageAlt: "Stockwise FAQ search app concept",
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 760'%3E%3Crect width='1200' height='760' fill='%230c172b'/%3E%3Cg fill='none' stroke='%2350f58d' stroke-width='18' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M150 540h900' opacity='.28'/%3E%3Cpath d='M190 520 350 390l130 70 210-240 130 120 190-190'/%3E%3C/g%3E%3Crect x='126' y='110' width='948' height='150' rx='28' fill='%23fff8e8' stroke='%230d1628' stroke-width='10'/%3E%3Ctext x='170' y='202' font-family='Inter,Arial,sans-serif' font-size='56' font-weight='900' fill='%230d1628'%3EFAQ search: PER / PBR / NISA%3C/text%3E%3Cg font-family='Inter,Arial,sans-serif' font-weight='900'%3E%3Crect x='150' y='315' width='260' height='88' rx='20' fill='%23ffd91f'/%3E%3Ctext x='190' y='372' font-size='38' fill='%230d1628'%3EDividend%3C/text%3E%3Crect x='450' y='315' width='210' height='88' rx='20' fill='%23ddf1ff'/%3E%3Ctext x='500' y='372' font-size='38' fill='%230d1628'%3ENISA%3C/text%3E%3Crect x='700' y='315' width='260' height='88' rx='20' fill='%23ffe3ea'/%3E%3Ctext x='755' y='372' font-size='38' fill='%230d1628'%3EPER/PBR%3C/text%3E%3C/g%3E%3C/svg%3E",
+    imageAlt: "StockWise FAQ search app concept",
     imageFit: "cover",
+    imageTone: "dark",
     role:
       "株式投資初心者向けに、検索UX、FAQ構造、用語説明の粒度を設計。React + TypeScriptで検索型FAQアプリとして構築。",
     decision:
@@ -247,7 +183,7 @@ const caseStudies = {
       "React / TypeScript実装の補助",
     ],
     learning:
-      "検索UXでは、情報量よりも質問の入口をどう作るかが重要です。Stockwiseでは、知識を並べるだけでなく、初心者の言葉から辿れる構造を意識しました。",
+      "検索UXでは、情報量よりも質問の入口をどう作るかが重要です。StockWiseでは、知識を並べるだけでなく、初心者の言葉から辿れる構造を意識しました。",
   },
 };
 
@@ -303,6 +239,7 @@ function openCase(key) {
 
   fields.kicker.textContent = study.kicker;
   fields.banner.dataset.fit = study.imageFit || "cover";
+  fields.banner.dataset.tone = study.imageTone || "";
   fields.image.src = study.image || "";
   fields.image.alt = study.imageAlt || `${study.title} visual`;
   fields.title.textContent = study.title;
@@ -368,22 +305,5 @@ dialog.addEventListener("click", (event) => {
 });
 
 window.addEventListener("scroll", requestSpotlightUpdate, { passive: true });
-window.addEventListener("resize", () => {
-  requestSpotlightUpdate();
-  requestKnowledgeGraphDraw();
-});
-
-if ("ResizeObserver" in window) {
-  const knowledgeNet = document.querySelector(".knowledge-net");
-  if (knowledgeNet) {
-    new ResizeObserver(requestKnowledgeGraphDraw).observe(knowledgeNet);
-  }
-}
-
-if (document.fonts?.ready) {
-  document.fonts.ready.then(requestKnowledgeGraphDraw);
-}
-
-window.addEventListener("load", requestKnowledgeGraphDraw);
+window.addEventListener("resize", requestSpotlightUpdate);
 updateSpotlight();
-requestKnowledgeGraphDraw();
