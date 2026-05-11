@@ -32,13 +32,22 @@ function lockPageScroll() {
 function unlockPageScroll() {
   document.body.classList.remove("modal-open");
   document.body.style.top = "";
+  
+  // Temporarily disable smooth scroll to instantly restore position
+  document.documentElement.style.scrollBehavior = "auto";
   window.scrollTo(0, lockedScrollY);
+  
+  // Restore original scroll behavior on the next frame
+  window.requestAnimationFrame(() => {
+    document.documentElement.style.scrollBehavior = "";
+  });
 }
 
 const caseStudies = {
   moftail: {
     kicker: "Case Study 01",
     title: "Moftail",
+    link: { type: "moftail", url: "https://moftail.com", label: "Visit Website" },
     image: "./assets/365Zen-Image.jpg",
     imageAlt: "Moftail Still Fox Tee visual",
     imageFit: "cover",
@@ -72,6 +81,7 @@ const caseStudies = {
   anchor: {
     kicker: "Case Study 02",
     title: "Anchor",
+    link: { type: "github", url: "https://github.com/ryuusuraimu/Anchor.swiftpm", label: "Repository" },
     image: "./assets/Anchor-Screens.jpg",
     imageAlt: "Anchor app screens",
     imageFit: "cover-left",
@@ -167,6 +177,7 @@ const caseStudies = {
   stockwise: {
     kicker: "Case Study 05",
     title: "StockWise",
+    link: { type: "github", url: "https://github.com/ryuusuraimu/stockwise", label: "Repository" },
     image:
       "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 760'%3E%3Crect width='1200' height='760' fill='%230c172b'/%3E%3Cg fill='none' stroke='%2350f58d' stroke-width='18' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M150 540h900' opacity='.28'/%3E%3Cpath d='M190 520 350 390l130 70 210-240 130 120 190-190'/%3E%3C/g%3E%3Crect x='126' y='110' width='948' height='150' rx='28' fill='%23fff8e8' stroke='%230d1628' stroke-width='10'/%3E%3Ctext x='170' y='202' font-family='Inter,Arial,sans-serif' font-size='56' font-weight='900' fill='%230d1628'%3EFAQ search: PER / PBR / NISA%3C/text%3E%3Cg font-family='Inter,Arial,sans-serif' font-weight='900'%3E%3Crect x='150' y='315' width='260' height='88' rx='20' fill='%23ffd91f'/%3E%3Ctext x='190' y='372' font-size='38' fill='%230d1628'%3EDividend%3C/text%3E%3Crect x='450' y='315' width='210' height='88' rx='20' fill='%23ddf1ff'/%3E%3Ctext x='500' y='372' font-size='38' fill='%230d1628'%3ENISA%3C/text%3E%3Crect x='700' y='315' width='260' height='88' rx='20' fill='%23ffe3ea'/%3E%3Ctext x='755' y='372' font-size='38' fill='%230d1628'%3EPER/PBR%3C/text%3E%3C/g%3E%3C/svg%3E",
     imageAlt: "StockWise FAQ search app concept",
@@ -207,6 +218,10 @@ const fields = {
   image: document.querySelector("#dialog-image"),
   kicker: document.querySelector("#dialog-kicker"),
   title: document.querySelector("#dialog-title"),
+  actionLink: document.querySelector("#dialog-action-link"),
+  actionImage: document.querySelector("#dialog-action-image"),
+  actionSvg: document.querySelector("#dialog-action-svg"),
+  actionText: document.querySelector("#dialog-action-text"),
   summary: document.querySelector("#dialog-summary"),
   role: document.querySelector("#dialog-role"),
   decision: document.querySelector("#dialog-decision"),
@@ -256,6 +271,22 @@ function openCase(key) {
   fields.image.src = study.image || "";
   fields.image.alt = study.imageAlt || `${study.title} visual`;
   fields.title.textContent = study.title;
+
+  if (study.link) {
+    fields.actionLink.href = study.link.url;
+    fields.actionText.textContent = study.link.label;
+    fields.actionLink.style.display = "flex";
+    if (study.link.type === "moftail") {
+      fields.actionImage.src = "./assets/Moftail-logo.png";
+      fields.actionImage.style.display = "block";
+      fields.actionSvg.style.display = "none";
+    } else {
+      fields.actionImage.style.display = "none";
+      fields.actionSvg.style.display = "block";
+    }
+  } else {
+    fields.actionLink.style.display = "none";
+  }
   fields.summary.innerHTML = noOrphan(study.summary);
   fields.role.innerHTML = noOrphan(study.role);
   fields.decision.innerHTML = noOrphan(study.decision);
