@@ -1,5 +1,6 @@
 const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let spotlightFrame = null;
+let lockedScrollY = 0;
 
 function updateSpotlight() {
   spotlightFrame = null;
@@ -20,6 +21,18 @@ function updateSpotlight() {
 function requestSpotlightUpdate() {
   if (spotlightFrame !== null) return;
   spotlightFrame = window.requestAnimationFrame(updateSpotlight);
+}
+
+function lockPageScroll() {
+  lockedScrollY = window.scrollY;
+  document.body.style.top = `-${lockedScrollY}px`;
+  document.body.classList.add("modal-open");
+}
+
+function unlockPageScroll() {
+  document.body.classList.remove("modal-open");
+  document.body.style.top = "";
+  window.scrollTo(0, lockedScrollY);
 }
 
 const caseStudies = {
@@ -252,6 +265,7 @@ function openCase(key) {
   renderTags(fields.tools, study.tools || []);
   renderList(fields.process, study.process);
   renderList(fields.ai, study.ai);
+  lockPageScroll();
   dialog.showModal();
 }
 
@@ -290,6 +304,8 @@ document.querySelectorAll("[data-copy-email]").forEach((button) => {
 });
 
 closeButton.addEventListener("click", () => dialog.close());
+
+dialog.addEventListener("close", unlockPageScroll);
 
 dialog.addEventListener("click", (event) => {
   const rect = dialog.getBoundingClientRect();
