@@ -1361,17 +1361,21 @@ figcaption {
   }
 
   .profile-sticker::before {
-    left: -21px;
-    bottom: -16px;
-    width: 46px;
-    height: 27px;
+    left: 20px;
+    bottom: -20px;
+    width: 0;
+    height: 0;
+    border-top-width: 20px;
+    border-right-width: 20px;
   }
 
   .profile-sticker::after {
-    left: -11px;
-    bottom: -9px;
-    width: 30px;
-    height: 18px;
+    left: 24px;
+    bottom: -10px;
+    width: 0;
+    height: 0;
+    border-top-width: 12px;
+    border-right-width: 12px;
   }
 
   .photo-frame {
