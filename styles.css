@@ -451,13 +451,13 @@ main {
 
 .burst span {
   position: absolute;
-  left: 14px;
+  left: 20px;
   top: -3px;
   width: 12px;
   height: 6px;
   background: var(--orange);
   border-radius: 999px;
-  transform-origin: -14px 50%;
+  transform-origin: -20px 50%;
 }
 
 .burst span:nth-child(1) {
@@ -857,8 +857,8 @@ figcaption {
 
 .terminal-dots {
   position: absolute;
-  top: 32px;
-  left: 34px;
+  top: 10px;
+  left: 18px;
   display: flex;
   gap: 10px;
 }
@@ -888,10 +888,13 @@ figcaption {
   margin-left: 5px;
   background: #d9dfef;
   vertical-align: -0.22em;
-  animation: blink 900ms steps(2, start) infinite;
+  animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
   50% {
     opacity: 0;
   }
@@ -1035,12 +1038,17 @@ figcaption {
   overflow: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
+  scrollbar-width: none;
   padding: clamp(24px, 4vw, 48px);
   border: 5px solid var(--line);
   border-radius: 26px;
   background: #fffdf6;
   color: var(--ink);
   box-shadow: var(--shadow);
+}
+
+.case-dialog::-webkit-scrollbar {
+  display: none;
 }
 
 .case-dialog::backdrop {
@@ -1050,9 +1058,12 @@ figcaption {
 
 .dialog-close {
   position: sticky;
-  top: 0;
-  z-index: 3;
+  top: -8px;
+  z-index: 10;
   float: right;
+  margin-top: -8px;
+  margin-right: -12px;
+  margin-bottom: 20px;
   width: 46px;
   aspect-ratio: 1;
   border: 4px solid var(--line);
@@ -1066,11 +1077,12 @@ figcaption {
 }
 
 .dialog-banner {
+  clear: right;
   display: grid;
   place-items: center;
   width: 100%;
   height: clamp(230px, 34vw, 420px);
-  margin: 12px 0 30px;
+  margin: 0 0 30px;
   border: 5px solid var(--line);
   border-radius: 22px;
   overflow: hidden;
@@ -1573,8 +1585,8 @@ figcaption {
   }
 
   .terminal-dots {
-    top: 15px;
-    left: 18px;
+    top: 9px;
+    left: 14px;
     z-index: 1;
   }
 

@@ -267,6 +267,7 @@ function openCase(key) {
   renderList(fields.ai, study.ai);
   lockPageScroll();
   dialog.showModal();
+  dialog.scrollTop = 0;
 }
 
 document.querySelectorAll("[data-case]").forEach((card) => {
