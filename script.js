@@ -95,14 +95,14 @@ const caseStudies = {
     imageAlt: "Moftail Still Fox Tee visual",
     imageFit: "cover",
     role:
-      "個人事業として、ブランド哲学、商品戦略、Shopify導線、広告、SNS、ドキュメント化までを一貫して設計。",
+      "実際に運営しているShopifyベースのPODブランドとして、EC、広告、UX、制作ワークフローを検証するProduct Labを設計・運営。",
     decision:
-      "商品数を広げる前に、Still Fox TeeをHero Productとして固定し、思想を検証可能な購入導線へ落とすことを優先しました。",
+      "単なるアパレル作品ではなく、商品ページ、広告クリエイティブ、レビュー、配送説明、制作ワークフローを検証できる場として扱いました。",
     output:
-      "Balance of Lifeを中心にしたBrand OS、Hero Product戦略、PDP改善観点、365 Zen Moments、広告・SNS運用メモを整備。",
-    tools: ["Shopify", "Printify", "Meta Ads", "Claude", "ChatGPT", "Markdown"],
+      "Balance of Lifeを中心にしたBrand OS、Hero Product戦略、PDP改善観点、広告・SNS運用メモ、制作ワークフローを整備。",
+    tools: ["Shopify", "Printify", "Meta Ads", "Documentation", "Markdown"],
     summary:
-      "服を売るブランドではなく、Balance of Lifeという状態価値を日常に届けるPODブランド。Still Fox Teeを入口に、Shopify、広告、SNS、商品ページを一つの世界観として設計しています。",
+      "Moftail is my real-world product lab. Shopify-based POD brand for the US marketとして、商品ページ、広告、レビュー、配送説明、制作ワークフローを実際の運営の中で検証しています。",
     problem:
       "Moftailの課題は、思想を増やすことではなく、思想を売上につながる実行順序へ落とし込むことでした。世界観、広告、モックアップ、商品ページ、信頼情報が分断されると、ブランドは美しくても購入にはつながりません。",
     process: [
@@ -113,7 +113,7 @@ const caseStudies = {
       "決定済み、仮説、未確定、次に見る指標をObsidian上のBrand OSとして整理",
     ],
     ai: [
-      "ブランド哲学、広告訴求、商品説明、FAQを複数視点で生成・レビュー",
+      "ブランド哲学、広告訴求、商品説明、FAQを複数視点でレビュー",
       "顧客視点、UX視点、広告視点で購入導線と信頼情報を点検",
       "画像生成プロンプト、短いZen line、投稿構造を作り、世界観から外れる表現を削る",
       "成長戦略を、勝ちモックアップ、勝ち訴求、商品ページ改善の順序に分解",
@@ -130,12 +130,12 @@ const caseStudies = {
     role:
       "家族の実体験を起点に、問題定義、UX設計、SwiftUI実装方針、提出文章までを自分で統合。",
     decision:
-      "緊急時に機能を増やしても使えません。事前のShield表示に絞り、声が出ない瞬間に判断させないようにしました。",
+      "パニック時はスマホを見ることすら負荷になるため、機能を増やすより、事前メッセージ、オフラインQR、ショートカットで判断負荷を減らすことを優先しました。",
     output:
       "Offline-first QR、Shield、Shortcuts / App Intents、高コントラストUI、提出用の英日ドキュメントを含むMVPを作成。",
-    tools: ["SwiftUI", "Xcode", "ChatGPT", "Claude", "UI Design"],
+    tools: ["SwiftUI", "Xcode", "Product Writing", "UI Design"],
     summary:
-      "家族のパニック時の実体験をもとに、声が出せない場面でも状況と助け方を伝えられる、オフライン完結の支援依頼カードとして設計しました。",
+      "Anchor is an iOS app designed for panic situations, where even opening a phone can feel difficult. Prepared messages, offline QR sharing, and shortcut-based actions reduce decision load.",
     problem:
       "パニック発作や感覚過負荷が起きる場面では、読む、話す、判断する能力がほぼゼロに近くなることがあります。本人は固まり、周囲の人も何をすべきか分からない。この沈黙を、会話なしで読める指示へ変える必要がありました。",
     process: [
@@ -146,7 +146,7 @@ const caseStudies = {
       "高コントラスト、大きい文字、短い文、誤タップしにくい余白で認知アクセシビリティを優先",
     ],
     ai: [
-      "SwiftUI構成、Observation、App Intents、QR生成、状態管理の実装案を相談",
+      "SwiftUI構成、Observation、App Intents、QR生成、状態管理の実装案を整理",
       "ChaosからCalmへ移るオンボーディング構造と、危機時文言の明確さを検討",
       "エラーやactor isolationの問題を最小再現に分け、Xcode / Playgroundsで検証",
       "提出文章では、問題、対象ユーザー、アクセシビリティ、使用技術を英日で整理",
@@ -163,10 +163,10 @@ const caseStudies = {
     role:
       "ストア運営者として、商品ページ上の違和感を観察し、再現手順と原因仮説を整理。",
     decision:
-      "感覚的に問い合わせるのではなく、期待値、実際の挙動、影響範囲を分けて第三者が検証できる形にしました。",
+      "“Something feels broken” を、再現可能な技術課題へ変換することを重視し、期待値、実際の挙動、影響範囲を分けて第三者が検証できる形にしました。",
     output:
       "Shopify標準挙動とテーマ固有挙動を切り分けた共有ドキュメントと、外部チームに伝わる改善提案を作成。",
-    tools: ["Shopify", "Liquid", "JavaScript", "Claude", "Markdown"],
+    tools: ["Shopify", "Liquid", "JavaScript", "Markdown"],
     summary:
       "商品ページの価格やサイズ選択の挙動を調査し、再現手順、期待値、実際の挙動、原因仮説を共有可能な資料に整理しました。",
     problem:
@@ -196,14 +196,14 @@ const caseStudies = {
     decision:
       "売り込み投稿ではなく、calm / stillness / balanceを静かに反復するブランド資産として扱いました。",
     output:
-      "Image + Short Zen line + MOFTAILの投稿構造、モチーフ集、キャプション方針、転用可能なコンテンツ基盤を作成。",
-    tools: ["Image Generation", "ChatGPT", "Claude", "Markdown", "SNS Planning"],
+      "Visual + Short Zen line + MOFTAILの投稿構造、モチーフ集、キャプション方針、転用可能なコンテンツ基盤を作成。",
+    tools: ["Content Planning", "Markdown", "SNS Planning"],
     summary:
       "Moftailのcalm、stillness、balance、awareness、natureを毎日の投稿として蓄積するブランド・コンテンツエンジンです。",
     problem:
       "小規模ブランドは、強い広告だけではなく静かな反復で信頼を積み上げる必要があります。ただし毎回ゼロから投稿を考えると、世界観がぶれ、単なるaesthetic画像集になってしまいます。",
     process: [
-      "Image + Short Zen line + MOFTAILという最小構造を固定",
+      "Visual + Short Zen line + MOFTAILという最小構造を固定",
       "morning light、forest、water、mist、tea ritual、windowsなどのモチーフを整理",
       "売り込みすぎない、説明しすぎない、ブランドの核から外れない原則を定義",
       "投稿を広告コピー、Zen Micro Film、商品ページ文脈へ転用できる資産として設計",
@@ -214,7 +214,40 @@ const caseStudies = {
       "短いキャプション案の作成とトーン調整",
     ],
     learning:
-      "AIは量を出してくれますが、何を選んで何を捨てるかは自分が決めないとブランドはぶれます。",
+      "量を出すだけでは、ブランドはまとまりません。何を選び、何を捨てるかを決める編集力が重要だと学びました。",
+  },
+  stockwise: {
+    kicker: "Case Study 05",
+    title: "Stockwise",
+    image:
+      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 760'%3E%3Crect width='1200' height='760' rx='56' fill='%230c172b'/%3E%3Cg fill='none' stroke='%2350f58d' stroke-width='18' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M150 540h900' opacity='.28'/%3E%3Cpath d='M190 520 350 390l130 70 210-240 130 120 190-190'/%3E%3C/g%3E%3Crect x='126' y='110' width='948' height='150' rx='28' fill='%23fff8e8' stroke='%230d1628' stroke-width='10'/%3E%3Ctext x='170' y='202' font-family='Inter,Arial,sans-serif' font-size='56' font-weight='900' fill='%230d1628'%3EFAQ search: PER / PBR / NISA%3C/text%3E%3Cg font-family='Inter,Arial,sans-serif' font-weight='900'%3E%3Crect x='150' y='315' width='260' height='88' rx='20' fill='%23ffd91f'/%3E%3Ctext x='190' y='372' font-size='38' fill='%230d1628'%3EDividend%3C/text%3E%3Crect x='450' y='315' width='210' height='88' rx='20' fill='%23ddf1ff'/%3E%3Ctext x='500' y='372' font-size='38' fill='%230d1628'%3ENISA%3C/text%3E%3Crect x='700' y='315' width='260' height='88' rx='20' fill='%23ffe3ea'/%3E%3Ctext x='755' y='372' font-size='38' fill='%230d1628'%3EPER/PBR%3C/text%3E%3C/g%3E%3C/svg%3E",
+    imageAlt: "Stockwise FAQ search app concept",
+    imageFit: "cover",
+    role:
+      "株式投資初心者向けに、検索UX、FAQ構造、用語説明の粒度を設計。React + TypeScriptで検索型FAQアプリとして構築。",
+    decision:
+      "投資情報を増やすのではなく、初心者が最初につまずくPER、PBR、NISA、配当利回りなどの基本用語をすぐ調べられる導線に絞りました。",
+    output:
+      "FAQ-style knowledge search app、カテゴリ設計、検索UI、基本用語の質問分解、React + TypeScript構成。",
+    tools: ["React", "TypeScript", "Search UX", "FAQ Design"],
+    summary:
+      "FAQ-style knowledge search app for beginner investors. 株式投資初心者が、PER、PBR、NISA、配当利回りなどの基本用語をすぐに調べられる検索型FAQアプリです。",
+    problem:
+      "初心者向けの投資情報は多い一方で、知りたい言葉にすぐ辿り着けない、説明の粒度が難しすぎる、関連質問が見えないという課題があります。",
+    process: [
+      "初心者が検索しそうな用語と質問を整理",
+      "PER、PBR、NISA、配当利回りなどをFAQ単位に分解",
+      "検索結果から関連質問へ移れる情報設計を検討",
+      "React + TypeScriptで検索UIとFAQ構造を実装",
+    ],
+    ai: [
+      "初心者が抱く質問の洗い出し",
+      "用語説明の粒度調整",
+      "FAQ構造と検索導線のレビュー",
+      "React / TypeScript実装の補助",
+    ],
+    learning:
+      "検索UXでは、情報量よりも質問の入口をどう作るかが重要です。Stockwiseでは、知識を並べるだけでなく、初心者の言葉から辿れる構造を意識しました。",
   },
 };
 

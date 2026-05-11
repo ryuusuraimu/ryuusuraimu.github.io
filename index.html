@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ryunosuke Nakamura - AI Product Portfolio</title>
+    <title>Ryunosuke Nakamura - Product Portfolio</title>
     <meta
       name="description"
-      content="AIを活用して課題整理、プロダクト設計、Shopify改善、iOSアプリ企画、ドキュメント化に取り組む中邨隆之介のポートフォリオ。"
+      content="課題整理、プロダクト設計、Shopify改善、iOSアプリ企画、ドキュメント化に取り組む中邨隆之介のポートフォリオ。"
     />
     <link
       rel="icon"
@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=Noto+Sans+JP:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=toon14" />
+    <link rel="stylesheet" href="./styles.css?v=product7" />
   </head>
   <body>
     <header class="site-header">
@@ -34,9 +34,14 @@
     <main id="top">
       <section class="hero" aria-label="Introduction">
         <div>
-          <p class="sticker tilt-left">AI Product / UX / Web</p>
+          <p class="sticker tilt-left">Product / UX / Web</p>
           <h1>RYUNOSUKE<br /><span>NAKAMURA</span></h1>
-          <p class="subtitle">Engineer, researcher, and maker with AI.</p>
+          <p class="subtitle">
+            I observe real-world friction, frame it into product problems, and ship practical solutions.
+          </p>
+          <p class="hero-note">
+            現実の違和感を観察し、プロダクト課題として整理し、実際に動く形へ落とし込みます。
+          </p>
         </div>
         <div class="socials" aria-label="Social links">
           <a
@@ -45,15 +50,14 @@
             rel="noreferrer"
             aria-label="Open Gmail compose"
           >
-            <svg class="gmail-mark" viewBox="0 0 64 48" aria-hidden="true">
-              <path fill="#4285f4" d="M8 16v24c0 2.2 1.8 4 4 4h8V25z" />
-              <path fill="#34a853" d="M44 25v19h8c2.2 0 4-1.8 4-4V16z" />
-              <path fill="#fbbc04" d="M44 16v9l12-9z" />
-              <path fill="#ea4335" d="M20 25V8l12 9 12-9v17L32 34z" />
-              <path fill="#c5221f" d="M8 12v4l12 9V8l-3.5-2.6C13 2.8 8 5.3 8 12z" />
-            </svg>
+            <img class="gmail-mark" src="./assets/gmail-icon.svg" alt="" aria-hidden="true" />
           </a>
-          <a href="https://github.com/ryuusuraimu" target="_blank" rel="noreferrer" aria-label="GitHub">
+          <a
+            href="https://github.com/ryuusuraimu"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub"
+          >
             <svg viewBox="0 0 98 96" aria-hidden="true">
               <path
                 fill="currentColor"
@@ -68,11 +72,16 @@
       <section class="bento-grid" aria-label="Portfolio overview">
         <article class="card intro-card pastel-pink">
           <figure class="photo-frame">
-            <img src="./assets/365Zen-Image.jpg" alt="Moftail Still Fox Tee visual" />
+            <img
+              src="./assets/365Zen-Image.jpg"
+              alt="Moftail Still Fox Tee visual"
+            />
             <figcaption>@Moftail</figcaption>
           </figure>
-          <h2>This is my work!</h2>
-          <p>思想を先に決めて、AIで形にして、実際に運用できるところまで持っていきます。</p>
+          <h2>Moftail is my product lab.</h2>
+          <p>
+            実際に運営しているShopifyベースのPODブランド。US市場向けに、商品ページ、広告クリエイティブ、レビュー、配送説明、制作ワークフローを検証しています。
+          </p>
         </article>
 
         <article class="card adventure-card pastel-blue">
@@ -81,8 +90,10 @@
             <img src="./assets/Anchor-Screens.jpg" alt="Anchor app screens" />
             <figcaption>Calm Tech</figcaption>
           </figure>
-          <h2>Anchor: 声が出ない瞬間に、代わりに伝える。</h2>
-          <p>パニック時の認知負荷を前提に、Shield、Offline-first QR、Shortcutsを設計したiOSアプリ。</p>
+          <h2>Anchor: パニック時の判断負荷を減らす。</h2>
+          <p>
+            「スマホを見ることすら負荷になる」前提で設計したiOSアプリ。事前メッセージ、オフラインQR、ショートカット連携で緊急時の判断を減らします。
+          </p>
         </article>
 
         <article class="card talks-card pastel-green" id="method">
@@ -95,7 +106,7 @@
             </li>
             <li>
               <strong>Frame</strong>
-              <span>AIで視点を増やす</span>
+              <span>複数視点で見直す</span>
             </li>
             <li>
               <strong>Ship</strong>
@@ -104,26 +115,67 @@
           </ul>
         </article>
 
-        <article class="card knowledge-card" aria-label="Obsidian style knowledge network">
-          <div class="section-label">◌ About the Work</div>
+        <article
+          class="card knowledge-card"
+          aria-label="Obsidian style knowledge network"
+        >
+          <div class="section-label obsidian-label">
+            <img src="./assets/obsidian-icon.svg" alt="" aria-hidden="true" />
+            About the Work
+          </div>
           <div class="knowledge-net">
-            <svg class="knowledge-edges" aria-hidden="true" focusable="false"></svg>
-            <a class="node node-core" data-node="core" href="#top"><i></i><b>AI Product Portfolio</b></a>
-            <button class="node node-moftail" data-node="moftail" data-case="moftail" type="button">
+            <svg
+              class="knowledge-edges"
+              aria-hidden="true"
+              focusable="false"
+            ></svg>
+            <a class="node node-core" data-node="core" href="#top"
+              ><i></i><b>Product Portfolio</b></a
+            >
+            <button
+              class="node node-moftail"
+              data-node="moftail"
+              data-case="moftail"
+              type="button"
+            >
               <i></i><b>Moftail Brand OS</b>
             </button>
-            <button class="node node-anchor" data-node="anchor" data-case="anchor" type="button">
+            <button
+              class="node node-anchor"
+              data-node="anchor"
+              data-case="anchor"
+              type="button"
+            >
               <i></i><b>Anchor Shield UX</b>
             </button>
-            <button class="node node-shopify" data-node="shopify" data-case="shopify" type="button">
+            <button
+              class="node node-shopify"
+              data-node="shopify"
+              data-case="shopify"
+              type="button"
+            >
               <i></i><b>Shopify Debugging</b>
             </button>
-            <button class="node node-zen" data-node="zen" data-case="zen" type="button">
+            <button
+              class="node node-zen"
+              data-node="zen"
+              data-case="zen"
+              type="button"
+            >
               <i></i><b>365 Zen Moments</b>
             </button>
-            <a class="node node-ai" data-node="ai" href="#method"><i></i><b>ChatGPT活用領域マップ</b></a>
-            <a class="node node-doc" data-node="doc" href="#work"><i></i><b>Obsidian Documentation</b></a>
-            <button class="node node-strategy" data-node="strategy" data-case="moftail" type="button">
+            <a class="node node-ai" data-node="ai" href="#method"
+              ><i></i><b>Workflow Map</b></a
+            >
+            <a class="node node-doc" data-node="doc" href="#work"
+              ><i></i><b>Obsidian Documentation</b></a
+            >
+            <button
+              class="node node-strategy"
+              data-node="strategy"
+              data-case="moftail"
+              type="button"
+            >
               <i></i><b>Hero Product Strategy</b>
             </button>
           </div>
@@ -133,30 +185,56 @@
           <div class="paper-stack">
             <img src="./assets/Anchor-Appicon.png" alt="Anchor app icon" />
           </div>
-          <h2>MY APP IDEA ARRIVED!</h2>
-          <p>Family experience became a product spec.</p>
+          <h2>HOW I WORK</h2>
+          <p>Problem framing / UX review / debugging / specs / testing ideas</p>
         </article>
       </section>
 
       <section class="card projects-section pastel-lavender" id="work">
-        <div class="section-label label-pill">☃ Cool Projects</div>
+        <div class="section-label label-pill">▣ Product-minded Work</div>
         <div class="project-layout">
           <button class="project-photo" type="button" data-case="moftail">
-            <img src="./assets/365Zen-Image.jpg" alt="Moftail Still Fox Tee visual" />
+            <img
+              src="./assets/365Zen-Image.jpg"
+              alt="Moftail Still Fox Tee visual"
+            />
             <span>
-              <strong>Moftail</strong>
-              Balance of Lifeを核にしたPODブランド。
+              <strong>Moftail Product Lab</strong>
+              EC・広告・UX・制作フローを、実際のブランド運営で検証しています。
             </span>
           </button>
-          <div class="terminal-card">
-            <div class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-            <p class="terminal-green">&gt; Starting thinking system...</p>
-            <p class="terminal-green">&gt; Scanning brand, EC, UX...</p>
-            <p>Hi! I'm Ryunosuke. I turn scattered ideas into working product direction.<span class="cursor"></span></p>
-            <div class="mini-actions">
-              <button type="button" data-case="anchor">Anchor</button>
-              <button type="button" data-case="shopify">Shopify</button>
-              <button type="button" data-case="zen">365 Zen</button>
+          <div class="project-stack">
+            <div class="terminal-card">
+              <div class="terminal-dots" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <p class="terminal-green">&gt; Observing real-world friction...</p>
+              <p class="terminal-green">&gt; Framing it into product problems...</p>
+              <p>
+                I define the question, review the output, document decisions, and turn ideas into working product direction.<span class="cursor"></span>
+              </p>
+              <div class="mini-actions">
+                <button type="button" data-case="anchor">Anchor</button>
+                <button type="button" data-case="shopify">Shopify</button>
+                <button type="button" data-case="stockwise">Stockwise</button>
+                <button type="button" data-case="zen">365 Zen</button>
+              </div>
+            </div>
+            <div class="work-highlight-grid">
+              <button class="work-highlight" type="button" data-case="shopify">
+                <span>Shopify Theme Debugging</span>
+                <strong>“Something feels broken” → reproducible issue</strong>
+                <p>
+                  商品ページの価格・サイズ選択の挙動を調査し、再現手順、期待値、実際の挙動、原因仮説をドキュメント化。
+                </p>
+              </button>
+              <button class="work-highlight" type="button" data-case="stockwise">
+                <span>Stockwise</span>
+                <strong>FAQ-style knowledge search app</strong>
+                <p>
+                  PER、PBR、NISA、配当利回りなどをすぐ調べられる検索型FAQアプリ。React + TypeScriptで検索UIとFAQ構造を設計。
+                </p>
+              </button>
             </div>
           </div>
         </div>
@@ -164,26 +242,50 @@
 
       <section class="skills-band" id="skills">
         <article class="card skill-card">
-          <span>Product</span>
-          <strong>課題分解 / MVP設計 / 情報設計 / UXレビュー</strong>
+          <span>Product Thinking</span>
+          <strong>課題分解 / MVP設計 / 情報設計 / UXレビュー / 仮説検証</strong>
         </article>
         <article class="card skill-card">
-          <span>AI Workflow</span>
-          <strong>ChatGPT / Claude / Gemini / Claude Code / Markdown</strong>
+          <span>Frontend</span>
+          <strong>HTML / CSS / JavaScript / React / TypeScript / SwiftUI</strong>
         </article>
         <article class="card skill-card">
-          <span>Web & EC</span>
-          <strong>Shopify改善 / Liquid調査 / Printify / FAQ設計</strong>
+          <span>Workflow</span>
+          <strong>仕様書作成 / デバッグ補助 / 調査メモ / レビュー / 検証計画</strong>
+        </article>
+        <article class="card skill-card">
+          <span>Commerce & Ops</span>
+          <strong>Shopify / Liquid調査 / Printify / Meta Ads / PDP改善 / FAQ設計</strong>
+        </article>
+        <article class="card skill-card">
+          <span>Knowledge UX</span>
+          <strong>FAQ構造化 / 検索導線 / 情報整理 / ユーザー質問の分解</strong>
         </article>
       </section>
 
       <section class="contact-card card" id="contact">
         <p class="sticker">Let's build!</p>
-        <h2>プロダクトやEC、業務の現場で、AIを使って実際に動くものを作りたいです。</h2>
+        <h2>
+          人が情報に迷う瞬間を減らすために、検索・UX・情報設計を組み合わせたプロダクトづくりに挑戦したいです。
+        </h2>
         <div class="contact-actions">
-          <a class="button dark" href="mailto:ryu.nakamura.dev@gmail.com">Mail app</a>
-          <button class="button light" type="button" data-copy-email="ryu.nakamura.dev@gmail.com">Copy email</button>
-          <a class="button light" href="https://github.com/ryuusuraimu" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="button dark" href="mailto:ryu.nakamura.dev@gmail.com"
+            >Mail app</a
+          >
+          <button
+            class="button light"
+            type="button"
+            data-copy-email="ryu.nakamura.dev@gmail.com"
+          >
+            Copy email
+          </button>
+          <a
+            class="button light"
+            href="https://github.com/ryuusuraimu"
+            target="_blank"
+            rel="noreferrer"
+            >GitHub</a
+          >
         </div>
       </section>
     </main>
@@ -224,7 +326,7 @@
           <ul id="dialog-process"></ul>
         </section>
         <section>
-          <h3>AI Usage</h3>
+          <h3>Workflow</h3>
           <ul id="dialog-ai"></ul>
         </section>
         <section>
@@ -234,6 +336,6 @@
       </div>
     </dialog>
 
-    <script src="./script.js?v=toon14"></script>
+    <script src="./script.js?v=product7"></script>
   </body>
 </html>
