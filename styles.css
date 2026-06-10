@@ -26,6 +26,7 @@ html {
   background: var(--cream);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 body {
@@ -39,6 +40,7 @@ body {
   line-height: 1.55;
   letter-spacing: 0;
   overflow-x: hidden;
+  overflow-x: clip;
   word-break: keep-all;
   overflow-wrap: break-word;
 }
@@ -206,6 +208,7 @@ main {
   width: min(1540px, 100%);
   margin: 0 auto;
   padding: 0 var(--page-pad) 70px;
+  overflow-x: hidden;
 }
 
 .hero {
@@ -1260,6 +1263,10 @@ figcaption {
     --shadow: 5px 6px 0 #0d1628;
   }
 
+  body {
+    word-break: normal;
+  }
+
   .site-header {
     align-items: flex-start;
     flex-direction: column;
@@ -1295,7 +1302,7 @@ figcaption {
 
   .hero h1 {
     margin-top: 10px;
-    font-size: clamp(3rem, 13.6vw, 4rem);
+    font-size: clamp(2.2rem, 10vw, 3.2rem);
     line-height: 0.9;
     white-space: normal;
     overflow-wrap: anywhere;
