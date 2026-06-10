@@ -24,6 +24,8 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 98px;
   background: var(--cream);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -1295,6 +1297,8 @@ figcaption {
     margin-top: 10px;
     font-size: clamp(3rem, 13.6vw, 4rem);
     line-height: 0.9;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .subtitle {
