@@ -1299,7 +1299,6 @@ figcaption {
     line-height: 0.9;
     white-space: normal;
     overflow-wrap: anywhere;
-    word-break: break-word;
   }
 
   .subtitle {
