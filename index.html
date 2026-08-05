@@ -17,7 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=Noto+Sans+JP:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=product27" />
+    <link rel="stylesheet" href="./styles.css?v=product24" />
   </head>
   <body>
     <header class="site-header">
@@ -28,30 +28,19 @@
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
       </nav>
-      <div class="header-status" aria-label="Portfolio status">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span data-i18n="header.status">Building in public / 2026</span>
-      </div>
-      <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch language">
-        <span id="language-label">日本語</span>
-      </button>
     </header>
 
     <main id="top">
       <section class="hero" aria-label="Introduction">
-        <div class="hero-copy">
+        <div>
           <p class="sticker tilt-left">Product / UX / Web</p>
           <h1>RYUNOSUKE<br /><span>NAKAMURA</span></h1>
-          <p class="subtitle" data-i18n="hero.subtitle">
+          <p class="subtitle">
             I observe real-world friction, frame it into product problems, and ship practical solutions.
           </p>
-          <p class="hero-note" data-i18n="hero.note">
-            From calmer iOS experiences to Shopify systems, I like working where people, information, and technology meet.
+          <p class="hero-note">
+            現実の違和感を観察し、プロダクト課題として整理し、実際に動く形へ落とし込みます。
           </p>
-          <div class="hero-actions" aria-label="Primary actions">
-            <a class="button dark" href="#work" data-i18n="hero.explore">Explore selected work</a>
-            <a class="button light" href="#contact" data-i18n="hero.collaborate">Let’s work together</a>
-          </div>
         </div>
         <div class="socials" aria-label="Social links">
           <a
@@ -89,18 +78,6 @@
             </svg>
           </a>
         </div>
-        <aside class="hero-signal" aria-label="Current focus">
-          <div class="signal-topline">
-            <span class="signal-index">01</span>
-            <span data-i18n="hero.signalCurrent">Current focus / latest build</span>
-          </div>
-          <strong data-i18n="hero.signalTitle">Anchor / Human Signal</strong>
-          <p data-i18n="hero.signalBody">A calmer iOS system for preparing support before the hard moment.</p>
-          <div class="signal-tags" aria-label="Current focus technologies">
-            <span>SwiftUI</span><span>Accessibility</span><span>Offline-first</span>
-          </div>
-          <small data-i18n="hero.signalMeta">OpenAI Build Week 2026 · current release candidate</small>
-        </aside>
       </section>
 
       <section class="bento-grid" aria-label="Portfolio overview">
@@ -132,43 +109,15 @@
         </article>
 
         <article class="card adventure-card pastel-blue">
-          <div class="section-label" data-i18n="latest.label">▣ Latest Build / 2026.07</div>
+          <div class="section-label">▣ Latest Build!</div>
           <figure class="wide-frame">
             <img src="./assets/Anchor-Screens.jpg" alt="Anchor app screens" />
             <figcaption>Calm Tech</figcaption>
           </figure>
-          <h2 data-i18n="latest.title">Anchor: make support visible when the moment gets hard.</h2>
-          <p data-i18n="latest.body">
-            The current Build Week version combines one-question preparation, a deterministic offline Shield, Reset, QR sharing, and manual Support Relay.
+          <h2>Anchor: パニック時の判断負荷を減らす。</h2>
+          <p>
+            「スマホを見ることすら負荷になる」前提で設計したiOSアプリ。事前メッセージ、オフラインQR、ショートカット連携で緊急時の判断を減らします。
           </p>
-        </article>
-
-        <article class="card anchor-track pastel-lavender" id="anchor-work">
-          <div class="section-label label-pill"><span data-i18n="anchor.trackLabel">⚓ Anchor / Two Chapters</span></div>
-          <div class="anchor-track-header">
-            <h2><span data-i18n="anchor.trackTitle1">One idea.</span><br /><span data-i18n="anchor.trackTitle2">Two chapters.</span></h2>
-            <p data-i18n="anchor.trackBody">Anchor began as a student challenge and grew into a Build Week project. The core stayed the same: make support visible when words become difficult.</p>
-          </div>
-          <div class="anchor-track-grid">
-            <button class="anchor-track-card" type="button" data-case="anchor-student">
-              <div class="anchor-track-image"><img src="./assets/anchor-student-challenge-home.png" alt="Latest Anchor Swift Student Challenge simulator screenshot" /></div>
-              <div class="anchor-track-copy">
-                <span class="anchor-track-number" data-i18n="anchor.studentLabel">01 / Swift Student Challenge</span>
-                <strong data-i18n="anchor.studentTitle">Build the quiet foundation.</strong>
-                <p data-i18n="anchor.studentBody">SwiftUI, accessibility, prepared communication, and an offline-first Shield shaped the first version of Anchor.</p>
-                <span class="card-link"><span data-i18n="anchor.openStory">Open story</span> <span aria-hidden="true">↗</span></span>
-              </div>
-            </button>
-            <button class="anchor-track-card" type="button" data-case="anchor-buildweek">
-              <div class="anchor-track-image"><img src="./assets/anchor-buildweek-home.png" alt="Latest Anchor OpenAI Build Week Home simulator screenshot" /></div>
-              <div class="anchor-track-copy">
-                <span class="anchor-track-number" data-i18n="anchor.buildweekLabel">02 / OpenAI Build Week</span>
-                <strong data-i18n="anchor.buildweekTitle">Turn a prototype into a human signal.</strong>
-                <p data-i18n="anchor.buildweekBody">Anchor expanded into a calmer product system with one-question preparation, a deterministic Shield, Reset, offline QR, and manual Support Relay.</p>
-                <span class="card-link"><span data-i18n="anchor.openStory">Open story</span> <span aria-hidden="true">↗</span></span>
-              </div>
-            </button>
-          </div>
         </article>
 
         <article class="card plate-card pastel-purple">
@@ -404,6 +353,6 @@
       </div>
     </dialog>
 
-    <script src="./script.js?v=product27"></script>
+    <script src="./script.js?v=product24"></script>
   </body>
 </html>
