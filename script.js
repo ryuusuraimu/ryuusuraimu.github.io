@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tex = new THREE.CanvasTexture(c);
     tex.wrapS = THREE.RepeatWrapping;
     tex.wrapT = THREE.RepeatWrapping;
-    tex.repeat.set(1.4, 1);
+    tex.repeat.set(1.6, 1.6);
     return tex;
   }
 
@@ -612,7 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tex = new THREE.CanvasTexture(c);
     tex.wrapS = THREE.RepeatWrapping;
     tex.wrapT = THREE.RepeatWrapping;
-    tex.repeat.set(1.4, 1);
+    tex.repeat.set(1.6, 1.6);
     return tex;
   }
 
@@ -664,7 +664,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tex = new THREE.CanvasTexture(c);
     tex.wrapS = THREE.RepeatWrapping;
     tex.wrapT = THREE.RepeatWrapping;
-    tex.repeat.set(1.4, 1);
+    tex.repeat.set(1.6, 1.6);
     return tex;
   }
 
@@ -1078,19 +1078,64 @@ document.addEventListener('DOMContentLoaded', () => {
     return tex;
   }
 
-  // Helper 6: Soft contact shadow radial gradient
+  // Helper 6: High-fidelity MacBook Air contact ambient occlusion shadow
   function createContactShadowTexture() {
     const c = document.createElement('canvas');
     c.width = 512;
     c.height = 512;
     const ctx = c.getContext('2d');
-    const g = ctx.createRadialGradient(256, 256, 60, 256, 256, 248);
-    g.addColorStop(0, 'rgba(0, 0, 0, 0.96)');
-    g.addColorStop(0.35, 'rgba(0, 0, 0, 0.70)');
-    g.addColorStop(0.70, 'rgba(0, 0, 0, 0.25)');
-    g.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, 512, 512);
+
+    // 1. Broad soft ambient occlusion falloff (multi-layer diffused blur)
+    for (let r = 240; r >= 130; r -= 12) {
+      const alpha = (1 - (r - 130) / 110) * 0.15;
+      ctx.fillStyle = `rgba(0, 0, 0, ${alpha.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.ellipse(256, 256, r * 0.95, r * 0.70, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 2. Direct chassis rectangular ambient occlusion matching M2 MacBook Air footprint
+    const bw = 370, bh = 264, cr = 24;
+    const bx = (512 - bw) / 2, by = (512 - bh) / 2;
+    for (let inset = 24; inset >= 0; inset -= 3) {
+      const alpha = 0.40 + ((24 - inset) / 24) * 0.48;
+      ctx.fillStyle = `rgba(0, 0, 0, ${alpha.toFixed(3)})`;
+      ctx.beginPath();
+      if (ctx.roundRect) {
+        ctx.roundRect(bx + inset, by + inset, bw - inset * 2, bh - inset * 2, Math.max(2, cr - inset));
+      } else {
+        const rx = bx + inset, ry = by + inset, rw = bw - inset * 2, rh = bh - inset * 2, rad = Math.max(2, cr - inset);
+        ctx.moveTo(rx + rad, ry);
+        ctx.lineTo(rx + rw - rad, ry);
+        ctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + rad);
+        ctx.lineTo(rx + rw, ry + rh - rad);
+        ctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - rad, ry + rh);
+        ctx.lineTo(rx + rad, ry + rh);
+        ctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - rad);
+        ctx.lineTo(rx, ry + rad);
+        ctx.quadraticCurveTo(rx, ry, rx + rad, ry);
+      }
+      ctx.fill();
+    }
+
+    // 3. Dense contact spots directly under the 4 rubber feet
+    const feet = [
+      [bx + 42, by + 38],
+      [bx + bw - 42, by + 38],
+      [bx + 42, by + bh - 38],
+      [bx + bw - 42, by + bh - 38]
+    ];
+    feet.forEach(([fx, fy]) => {
+      const footGrad = ctx.createRadialGradient(fx, fy, 4, fx, fy, 34);
+      footGrad.addColorStop(0, 'rgba(0, 0, 0, 0.98)');
+      footGrad.addColorStop(0.45, 'rgba(0, 0, 0, 0.85)');
+      footGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = footGrad;
+      ctx.beginPath();
+      ctx.arc(fx, fy, 34, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
     const tex = new THREE.CanvasTexture(c);
     return tex;
   }
@@ -1141,7 +1186,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Expansive standing desk tabletop with beveled bullnose edges
-  const deskTopShape = createRoundedRectShape(6.6, 2.9, 0.12);
+  // Extended forward (depth 5.60, centered at Z = 1.20) so the tabletop extends
+  // seamlessly from the hutch wall (Z = -1.60) through and beyond the bottom of the viewport (Z = +4.00),
+  // completely eliminating any floating gap or empty void under the front edge!
+  const deskTopShape = createRoundedRectShape(7.6, 5.6, 0.12);
   const deskTopGeo = new THREE.ExtrudeGeometry(deskTopShape, {
     depth: 0.08,
     bevelEnabled: true,
@@ -1153,9 +1201,16 @@ document.addEventListener('DOMContentLoaded', () => {
   deskTopGeo.rotateX(-Math.PI / 2);
 
   const deskSurfaceMesh = new THREE.Mesh(deskTopGeo, deskSurfaceMaterial);
-  deskSurfaceMesh.position.set(0, -0.140, -0.15);
+  deskSurfaceMesh.position.set(0, -0.140, 1.20);
   deskSurfaceMesh.receiveShadow = true;
   deskGroup.add(deskSurfaceMesh);
+
+  // Under-desk structural steel frame crossbeam for realistic grounded architecture
+  const underDeskFrame = new THREE.Mesh(new THREE.BoxGeometry(5.4, 0.06, 0.10), steelLegMaterial);
+  underDeskFrame.position.set(0, -0.170, 0.20);
+  underDeskFrame.castShadow = true;
+  underDeskFrame.receiveShadow = true;
+  deskGroup.add(underDeskFrame);
 
   // Left & Right Standing Desk Legs (Dual motor columns & feet)
   [-2.5, 2.5].forEach(x => {
@@ -1801,9 +1856,9 @@ document.addEventListener('DOMContentLoaded', () => {
     opacity: 0.0,
     depthWrite: false
   });
-  const contactShadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.52, 1.82), contactShadowMaterial);
+  const contactShadowMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.65, 1.95), contactShadowMaterial);
   contactShadowMesh.rotateX(-Math.PI / 2);
-  contactShadowMesh.position.set(0, -0.0358, 0.0);
+  contactShadowMesh.position.set(0, -0.0350, 0.0);
   deskGroup.add(contactShadowMesh);
 
   // Screen Emissive Bounce Light
@@ -1883,10 +1938,10 @@ document.addEventListener('DOMContentLoaded', () => {
     roughness: 0.85,
     metalness: 0.04
   });
-  const floorGeo = new THREE.PlaneGeometry(16, 12);
+  const floorGeo = new THREE.PlaneGeometry(20, 18);
   floorGeo.rotateX(-Math.PI / 2);
   const floorMesh = new THREE.Mesh(floorGeo, floorMat);
-  floorMesh.position.set(0, -1.89, -0.5);
+  floorMesh.position.set(0, -1.89, 1.5);
   floorMesh.receiveShadow = true;
   deskGroup.add(floorMesh);
 
@@ -2189,10 +2244,9 @@ document.addEventListener('DOMContentLoaded', () => {
       laptopGroup.scale.setScalar(scale);
 
       // Ground model flush on top of desk mat:
-      // In laptopGroup coordinates, base rubber feet are at y = -0.0363.
-      // Setting laptopGroup.position.y = 0.000 places the bottom rubber feet at y = -0.0363,
-      // resting 100% flush on the desk mat top surface (-0.0360) with 0mm submersion.
-      laptopGroup.position.set(0, 0.000, 0);
+      // Base rubber feet compress 2.2mm into the soft felt mat pile (-0.0385 Y),
+      // bringing the bottom unibody plate flush to the mat (-0.0359 Y) with 0 floating gap.
+      laptopGroup.position.set(0, -0.0022, 0);
 
       macRoot.add(laptopGroup);
       lidNode = lidGroup;
