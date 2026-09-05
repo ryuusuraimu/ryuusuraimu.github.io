@@ -319,19 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const tex = new THREE.CanvasTexture(c);
       tex.encoding = THREE.sRGBEncoding;
       tex.generateMipmaps = true;
-
-      // Load logo watermark into bottom right of terminal
-      const logoImg = new Image();
-      logoImg.src = './assets/Shopify-Theme.png';
-      logoImg.onload = () => {
-        const lw = 155;
-        const lh = 33;
-        ctx.globalAlpha = 0.88;
-        ctx.drawImage(logoImg, c.width - lw - 24, c.height - lh - 16, lw, lh);
-        ctx.globalAlpha = 1.0;
-        tex.needsUpdate = true;
-      };
-
       return tex;
     } catch (err) {
       console.warn('Could not generate Shopify Theme canvas texture, fallback to null', err);
