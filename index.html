@@ -1,358 +1,461 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ryunosuke Nakamura - Product Portfolio</title>
-    <meta
-      name="description"
-      content="課題整理、プロダクト設計、Shopify改善、iOSアプリ企画、ドキュメント化に取り組む中邨隆之介のポートフォリオ。"
-    />
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="./assets/portfolio-logo.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800;900&family=Noto+Sans+JP:wght@500;700;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css?v=product24" />
-  </head>
-  <body>
-    <header class="site-header">
-      <a class="logo-pill" href="#top">Hello, portfolio!</a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#work">Work</a>
-        <a href="#method">Method</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
 
-    <main id="top">
-      <section class="hero" aria-label="Introduction">
-        <div>
-          <p class="sticker tilt-left">Product / UX / Web</p>
-          <h1>RYUNOSUKE<br /><span>NAKAMURA</span></h1>
-          <p class="subtitle">
-            I observe real-world friction, frame it into product problems, and ship practical solutions.
-          </p>
-          <p class="hero-note">
-            現実の違和感を観察し、プロダクト課題として整理し、実際に動く形へ落とし込みます。
-          </p>
-        </div>
-        <div class="socials" aria-label="Social links">
-          <a
-            href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=ryu.nakamura.dev@gmail.com"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Open Gmail compose"
-          >
-            <img class="gmail-mark" src="./assets/gmail-icon.svg" alt="" aria-hidden="true" />
-          </a>
-          <a
-            href="https://github.com/ryuusuraimu"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="GitHub"
-          >
-            <svg viewBox="0 0 98 96" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M49 0C21.9 0 0 22.1 0 49.3c0 21.8 14 40.2 33.4 46.8 2.4.4 3.3-1.1 3.3-2.4v-8.4c-13.6 3-16.5-6.6-16.5-6.6-2.2-5.7-5.4-7.2-5.4-7.2-4.5-3.1.3-3 .3-3 4.9.3 7.5 5.1 7.5 5.1 4.4 7.6 11.5 5.4 14.3 4.1.4-3.2 1.7-5.4 3.1-6.6-10.9-1.2-22.3-5.5-22.3-24.3 0-5.4 1.9-9.8 5-13.2-.5-1.2-2.2-6.3.5-13 0 0 4.1-1.3 13.5 5 3.9-1.1 8.1-1.6 12.3-1.6s8.4.5 12.3 1.6c9.4-6.3 13.5-5 13.5-5 2.7 6.7 1 11.8.5 13 3.1 3.4 5 7.8 5 13.2 0 18.9-11.5 23-22.4 24.2 1.8 1.5 3.3 4.5 3.3 9.1v13.5c0 1.3.9 2.8 3.4 2.4C84 89.5 98 71.1 98 49.3 98 22.1 76.1 0 49 0Z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/%E9%9A%86%E4%B9%8B%E4%BB%8B-%E4%B8%AD%E9%82%A8-2b7b98337/"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-              />
-            </svg>
-          </a>
-        </div>
-      </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ryunosuke Nakamura — Product Builder & Explorer</title>
+  <meta name="description" content="現実の摩擦を観察し、プロダクト課題として整理し、動く形に落とす。中邨隆之介（ryuusuraimu）のポートフォリオ。" />
 
-      <section class="bento-grid" aria-label="Portfolio overview">
-        <article class="card profile-card pastel-lavender" aria-label="Profile photo">
-          <figure class="profile-frame">
-            <img
-              src="./assets/ryunosuke-profile.png"
-              alt="Portrait of Ryunosuke Nakamura"
-            />
-          </figure>
-          <p class="profile-sticker">
-            This is me!
-            <span class="burst" aria-hidden="true"><span></span><span></span><span></span></span>
-          </p>
-        </article>
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png?v=rn-lineart-v1" />
+  <link rel="icon" type="image/png" sizes="512x512" href="./assets/portfolio-logo.png?v=rn-lineart-v1" />
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png?v=rn-lineart-v1" />
 
-        <article class="card intro-card pastel-pink">
-          <figure class="photo-frame">
-            <img
-              src="./assets/365Zen-Image.jpg"
-              alt="Moftail Still Fox Tee visual"
-            />
-            <figcaption>@Moftail</figcaption>
-          </figure>
-          <h2>Moftail is my product lab.</h2>
-          <p>
-            実際に運営しているShopifyベースのPODブランド。US市場向けに、商品ページ、広告クリエイティブ、レビュー、配送説明、制作ワークフローを検証しています。
-          </p>
-        </article>
+  <!-- Google Fonts: Inter (halyard substitute) & Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+    rel="stylesheet" />
 
-        <article class="card adventure-card pastel-blue">
-          <div class="section-label">▣ Latest Build!</div>
-          <figure class="wide-frame">
-            <img src="./assets/Anchor-Screens.jpg" alt="Anchor app screens" />
-            <figcaption>Calm Tech</figcaption>
-          </figure>
-          <h2>Anchor: パニック時の判断負荷を減らす。</h2>
-          <p>
-            「スマホを見ることすら負荷になる」前提で設計したiOSアプリ。事前メッセージ、オフラインQR、ショートカット連携で緊急時の判断を減らします。
-          </p>
-        </article>
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-        <article class="card plate-card pastel-purple">
-          <div class="paper-stack">
-            <img src="./assets/Anchor-Appicon.png" alt="Anchor app icon" />
+  <!-- Three.js & 3D Loaders -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/fflate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FBXLoader.js"></script>
+
+  <link rel="stylesheet" href="./styles.css?v=oryzo-darkroom-v17" />
+</head>
+
+<body>
+
+  <!-- Fixed Top Navigation: ORYZO Minimal Wordmark & 4 items -->
+  <header class="site-header">
+    <a href="#panel-hero" class="logo-wordmark" aria-label="Ryunosuke Nakamura">
+      <span>RYUNOSUKE NAKAMURA</span>
+      <span class="logo-spec-tag">2026 SPEC</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#panel-hero" class="nav-item active">INTRO</a>
+      <a href="#scroll-stage" class="nav-item">PROJECTS</a>
+      <a href="#how-i-work" class="nav-item">METHOD</a>
+      <a href="#about" class="nav-item">ABOUT</a>
+      <a href="mailto:ryu.nakamura.dev@gmail.com" class="nav-item">CONTACT</a>
+    </nav>
+  </header>
+
+  <!-- Vertical Sidebar Label: Rotated 90deg text flush right -->
+  <aside class="vertical-sidebar-label" aria-hidden="true">
+    M2 MACBOOK AIR — 2026 FACT BASE
+  </aside>
+
+  <!-- Main Pinned 3D Stage -->
+  <main>
+    <div id="scroll-stage" class="scroll-stage">
+
+      <!-- Sticky Viewport (100vh Full Bleed Walnut Shadow) -->
+      <div class="sticky-viewport">
+
+        <!-- Subtle Darkroom Grid Overlay -->
+        <div class="darkroom-grid-overlay"></div>
+
+        <!-- Story Content Layer (Product Reveal Sections) -->
+        <div class="story-content-layer">
+
+          <!-- Slide 0: Hero Lockup -->
+          <div class="story-panel panel-hero active" id="panel-hero">
+            <div class="hero-top-lockup">
+              <p class="hero-tagline">PRODUCT BUILDER & EXPLORER — FACT BASE 2026</p>
+              <h1 class="hero-display-headline">
+                FROM FRICTION<br />
+                TO SOFTWARE.
+              </h1>
+              <p class="hero-sub-statement">
+                「なぜユーザーが困っているのか」「どこで行動が止まっているのか」——<br />
+                日常のコミュニケーション摩擦や事業のボトルネックを観察し、iOS開発・米国POD運営・Shopifyテーマ有償改善まで、技術と事実データで検証を繰り返す。
+              </p>
+            </div>
+
+            <!-- Hero Overlay Info Card (Bottom-Left) -->
+            <div class="hero-info-card">
+              <div class="hero-card-header">
+                <span class="hero-card-title">OBSERVATION & DATA</span>
+                <span class="hero-card-spec">M2 CHASSIS REVEAL</span>
+              </div>
+              <p class="hero-card-body">
+                当事者が発作時に説明できない摩擦（Anchor）や、広告費$597・78 ATC・購入0件の需要検証（Moftail）など、現実の摩擦と生データを中心に据えたプロダクト開発記録。
+              </p>
+              <div class="hero-action-group">
+                <button class="btn-pill-filled" id="btn-open-macbook">
+                  <span>EXPLORE THE PROJECTS ↓</span>
+                </button>
+                <span class="scroll-hint-micro">SCROLL DOWN TO REVEAL</span>
+              </div>
+            </div>
           </div>
-          <h2>HOW I WORK</h2>
-          <p>Problem framing / UX review / debugging / specs / testing ideas</p>
-        </article>
 
-        <article class="card talks-card pastel-green" id="method">
-          <div class="section-label">▤ My Method</div>
-          <p class="scribble">needs to be tested in the real world</p>
-          <ul class="talk-list">
-            <li>
-              <strong>Observe</strong>
-              <span>違和感を先に言語化する</span>
-            </li>
-            <li>
-              <strong>Frame</strong>
-              <span>複数視点で見直す</span>
-            </li>
-            <li>
-              <strong>Ship</strong>
-              <span>使える形へ落とす</span>
-            </li>
-          </ul>
-        </article>
+          <!-- Slide 1: Anchor Reveal -->
+          <div class="story-panel" id="panel-anchor">
+            <div class="reveal-grid">
+              
+              <!-- Left Column: Display Heading & Core Observation -->
+              <div class="reveal-col-left">
+                <span class="project-serial-label">01 / IOS PRODUCT</span>
+                <h2 class="reveal-heading">ANCHOR.</h2>
+                <p class="reveal-sublabel">SWIFTUI · CALM TECH · SSC 2026</p>
+                <hr class="hairline-divider" />
+                <div class="reveal-point-item">
+                  <span class="reveal-point-title">01 / OBSERVATION</span>
+                  <p>身近な家族の経験から、「助けが必要な瞬間に本人が説明しなければならない」問題を観察。パニック時の認知的負荷を削るため、平常時準備と確定UI（Shield / Reset）を設計。</p>
+                </div>
+              </div>
 
-        <section class="card ai-section" aria-labelledby="ai-title">
-          <div class="ai-header">
-            <div class="logo-pill ai-pill" id="ai-title">HOW I USE AI</div>
-            <p class="ai-lead">
-              複数のAIを使い分けながら、プロダクトを作る。<br />
-              「AIに任せる」ではなく、「AIに議論させて、自分で判断する」。
+              <!-- Center Column: 3D Product Spacer -->
+              <div class="reveal-col-center"></div>
+
+              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <div class="reveal-col-right">
+                <p class="reveal-body-conversational">
+                  A native iOS tool designed for moments of panic, communicating essential care when the user cannot speak.
+                </p>
+                <div class="reveal-points-list">
+                  <div class="reveal-point-item">
+                    <span class="reveal-point-title">02 / CRAFT & EVOLUTION</span>
+                    <p>Swift Student Challenge 2026提出後も開発を継続。平常時準備フェーズでOpenAI音声（gpt-4o-mini-tts）を生成・ローカル保存し、危機時は通信を介さず保存音声で即時再生するフェイルセーフ設計を実装（Release Candidate）。</p>
+                  </div>
+                </div>
+                <hr class="hairline-divider" />
+                <div class="spec-footnotes-grid">
+                  <span class="spec-footnote-item">* IOS / SWIFTUI</span>
+                  <span class="spec-footnote-item highlight-stat">* SSC 2026 SUBMISSION</span>
+                  <span class="spec-footnote-item highlight-stat">* OPENAI BUILD WEEK RC</span>
+                  <span class="spec-footnote-item">* OFFLINE FAILSAFE</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Slide 2A: Moftail Storefront & Setup -->
+          <div class="story-panel" id="panel-moftail-storefront">
+            <div class="reveal-grid">
+
+              <!-- Left Column: Display Heading & Storefront Pipeline -->
+              <div class="reveal-col-left">
+                <span class="project-serial-label">02 / US D2C BRAND</span>
+                <h2 class="reveal-heading">MOFTAIL.</h2>
+                <p class="reveal-sublabel">PHASE 01 · STOREFRONT & COMMERCE SETUP</p>
+                <hr class="hairline-divider" />
+                <div class="reveal-point-item">
+                  <span class="reveal-point-title">01 / STOREFRONT & PIPELINE</span>
+                  <p>Shopify × Printify（オンデマンド製造）で在庫ゼロのECブランドを立ち上げ。商品企画からテーマカスタマイズ、決済・受注連携パイプラインを迅速に構築。</p>
+                </div>
+              </div>
+
+              <!-- Center Column: 3D Product Spacer -->
+              <div class="reveal-col-center"></div>
+
+              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <div class="reveal-col-right">
+                <p class="reveal-body-conversational">
+                  Zero-inventory apparel brand built from scratch—establishing an agile, scalable US commerce pipeline.
+                </p>
+                <div class="reveal-points-list">
+                  <div class="reveal-point-item">
+                    <span class="reveal-point-title">INFRASTRUCTURE</span>
+                    <p>物理的な在庫リスクを抱えずに米国市場で仮説検証を行うため、Shopifyと分散型POD（Print-on-Demand）をAPI連携し、即座に販売可能な基盤を整備。</p>
+                  </div>
+                </div>
+                <hr class="hairline-divider" />
+                <div class="spec-footnotes-grid">
+                  <span class="spec-footnote-item">* SHOPIFY COMMERCE</span>
+                  <span class="spec-footnote-item">* ZERO INVENTORY SETUP</span>
+                  <span class="spec-footnote-item">* PRINTIFY INTEGRATION</span>
+                  <span class="spec-footnote-item">* US D2C PIPELINE</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Slide 2B: Moftail Meta Ads & Demand Verification -->
+          <div class="story-panel" id="panel-moftail-ads">
+            <div class="reveal-grid">
+
+              <!-- Left Column: Display Heading & Paid Verification -->
+              <div class="reveal-col-left">
+                <span class="project-serial-label">02 / US D2C BRAND</span>
+                <h2 class="reveal-heading">MOFTAIL.</h2>
+                <p class="reveal-sublabel">PHASE 02 · META ADS & DEMAND VERIFICATION</p>
+                <hr class="hairline-divider" />
+                <div class="reveal-point-item">
+                  <span class="reveal-point-title">02 / PAID DEMAND TEST</span>
+                  <p>自腹で広告費 <strong>$597.87</strong> を実費投じ、Meta広告を運用。27,396 Imp / 1,067 Clicks / 78 Add to Cart を計測し、リアルな顧客ファネルを追跡。</p>
+                </div>
+              </div>
+
+              <!-- Center Column: 3D Product Spacer -->
+              <div class="reveal-col-center"></div>
+
+              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <div class="reveal-col-right">
+                <p class="reveal-body-conversational">
+                  Verified market demand with $597.87 ad spend—turning cold analytics into an unfiltered PMF reality check.
+                </p>
+                <div class="reveal-points-list">
+                  <div class="reveal-point-item">
+                    <span class="reveal-point-title">THE COLD PMF GAP</span>
+                    <p>カート追加78件に対し購入0件。「上流の関心はあるが購買需要（PMF）は未証明」という冷徹な事実をデータから直視。憶測ではなくファクトに基づき次の一手を設計。</p>
+                  </div>
+                </div>
+                <hr class="hairline-divider" />
+                <div class="spec-footnotes-grid">
+                  <span class="spec-footnote-item highlight-stat">* $597.87 AD SPEND</span>
+                  <span class="spec-footnote-item highlight-stat">* 78 ADD TO CARTS</span>
+                  <span class="spec-footnote-item highlight-stat">* 0 PURCHASES (PMF GAP)</span>
+                  <span class="spec-footnote-item">* 27,396 IMPRESSIONS</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Slide 2C: Moftail Supply POD & Birding Pivot -->
+          <div class="story-panel" id="panel-moftail-pod">
+            <div class="reveal-grid">
+
+              <!-- Left Column: Display Heading & Supply Chain -->
+              <div class="reveal-col-left">
+                <span class="project-serial-label">02 / US D2C BRAND</span>
+                <h2 class="reveal-heading">MOFTAIL.</h2>
+                <p class="reveal-sublabel">PHASE 03 · SUPPLY POD & BIRDING PIVOT</p>
+                <hr class="hairline-divider" />
+                <div class="reveal-point-item">
+                  <span class="reveal-point-title">03 / SUPPLY CHAIN & PIVOT</span>
+                  <p>Printifyのオンデマンド製造網を活用。作り手のエゴを捨て、米国約9,630万人の野鳥愛好家（Birding）カルチャー特化へ市場・商品設計をピボット。</p>
+                </div>
+              </div>
+
+              <!-- Center Column: 3D Product Spacer -->
+              <div class="reveal-col-center"></div>
+
+              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <div class="reveal-col-right">
+                <p class="reveal-body-conversational">
+                  Pivoting toward an ultra-high affinity culture—matching on-demand fulfillment with passionate niche communities.
+                </p>
+                <div class="reveal-points-list">
+                  <div class="reveal-point-item">
+                    <span class="reveal-point-title">MARKET RE-ENGINEERING</span>
+                    <p>汎用アパレルから「野鳥観察者（Birders）の生活文脈」へポジショニングを転換。受注生産による身軽さを武器に、熱狂度の高い特定セグメントへ適合。</p>
+                  </div>
+                </div>
+                <hr class="hairline-divider" />
+                <div class="spec-footnotes-grid">
+                  <span class="spec-footnote-item highlight-stat">* 96.3M US BIRDERS</span>
+                  <span class="spec-footnote-item">* PRINTIFY POD NETWORK</span>
+                  <span class="spec-footnote-item">* BIRDING CULTURE PIVOT</span>
+                  <span class="spec-footnote-item">* DATA-DRIVEN STRATEGY</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Slide 3: Shopify Theme Reveal -->
+          <div class="story-panel" id="panel-shopify-theme">
+            <div class="reveal-grid">
+
+              <!-- Left Column: Display Heading & Investigation -->
+              <div class="reveal-col-left">
+                <span class="project-serial-label">03 / THEME ENGINEERING</span>
+                <h2 class="reveal-heading">SHOPIFY THEME.</h2>
+                <p class="reveal-sublabel">PAID FREELANCE TRIAL · $30/H · 14 TASKS</p>
+                <hr class="hairline-divider" />
+                <div class="reveal-point-item">
+                  <span class="reveal-point-title">01 / INVESTIGATION</span>
+                  <p>Moftail運営中、商用テーマのバリエーション変更時に価格・カート不一致が発生する不具合を独自検証。Liquid・CSS・フロントエンド状態の根本原因を特定。</p>
+                </div>
+              </div>
+
+              <!-- Center Column: 3D Product Spacer -->
+              <div class="reveal-col-center"></div>
+
+              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <div class="reveal-col-right">
+                <p class="reveal-body-conversational">
+                  Independent triage of commercial Shopify theme flaws led to an invitation for a $30/h paid trial.
+                </p>
+                <div class="reveal-points-list">
+                  <div class="reveal-point-item">
+                    <span class="reveal-point-title">02 / PAID FREELANCE DELIVERY</span>
+                    <p>再現手順・原因仮説・修正案を英語技術文書で納品し、開発元Product Managerから高評価を獲得。直接スカウトを受け時給$30の有償トライアルに参加。約1週間（19時間20分）で14タスクを完遂し、コードとNotion検証文書を納品。</p>
+                  </div>
+                </div>
+                <hr class="hairline-divider" />
+                <div class="spec-footnotes-grid">
+                  <span class="spec-footnote-item highlight-stat">* $30/H PAID FREELANCE</span>
+                  <span class="spec-footnote-item highlight-stat">* 14 TASKS COMPLETED</span>
+                  <span class="spec-footnote-item highlight-stat">* 19H 20M LOGGED</span>
+                  <span class="spec-footnote-item">* ENGLISH TECH REPORT</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Real Three.js WebGL 3D Canvas Stage -->
+        <div class="three-stage" id="three-stage">
+          <canvas id="three-canvas"></canvas>
+          <div class="screen-floating-badge" id="screen-badge">
+            <span class="badge-dot"></span>
+            <span class="badge-text" id="badge-text">M2 MACBOOK AIR 3D</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Section 2: Method & Mindset (Walnut Shadow Full-Bleed 3-Card Grid) -->
+    <section class="section-how-i-build" id="how-i-work">
+      <div class="container-narrow">
+
+        <span class="section-label-micro">MINDSET & PROCESS</span>
+        <h2 class="section-editorial-title">TURNING FRICTION INTO SOFTWARE.</h2>
+        <p class="section-editorial-desc">
+          指示されたコードを書くだけではなく、日常や事業の「摩擦」を観察し、問いを立て、小さく作って実環境で検証し、事実データから学ぶサイクルを一貫して回してきました。
+        </p>
+
+        <div class="method-cards-grid">
+
+          <div class="method-card">
+            <div class="card-step-num">01</div>
+            <div class="card-step-badge">OBSERVATION</div>
+            <h3 class="card-title-upper">日常や事業の「摩擦」を見つける</h3>
+            <p class="card-desc-mixed">
+              「なぜ助けを呼べないのか」「なぜサポート回答と実際の挙動が食い違うのか」。当事者の切実なペインや業務上の違和感から、まだ言語化されていない課題の種を観察します。
             </p>
-          </div>
-          <div class="ai-phase-grid">
-            <article class="ai-phase-card">
-              <span class="ai-phase-number">01</span>
-              <h3>RESEARCH</h3>
-              <strong>問いを広げる</strong>
-              <p>
-                3つのAIに同じ問いを投げ、出力の違いを見る。
-              </p>
-              <code>// 現状はChatGPTが多い</code>
-            </article>
-            <article class="ai-phase-card">
-              <span class="ai-phase-number">02</span>
-              <h3>DEBATE</h3>
-              <strong>AIに議論させる</strong>
-              <p>
-                複数のAIに意見を出させ、判定者として見る。一つのモデルだけに依存しない。
-              </p>
-            </article>
-            <article class="ai-phase-card">
-              <span class="ai-phase-number">03</span>
-              <h3>DESIGN</h3>
-              <strong>UIから考える</strong>
-              <p>
-                画面を先に作り、流れと違和感を見る。StitchでUI案を磨く。
-              </p>
-            </article>
-            <article class="ai-phase-card">
-              <span class="ai-phase-number">04</span>
-              <h3>SHIP</h3>
-              <strong>仕様を渡して実装する</strong>
-              <p>
-                Claude Code / Codex に渡す前に、仕様MDとagent制御MDを用意する。
-              </p>
-              <code>// バイブコーディングを避けるための方法</code>
-            </article>
-          </div>
-          <footer class="ai-footer">
-            <p>AIに答えを出させるんじゃなくて、AIに議論させて、自分で判断する。</p>
-            <span>— Don't let AI answer. Make AI debate. You judge. —</span>
-          </footer>
-        </section>
-      </section>
-
-      <section class="card projects-section pastel-lavender" id="work">
-        <div class="section-label label-pill">▣ Product-minded Work</div>
-        <div class="project-layout">
-          <button class="project-photo" type="button" data-case="moftail">
-            <img
-              src="./assets/365Zen-Image.jpg"
-              alt="Moftail Still Fox Tee visual"
-            />
-            <span>
-              <strong>Moftail Product Lab</strong>
-              EC・広告・UX・制作フローを、実際のブランド運営で検証しています。
-            </span>
-          </button>
-          <div class="project-stack">
-            <div class="terminal-card">
-              <div class="terminal-dots" aria-hidden="true">
-                <span></span><span></span><span></span>
-              </div>
-              <p class="terminal-green">&gt; Observing real-world friction...</p>
-              <p class="terminal-green">&gt; Framing it into product problems...</p>
-              <p>
-                I define the question, review the output, document decisions, and turn ideas into working product direction.<span class="cursor"></span>
-              </p>
-              <div class="mini-actions">
-                <button type="button" data-case="anchor">Anchor</button>
-                <button type="button" data-case="shopify">Shopify</button>
-                <button type="button" data-case="stockwise">StockWise</button>
-                <button type="button" data-case="zen">365 Zen</button>
-              </div>
-            </div>
-            <div class="work-highlight-grid">
-              <button class="work-highlight" type="button" data-case="shopify">
-                <span>Shopify Theme Debugging</span>
-                <strong>“Something feels broken” → reproducible issue</strong>
-                <p>
-                  商品ページの価格・サイズ選択の挙動を調査し、再現手順、期待値、実際の挙動、原因仮説をドキュメント化。
-                </p>
-              </button>
-              <button class="work-highlight" type="button" data-case="stockwise">
-                <span>StockWise</span>
-                <strong>FAQ-style knowledge search app</strong>
-                <p>
-                  PER、PBR、NISA、配当利回りなどをすぐ調べられる検索型FAQアプリ。React + TypeScriptで検索UIとFAQ構造を設計。
-                </p>
-              </button>
+            <div class="card-action-citation">
+              <span class="citation-lead">IN ACTION:</span> ANCHORの認知的負荷観察、商用Shopifyテーマの価格不整合発見
             </div>
           </div>
+
+          <div class="method-card">
+            <div class="card-step-num">02</div>
+            <div class="card-step-badge">FRAMING & BUILD</div>
+            <h3 class="card-title-upper">問いを構造化し、最適な形に落とす</h3>
+            <p class="card-desc-mixed">
+              「誰が・どの瞬間に困り・なぜ不十分か」を言語化。SwiftUI（Anchor）、ShopifyテーマLiquid、React/TypeScript（Stockwise）など課題に応じた技術を選択し素早く具現化。
+            </p>
+            <div class="card-action-citation">
+              <span class="citation-lead">IN ACTION:</span> ANCHORの確定UI設計、STOCKWISEのUIと検索ロジック分離
+            </div>
+          </div>
+
+          <div class="method-card">
+            <div class="card-step-num">03</div>
+            <div class="card-step-badge">TEST & LEARN</div>
+            <h3 class="card-title-upper">実環境で試し、事実データから学ぶ</h3>
+            <p class="card-desc-mixed">
+              実機、Shopify実店舗、広告実費、海外開発元との実務など、リアルな環境で検証。購入0件という結果も直視し、ファネルに分解して次の仮説へ繋げます。
+            </p>
+            <div class="card-action-citation">
+              <span class="citation-lead">IN ACTION:</span> META広告実費$597運用のファネル分析と野鳥愛好家（BIRDING）市場再設計
+            </div>
+          </div>
+
         </div>
-      </section>
 
-      <section class="skills-band" id="skills">
-        <article class="card skill-card">
-          <span>Product Thinking</span>
-          <strong>課題分解 / MVP設計 / 情報設計 / UXレビュー / 仮説検証</strong>
-        </article>
-        <article class="card skill-card">
-          <span>Frontend</span>
-          <strong>HTML / CSS / JavaScript / React / TypeScript / SwiftUI</strong>
-        </article>
-        <article class="card skill-card">
-          <span>Workflow</span>
-          <strong>仕様書作成 / デバッグ補助 / 調査メモ / レビュー / 検証計画</strong>
-        </article>
-        <article class="card skill-card">
-          <span>Commerce & Ops</span>
-          <strong>Shopify / Liquid調査 / Printify / Meta Ads / PDP改善 / FAQ設計</strong>
-        </article>
-        <article class="card skill-card">
-          <span>Knowledge UX</span>
-          <strong>FAQ構造化 / 検索導線 / 情報整理 / ユーザー質問の分解</strong>
-        </article>
-      </section>
+      </div>
+    </section>
 
-      <section class="contact-card card" id="contact">
-        <p class="sticker">Let's build!</p>
-        <h2>
-          人が情報に迷う瞬間を減らすために、検索・UX・情報設計を組み合わせたプロダクトづくりに挑戦したいです。
-        </h2>
-        <div class="contact-actions">
-          <a class="button dark" href="mailto:ryu.nakamura.dev@gmail.com"
-            >Mail app</a
-          >
-          <button
-            class="button light"
-            type="button"
-            data-copy-email="ryu.nakamura.dev@gmail.com"
-          >
-            Copy email
-          </button>
-          <a
-            class="button light"
-            href="https://github.com/ryuusuraimu"
-            target="_blank"
-            rel="noreferrer"
-            >GitHub</a
-          >
+    <!-- Section 3: About Ryunosuke (Museum Artifact Dossier) -->
+    <section class="section-about" id="about">
+      <div class="container-narrow">
+
+        <div class="about-dossier-card">
+          <div class="about-flex">
+
+            <div class="about-photo-wrap">
+              <div class="photo-editorial-frame">
+                <img src="./assets/ryunosuke-profile.png" alt="Ryunosuke Nakamura" />
+              </div>
+              <p class="photo-serial-caption">RYUNOSUKE NAKAMURA · SPEC 2026</p>
+            </div>
+
+            <div class="about-text-wrap">
+              <h2 class="about-name-display">中邨 隆之介 / RYUNOSUKE</h2>
+              <p class="about-role-statement">PRODUCT BUILDER / ENGINEER / FUTURE PRODUCT MANAGER</p>
+
+              <p class="about-bio-mixed">
+                大阪電気通信大学で情報工学を学びながら、iOSアプリ「Anchor」、米国向けPODブランド「Moftail」、投資学習Webアプリ「Stockwise」などを個人で開発・運営しています。<br /><br />
+                Moftailの運営中には、利用していたShopifyテーマの不具合を独自に調査し、再現手順・原因仮説・修正案を英語ドキュメントで開発元へ共有。その調査をProduct Managerから高く評価され、時給$30の有償フリーランストライアルに参画し、約1週間（19時間20分）で14タスクを完遂・納品しました。<br /><br />
+                単に指示されたコードを書くのではなく、「なぜユーザーが困っているのか」「どこで行動が止まっているのか」を観察し、仮説を立て、小さく実装・検証して結果を次の改善へ繋げることを大切にしています。
+              </p>
+
+              <div class="about-facts-grid">
+                <div class="fact-item">
+                  <span class="fact-label-upper">EDUCATION</span>
+                  <span class="fact-val-mixed">大阪電気通信大学 情報工学科</span>
+                </div>
+                <div class="fact-item">
+                  <span class="fact-label-upper">IOS / CALM TECH</span>
+                  <span class="fact-val-mixed">Anchor (SSC 2026 / OpenAI RC)</span>
+                </div>
+                <div class="fact-item">
+                  <span class="fact-label-upper">COMMERCE & DATA</span>
+                  <span class="fact-val-mixed">Moftail ($597.87 Ad Test / Birding)</span>
+                </div>
+                <div class="fact-item">
+                  <span class="fact-label-upper">PAID TRIAL</span>
+                  <span class="fact-val-mixed">Shopify Theme ($30/h · 14 Tasks)</span>
+                </div>
+                <div class="fact-item">
+                  <span class="fact-label-upper">WEB APPLICATION</span>
+                  <span class="fact-val-mixed">Stockwise (React / TypeScript)</span>
+                </div>
+                <div class="fact-item">
+                  <span class="fact-label-upper">COMMUNICATION</span>
+                  <span class="fact-val-mixed">English Technical Documentation</span>
+                </div>
+              </div>
+
+              <div class="about-actions">
+                <a href="mailto:ryu.nakamura.dev@gmail.com" class="btn-ghost-pill">SAY HELLO →</a>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </section>
-    </main>
 
-    <dialog class="case-dialog" id="case-dialog">
-      <button class="dialog-close" type="button" aria-label="閉じる">×</button>
-      <figure class="dialog-banner" id="dialog-banner">
-        <img id="dialog-image" src="" alt="" />
-      </figure>
-      <p class="kicker" id="dialog-kicker"></p>
-      <div class="dialog-title-row">
-        <h2 id="dialog-title"></h2>
-        <a id="dialog-action-link" href="#" target="_blank" rel="noreferrer" class="button light dialog-action-button" style="display: none;">
-          <img id="dialog-action-image" src="" alt="" aria-hidden="true" style="display: none;" />
-          <svg id="dialog-action-svg" viewBox="0 0 98 96" aria-hidden="true" style="display: none;">
-            <path fill="currentColor" d="M49 0C21.9 0 0 22.1 0 49.3c0 21.8 14 40.2 33.4 46.8 2.4.4 3.3-1.1 3.3-2.4v-8.4c-13.6 3-16.5-6.6-16.5-6.6-2.2-5.7-5.4-7.2-5.4-7.2-4.5-3.1.3-3 .3-3 4.9.3 7.5 5.1 7.5 5.1 4.4 7.6 11.5 5.4 14.3 4.1.4-3.2 1.7-5.4 3.1-6.6-10.9-1.2-22.3-5.5-22.3-24.3 0-5.4 1.9-9.8 5-13.2-.5-1.2-2.2-6.3.5-13 0 0 4.1-1.3 13.5 5 3.9-1.1 8.1-1.6 12.3-1.6s8.4.5 12.3 1.6c9.4-6.3 13.5-5 13.5-5 2.7 6.7 1 11.8.5 13 3.1 3.4 5 7.8 5 13.2 0 18.9-11.5 23-22.4 24.2 1.8 1.5 3.3 4.5 3.3 9.1v13.5c0 1.3.9 2.8 3.4 2.4C84 89.5 98 71.1 98 49.3 98 22.1 76.1 0 49 0Z" />
-          </svg>
-          <span id="dialog-action-text"></span>
-        </a>
       </div>
-      <p class="dialog-summary" id="dialog-summary"></p>
-      <div class="dialog-meta-grid" aria-label="Role decision and output">
-        <section>
-          <h3>Role</h3>
-          <p id="dialog-role"></p>
-        </section>
-        <section>
-          <h3>Decision</h3>
-          <p id="dialog-decision"></p>
-        </section>
-        <section>
-          <h3>Output</h3>
-          <p id="dialog-output"></p>
-        </section>
-      </div>
-      <div class="dialog-tools" aria-label="Tools used">
-        <h3>Tools</h3>
-        <div id="dialog-tools"></div>
-      </div>
-      <div class="dialog-grid">
-        <section>
-          <h3>Problem</h3>
-          <p id="dialog-problem"></p>
-        </section>
-        <section>
-          <h3>Process</h3>
-          <ul id="dialog-process"></ul>
-        </section>
-        <section>
-          <h3>Workflow</h3>
-          <ul id="dialog-ai"></ul>
-        </section>
-        <section>
-          <h3>Learning</h3>
-          <p id="dialog-learning"></p>
-        </section>
-      </div>
-    </dialog>
+    </section>
 
-    <script src="./script.js?v=product24"></script>
-  </body>
+    <!-- Site Footer: Minimal Editorial Closure -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-statement">
+          <h2 class="footer-callout-heading">READY TO EXPLORE?</h2>
+          <a href="mailto:ryu.nakamura.dev@gmail.com" class="btn-pill-filled">
+            <span>RYU.NAKAMURA.DEV@GMAIL.COM</span>
+          </a>
+        </div>
+        <div class="footer-bottom-bar">
+          <p>© 2026 RYUNOSUKE NAKAMURA. ALL FACTS VERIFIED.</p>
+          <a href="#panel-hero" class="footer-link-underline">BACK TO TOP ↑</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="./script.js?v=oryzo-darkroom-v33"></script>
+</body>
+
 </html>

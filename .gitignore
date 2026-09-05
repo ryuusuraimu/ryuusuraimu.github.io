@@ -1,0 +1,21 @@
+.DS_Store
+assets/model_macbook/
+assets/macbook_air.usda
+assets/macbook.fbx
+assets/macbook_air_m2_midnight.usdz
+assets/usdz_extracted/
+assets/metal1/
+assets/textures/
+assets/1712404-01.jpeg
+assets/Texture For Key.jpg
+assets/albedo.jpg
+assets/colorRGB.jpg
+assets/macD1.png
+assets/metalness.jpg
+assets/normal.jpg
+*.blend
+*.usdc
+!assets/macbook_air_m2.obj
+!assets/macbook_air_m2.mtl
+
+
