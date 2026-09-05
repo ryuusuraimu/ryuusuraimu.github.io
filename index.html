@@ -28,7 +28,7 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/fflate.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FBXLoader.js"></script>
 
-  <link rel="stylesheet" href="./styles.css?v=oryzo-darkroom-v17" />
+  <link rel="stylesheet" href="./styles.css?v=oryzo-darkroom-v18" />
 </head>
 
 <body>
@@ -107,322 +107,274 @@
             </div>
           </div>
 
-          <!-- Slide 1: Anchor Reveal -->
+          <!-- Slide 1: Anchor Reveal (Single-Side Storytelling) -->
           <div class="story-panel" id="panel-anchor">
-            <div class="reveal-grid">
-              
-              <!-- Left Column: Display Heading & Problem Narrative -->
-              <div class="reveal-col-left">
-                <span class="project-serial-label">01 / ANCHOR</span>
-                <h2 class="reveal-heading">声が必要な瞬間に、<br />声を失ってしまったら？</h2>
-                <p class="reveal-sublabel">SWIFT 6 · SWIFTUI · SHORTCUTS · OFFLINE QR · SSC 2026</p>
-                <hr class="hairline-divider" />
-                <div class="reveal-narrative-block">
-                  <p class="reveal-story-lead">
-                    パニックの最中では、言葉が出ない。音が強く感じる。簡単な判断さえ難しくなる。
-                  </p>
-                  <p class="reveal-story-text">
-                    そして周りにいる人も、<strong>「助けたい。でも、何をすればいいのか分からない。」</strong>そんな状態になることがある。<br />
-                    身近な人の経験を聞く中で、僕が強く感じた問題は、発作そのものだけではなかった。
-                  </p>
-                  <blockquote class="reveal-punchline">
-                    必要なことを、必要な瞬間に伝えられない。<br />その“沈黙”だった。
-                  </blockquote>
+            <div class="story-panel-layout">
+              <div class="story-narrative-col">
+                <span class="story-serial-badge">01 / ANCHOR</span>
+                <h2 class="story-main-heading">声が必要な瞬間に、<br />声を失ってしまったら？</h2>
+                <p class="story-meta-sublabel">PREPARED BEFORE CRISIS · COGNITIVE ACCESSIBILITY</p>
+                <hr class="story-divider" />
+                <p class="story-narrative-lead">
+                  パニックの最中では、言葉が出ない。音が強く感じる。簡単な判断さえ難しくなる。
+                </p>
+                <p class="story-narrative-body">
+                  そして周りにいる人も、<strong>「助けたい。でも、何をすればいいのか分からない。」</strong>そんな状態になることがある。<br />
+                  身近な人の経験を聞く中で、僕が強く感じた問題は、発作そのものだけではありませんでした。
+                </p>
+                <blockquote class="story-quote-punchline">
+                  必要なことを、必要な瞬間に伝えられない。<br />その“沈黙”だった。
+                </blockquote>
+                <p class="story-narrative-body">
+                  発作が起きてから本人に頑張って操作してもらうのではなく、<strong>何も起きていない時に、未来の自分のために準備できないか。</strong>その答えとして作ったのが、<strong>Anchor</strong>。<br /><br />
+                  危機時には、<strong>Shield</strong>を起動する。今、何が起きているか。何をしてほしいか。何をしてほしくないか。会話をしなくても必要を伝えられるように、ワンタップで読める高コントラストの指示に変える。便利さではなく、その瞬間に使えることを設計した。
+                </p>
+                
+                <div class="apple-hint-group">
+                  <details class="apple-hint-pill">
+                    <summary>
+                      <span class="hint-pill-badge">HINT</span>
+                      <span class="hint-pill-title">Cognitive Accessibility</span>
+                      <span class="hint-pill-icon">＋</span>
+                    </summary>
+                    <div class="hint-pill-drawer">
+                      強いストレス下では、読む・判断する・細かく操作するといった能力が大きく落ちることがある。Anchorでは、それを例外ではなく前提条件としてUIを設計している。
+                    </div>
+                  </details>
+                  <details class="apple-hint-pill">
+                    <summary>
+                      <span class="hint-pill-badge">HINT</span>
+                      <span class="hint-pill-title">Offline First</span>
+                      <span class="hint-pill-icon">＋</span>
+                    </summary>
+                    <div class="hint-pill-drawer">
+                      主要機能をネットワークに依存させない設計。QRにはリンクではなく情報そのものを持たせることで、通信できない状態でも支援情報を共有できる。
+                    </div>
+                  </details>
+                </div>
+
+                <div class="story-tech-footnotes">
+                  <span class="story-tech-tag">* SWIFT 6</span>
+                  <span class="story-tech-tag">* SWIFTUI</span>
+                  <span class="story-tech-tag">* SHORTCUTS</span>
+                  <span class="story-tech-tag highlight-stat">* OFFLINE QR</span>
+                  <span class="story-tech-tag highlight-stat">* SWIFT STUDENT CHALLENGE 2026</span>
                 </div>
               </div>
-
-              <!-- Center Column: 3D Product Spacer -->
-              <div class="reveal-col-center"></div>
-
-              <!-- Right Column: Preparedness-first & Shield UI Solution -->
-              <div class="reveal-col-right">
-                <div class="reveal-narrative-block">
-                  <div class="reveal-highlight-box">
-                    <span class="highlight-box-title">PREPARED BEFORE CRISIS</span>
-                    <p>発作が起きてから本人に頑張って操作してもらうのではなく、<strong>何も起きていない時に、未来の自分のために準備できないか。</strong>その答えとして作ったのが、<strong>Anchor</strong>。</p>
-                  </div>
-                  <p class="reveal-story-text">
-                    危機時には、<strong>Shield</strong>を起動する。そこに表示されるのは、今、何が起きているのか。何をしてほしいのか。何をしてほしくないのか。複雑な状況を、短く、読める指示に変える。会話をしなくても、必要を伝えられるようにする。
-                  </p>
-                  <div class="reveal-core-design">
-                    <p class="core-design-quote"><strong>危機時に、考えなくても使えること。</strong><br />ワンタップShield / 高コントラスト大文字 / オフラインQR / 保存音声再生。便利さではなく、その瞬間に使えることを設計した。</p>
-                  </div>
-                  <div class="hint-badge-group">
-                    <div class="hint-badge">
-                      <span class="hint-badge-header">HINT — Cognitive Accessibility</span>
-                      <p class="hint-badge-desc">強いストレス下では、読む・判断する・細かく操作するといった能力が大きく落ちることがある。Anchorでは、それを例外ではなく前提条件としてUIを設計している。</p>
-                    </div>
-                    <div class="hint-badge">
-                      <span class="hint-badge-header">HINT — Offline First</span>
-                      <p class="hint-badge-desc">主要機能をネットワークに依存させない設計。QRにはリンクではなく情報そのものを持たせることで、通信できない状態でも支援情報を共有できる。</p>
-                    </div>
-                  </div>
-                  <hr class="hairline-divider" />
-                  <div class="spec-footnotes-grid">
-                    <span class="spec-footnote-item">* SWIFT 6</span>
-                    <span class="spec-footnote-item">* SWIFTUI</span>
-                    <span class="spec-footnote-item">* SHORTCUTS</span>
-                    <span class="spec-footnote-item highlight-stat">* OFFLINE QR</span>
-                    <span class="spec-footnote-item highlight-stat">* SWIFT STUDENT CHALLENGE 2026</span>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
 
-          <!-- Slide 2A: Moftail Storefront & Market Reality -->
+          <!-- Slide 2A: Moftail Storefront & Market Reality (Single-Side Storytelling) -->
           <div class="story-panel" id="panel-moftail-storefront">
-            <div class="reveal-grid">
+            <div class="story-panel-layout">
+              <div class="story-narrative-col">
+                <span class="story-serial-badge">02 / MOFTAIL</span>
+                <h2 class="story-main-heading">「良い」と思ったものは、<br />本当に人を動かすのか。</h2>
+                <p class="story-meta-sublabel">PHASE 01 · US D2C BRAND & MARKET TESTING</p>
+                <hr class="story-divider" />
+                <p class="story-narrative-lead">
+                  Moftailは、米国市場に向けて実際に運営しているPODブランド。
+                </p>
+                <p class="story-narrative-body">
+                  Shopifyでストアを作る。商品を作る。広告を出す。ユーザーに見てもらう。そして、
+                </p>
+                <blockquote class="story-quote-punchline">
+                  数字で答えをもらう。
+                </blockquote>
+                <p class="story-narrative-body">
+                  最初に学んだのは、<strong>自分の感覚と、市場の反応は同じではない</strong>ということだった。<br /><br />
+                  だからMoftailでは、「どれが一番綺麗か」ではなく、<strong>「どれが、人を動かしたか」</strong>で判断するようになった。自らの感覚を疑い、マーケットの冷徹な事実を直視するアプローチへの転換。
+                </p>
 
-              <!-- Left Column: Display Heading & Storefront Reality -->
-              <div class="reveal-col-left">
-                <span class="project-serial-label">02 / MOFTAIL</span>
-                <h2 class="reveal-heading">「良い」と思ったものは、<br />本当に人を動かすのか。</h2>
-                <p class="reveal-sublabel">PHASE 01 · US D2C BRAND & MARKET TESTING</p>
-                <hr class="hairline-divider" />
-                <div class="reveal-narrative-block">
-                  <p class="reveal-story-lead">
-                    Moftailは、米国市場に向けて実際に運営しているPODブランド。
-                  </p>
-                  <p class="reveal-story-text">
-                    Shopifyでストアを作る。商品を作る。広告を出す。ユーザーに見てもらう。そして、
-                  </p>
-                  <blockquote class="reveal-punchline">
-                    数字で答えをもらう。
-                  </blockquote>
+                <div class="apple-hint-group">
+                  <details class="apple-hint-pill">
+                    <summary>
+                      <span class="hint-pill-badge">HINT</span>
+                      <span class="hint-pill-title">POD (Print on Demand)</span>
+                      <span class="hint-pill-icon">＋</span>
+                    </summary>
+                    <div class="hint-pill-drawer">
+                      注文後に商品を製造する仕組み。在庫リスクをゼロに抑えながら、市場でリアルタイムに商品仮説を検証できる。
+                    </div>
+                  </details>
+                </div>
+
+                <div class="story-tech-footnotes">
+                  <span class="story-tech-tag">* SHOPIFY COMMERCE</span>
+                  <span class="story-tech-tag highlight-stat">* ZERO INVENTORY POD</span>
+                  <span class="story-tech-tag">* US D2C PIPELINE</span>
+                  <span class="story-tech-tag">* MARKET VALIDATION</span>
                 </div>
               </div>
-
-              <!-- Center Column: 3D Product Spacer -->
-              <div class="reveal-col-center"></div>
-
-              <!-- Right Column: Sensation vs Action -->
-              <div class="reveal-col-right">
-                <div class="reveal-narrative-block">
-                  <div class="reveal-highlight-box">
-                    <span class="highlight-box-title">MARKET OVER SENSATION</span>
-                    <p>最初に学んだのは、<strong>自分の感覚と、市場の反応は同じではない</strong>ということだった。</p>
-                  </div>
-                  <p class="reveal-story-text">
-                    だからMoftailでは、「どれが一番綺麗か」ではなく、
-                  </p>
-                  <blockquote class="reveal-punchline">
-                    「どれが、人を動かしたか」
-                  </blockquote>
-                  <p class="reveal-story-text">
-                    で判断するようになった。自らの感覚を疑い、マーケットの冷徹な事実を直視するアプローチへの転換。
-                  </p>
-                  <hr class="hairline-divider" />
-                  <div class="spec-footnotes-grid">
-                    <span class="spec-footnote-item">* SHOPIFY COMMERCE</span>
-                    <span class="spec-footnote-item highlight-stat">* ZERO INVENTORY POD</span>
-                    <span class="spec-footnote-item">* US D2C PIPELINE</span>
-                    <span class="spec-footnote-item">* MARKET VALIDATION</span>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
 
-          <!-- Slide 2B: Moftail Meta Ads & A/B Testing Data -->
+          <!-- Slide 2B: Moftail Meta Ads & A/B Testing Data (Single-Side Storytelling) -->
           <div class="story-panel" id="panel-moftail-ads">
-            <div class="reveal-grid">
+            <div class="story-panel-layout">
+              <div class="story-narrative-col">
+                <span class="story-serial-badge">02 / MOFTAIL</span>
+                <h2 class="story-main-heading">One image.<br />One variable.<br />Real response.</h2>
+                <p class="story-meta-sublabel">PHASE 02 · META ADS A/B TESTING & METRICS</p>
+                <hr class="story-divider" />
+                <p class="story-narrative-lead">
+                  モックアップテストでは、コピーやリンクなどの条件を揃え、変える要素を一つに絞る。
+                </p>
+                <p class="story-narrative-body">
+                  そのうえで広告を出し、実際の反応を見る。Cycle 2では明確な差が出た：
+                </p>
 
-              <!-- Left Column: Display Heading & Test Condition -->
-              <div class="reveal-col-left">
-                <span class="project-serial-label">02 / MOFTAIL</span>
-                <h2 class="reveal-heading">One image.<br />One variable.<br />Real response.</h2>
-                <p class="reveal-sublabel">PHASE 02 · META ADS A/B TESTING & METRICS</p>
-                <hr class="hairline-divider" />
-                <div class="reveal-narrative-block">
-                  <p class="reveal-story-lead">
-                    モックアップテストでは、コピーやリンクなどの条件を揃え、変える要素を一つに絞る。
-                  </p>
-                  <p class="reveal-story-text">
-                    そのうえで広告を出し、実際の反応を見る。Cycle 2では明確な差が出た：
-                  </p>
-                  <div class="reveal-data-card">
-                    <div class="data-metric-row">
-                      <span class="metric-name">Wood (Natural Ash)</span>
-                      <span class="metric-val highlight-win">CTR 5.26% ★ PRIMARY</span>
-                    </div>
-                    <div class="data-metric-row">
-                      <span class="metric-name">Matcha (Organic Green)</span>
-                      <span class="metric-val">CTR 4.21% (次点)</span>
-                    </div>
-                    <div class="data-metric-row">
-                      <span class="metric-name">Cork (Raw Texture)</span>
-                      <span class="metric-val text-muted">CTR 2.75% (優先度下)</span>
-                    </div>
+                <div class="story-metric-board">
+                  <div class="story-metric-item">
+                    <span class="story-metric-label">Wood (Natural Ash Finish)</span>
+                    <span class="story-metric-value winner">CTR 5.26% ★ PRIMARY</span>
+                  </div>
+                  <div class="story-metric-item">
+                    <span class="story-metric-label">Matcha (Organic Green Texture)</span>
+                    <span class="story-metric-value">CTR 4.21% (次点)</span>
+                  </div>
+                  <div class="story-metric-item">
+                    <span class="story-metric-label">Cork (Raw Surface Material)</span>
+                    <span class="story-metric-value text-muted">CTR 2.75% (優先度下)</span>
                   </div>
                 </div>
-              </div>
 
-              <!-- Center Column: 3D Product Spacer -->
-              <div class="reveal-col-center"></div>
+                <blockquote class="story-quote-punchline">
+                  感覚ではなく、行動に差が出た。
+                </blockquote>
+                <p class="story-narrative-body">
+                  Woodを主軸にする。Matchaを次点にする。Corkの優先順位を下げる。数字を見て、次の判断を変えた。
+                </p>
 
-              <!-- Right Column: Decision & Action -->
-              <div class="reveal-col-right">
-                <div class="reveal-narrative-block">
-                  <blockquote class="reveal-punchline">
-                    感覚ではなく、行動に差が出た。
-                  </blockquote>
-                  <p class="reveal-story-text">
-                    Woodを主軸にする。Matchaを次点にする。Corkの優先順位を下げる。数字を見て、次の判断を変えた。
-                  </p>
-                  <div class="hint-badge-group">
-                    <div class="hint-badge">
-                      <span class="hint-badge-header">HINT — CTR</span>
-                      <p class="hint-badge-desc">Click Through Rate。広告が表示された回数に対して、どれだけクリックされたかを見る指標。</p>
+                <div class="apple-hint-group">
+                  <details class="apple-hint-pill">
+                    <summary>
+                      <span class="hint-pill-badge">HINT</span>
+                      <span class="hint-pill-title">CTR (Click-Through Rate)</span>
+                      <span class="hint-pill-icon">＋</span>
+                    </summary>
+                    <div class="hint-pill-drawer">
+                      クリック率。広告が表示された回数に対して、どれだけクリックされたかを見る指標。
                     </div>
-                    <div class="hint-badge">
-                      <span class="hint-badge-header">HINT — Add to Cart</span>
-                      <p class="hint-badge-desc">商品をカートへ追加した行動。クリックの次に、「実際に欲しいと思われたか」を見るための重要なシグナル。</p>
+                  </details>
+                  <details class="apple-hint-pill">
+                    <summary>
+                      <span class="hint-pill-badge">HINT</span>
+                      <span class="hint-pill-title">Add to Cart</span>
+                      <span class="hint-pill-icon">＋</span>
+                    </summary>
+                    <div class="hint-pill-drawer">
+                      商品をカートへ追加した行動。クリックの次に、「実際に欲しいと思われたか」を見るための重要シグナル。
                     </div>
-                  </div>
-                  <hr class="hairline-divider" />
-                  <div class="spec-footnotes-grid">
-                    <span class="spec-footnote-item highlight-stat">* $597.87 AD SPEND</span>
-                    <span class="spec-footnote-item highlight-stat">* 78 ADD TO CARTS</span>
-                    <span class="spec-footnote-item">* 27,396 IMPRESSIONS</span>
-                    <span class="spec-footnote-item">* DATA-DRIVEN PIVOT</span>
-                  </div>
+                  </details>
+                </div>
+
+                <div class="story-tech-footnotes">
+                  <span class="story-tech-tag highlight-stat">* $597.87 AD SPEND</span>
+                  <span class="story-tech-tag highlight-stat">* 78 ADD TO CARTS</span>
+                  <span class="story-tech-tag">* 27,396 IMPRESSIONS</span>
+                  <span class="story-tech-tag">* DATA-DRIVEN PIVOT</span>
                 </div>
               </div>
-
             </div>
           </div>
 
-          <!-- Slide 2C: Moftail Brand Philosophy & Balance of Life -->
+          <!-- Slide 2C: Moftail Brand Philosophy & Balance of Life (Single-Side Storytelling) -->
           <div class="story-panel" id="panel-moftail-pod">
-            <div class="reveal-grid">
+            <div class="story-panel-layout">
+              <div class="story-narrative-col">
+                <span class="story-serial-badge">02 / MOFTAIL</span>
+                <h2 class="story-main-heading">Pretty isn't enough.</h2>
+                <p class="story-meta-sublabel">PHASE 03 · BRAND PHILOSOPHY & PROOF</p>
+                <hr class="story-divider" />
+                <p class="story-narrative-lead">
+                  テストを重ねる中で見えてきたことがある。ただ綺麗なだけでは弱い。
+                </p>
+                <p class="story-narrative-body">
+                  商品が主役であること。生活の文脈があること。静かな空気があること。自然で、温かく、そこに商品が本当に存在しているように見えること。<br />
+                  Moftailのログには、こんな言葉を残している。
+                </p>
+                <blockquote class="story-quote-punchline manifesto-quote">
+                  The best mockup is not the prettiest one.<br />
+                  It is the one that moves people to act.
+                </blockquote>
+                <p class="story-narrative-body">
+                  Moftailが扱いたいのは、服そのものだけではない。中心にあるのは、<strong>Balance of Life</strong>。<br />
+                  静けさ。意図。調和。AIや情報が増え続ける世界の中で、一度立ち止まり、自分に戻るための感覚を形にする。
+                </p>
+                <blockquote class="story-quote-punchline">
+                  Philosophy needs proof.
+                </blockquote>
+                <p class="story-narrative-body">
+                  でも、思想だけでは事業にならない。だから今は、勝つモックアップ、勝つデザイン、購入につながる商品ページ、広告から商品までの一貫性を一つずつ検証している。
+                </p>
 
-              <!-- Left Column: Display Heading & Pretty Isn't Enough -->
-              <div class="reveal-col-left">
-                <span class="project-serial-label">02 / MOFTAIL</span>
-                <h2 class="reveal-heading">Pretty isn't enough.</h2>
-                <p class="reveal-sublabel">PHASE 03 · BRAND PHILOSOPHY & PROOF</p>
-                <hr class="hairline-divider" />
-                <div class="reveal-narrative-block">
-                  <p class="reveal-story-lead">
-                    テストを重ねる中で見えてきたことがある。ただ綺麗なだけでは弱い。
-                  </p>
-                  <p class="reveal-story-text">
-                    商品が主役であること。生活の文脈があること。静かな空気があること。自然で、温かく、そこに商品が本当に存在しているように見えること。<br />
-                    Moftailのログには、こんな言葉を残している。
-                  </p>
-                  <blockquote class="reveal-punchline manifesto-quote">
-                    The best mockup is not the prettiest one.<br />
-                    It is the one that moves people to act.
-                  </blockquote>
+                <div class="story-tech-footnotes">
+                  <span class="story-tech-tag highlight-stat">* BALANCE OF LIFE</span>
+                  <span class="story-tech-tag">* PRINTIFY NETWORK</span>
+                  <span class="story-tech-tag highlight-stat">* PHILOSOPHY NEEDS PROOF</span>
+                  <span class="story-tech-tag">* BRAND STRATEGY</span>
                 </div>
               </div>
-
-              <!-- Center Column: 3D Product Spacer -->
-              <div class="reveal-col-center"></div>
-
-              <!-- Right Column: Balance of Life & Proof -->
-              <div class="reveal-col-right">
-                <div class="reveal-narrative-block">
-                  <div class="reveal-highlight-box">
-                    <span class="highlight-box-title">BALANCE OF LIFE</span>
-                    <p>Moftailが扱いたいのは、服そのものだけではない。中心にあるのは、<strong>Balance of Life</strong>。<br />静けさ。意図。調和。AIや情報が増え続ける世界の中で、一度立ち止まり、自分に戻るための感覚を形にする。</p>
-                  </div>
-                  <blockquote class="reveal-punchline">
-                    Philosophy needs proof.
-                  </blockquote>
-                  <p class="reveal-story-text">
-                    でも、思想だけでは事業にならない。だから今は、勝つモックアップ、勝つデザイン、購入につながる商品ページ、広告から商品までの一貫性を一つずつ検証している。
-                  </p>
-                  <div class="hint-badge">
-                    <span class="hint-badge-header">HINT — POD</span>
-                    <p class="hint-badge-desc">Print on Demand。注文後に商品を製造する仕組み。在庫リスクを抑えながら、市場で商品仮説を検証できる。</p>
-                  </div>
-                  <hr class="hairline-divider" />
-                  <div class="spec-footnotes-grid">
-                    <span class="spec-footnote-item highlight-stat">* BALANCE OF LIFE</span>
-                    <span class="spec-footnote-item">* PRINTIFY NETWORK</span>
-                    <span class="spec-footnote-item highlight-stat">* PHILOSOPHY NEEDS PROOF</span>
-                    <span class="spec-footnote-item">* BRAND STRATEGY</span>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
 
-          <!-- Slide 3: Shopify Theme & Client Work Reveal -->
+          <!-- Slide 3: Shopify Theme & Client Work Reveal (Single-Side Storytelling) -->
           <div class="story-panel" id="panel-shopify-theme">
-            <div class="reveal-grid">
+            <div class="story-panel-layout">
+              <div class="story-narrative-col">
+                <span class="story-serial-badge">03 / CLIENT WORK</span>
+                <h2 class="story-main-heading">「Shopify側の問題です。」<br />本当に？</h2>
+                <p class="story-meta-sublabel">PAID FREELANCE TRIAL · $30/H · 14 TASKS</p>
+                <hr class="story-divider" />
+                <p class="story-narrative-lead">
+                  Moftailを運営していた時のこと。
+                </p>
+                <p class="story-narrative-body">
+                  ストアの画面で、サイズを変えても価格が変わらない問題を見つけた。<br />
+                  開発元に報告すると、返ってきた答えは<strong>「それはShopify側の仕様です」</strong>というものだった。でも、コードと動きを見ていると、何かがおかしかった。
+                </p>
+                <blockquote class="story-quote-punchline">
+                  本当にShopify側の問題なのか？
+                </blockquote>
+                <p class="story-narrative-body">
+                  諦めきれず、自分で原因を調べ始めた。何が起きているのか。どのコードが動いていないのか。どうすれば直るのか。<br /><br />
+                  調査結果を英語でレポートにまとめ、再現手順と修正コードを添えて開発元へ送った。すると相手の反応が変わり、<strong>「うちのコードを触ってみないか」</strong>と時給30ドルの有償トライアルが決まり、14個のタスクを任されることになった。
+                </p>
+                <blockquote class="story-quote-punchline">
+                  技術は、自分のためだけでなく、<br />誰かの事業を前へ進めるためにも使える。
+                </blockquote>
 
-              <!-- Left Column: Display Heading & Investigation -->
-              <div class="reveal-col-left">
-                <span class="project-serial-label">03 / CLIENT WORK</span>
-                <h2 class="reveal-heading">「Shopify側の問題です。」<br />本当に？</h2>
-                <p class="reveal-sublabel">PAID FREELANCE TRIAL · $30/H · 14 TASKS</p>
-                <hr class="hairline-divider" />
-                <div class="reveal-narrative-block">
-                  <p class="reveal-story-lead">
-                    Moftailを運営していた時のこと。
-                  </p>
-                  <p class="reveal-story-text">
-                    ストアの画面で、サイズを変えても価格が変わらない問題を見つけた。<br />
-                    開発元に報告すると、返ってきた答えは<strong>「それはShopify側の仕様です」</strong>というものだった。
-                  </p>
-                  <p class="reveal-story-text">
-                    でも、コードと動きを見ていると、何かがおかしかった。
-                  </p>
-                  <blockquote class="reveal-punchline">
-                    本当にShopify側の問題なのか？
-                  </blockquote>
+                <div class="apple-hint-group">
+                  <details class="apple-hint-pill">
+                    <summary>
+                      <span class="hint-pill-badge">HINT</span>
+                      <span class="hint-pill-title">Reproduction Steps</span>
+                      <span class="hint-pill-icon">＋</span>
+                    </summary>
+                    <div class="hint-pill-drawer">
+                      不具合を報告する時、最も重要なのは「相手の手元で確実に再現できること」。環境、手順、期待値、実際の挙動を分解して記述する。
+                    </div>
+                  </details>
+                  <details class="apple-hint-pill">
+                    <summary>
+                      <span class="hint-pill-badge">HINT</span>
+                      <span class="hint-pill-title">Liquid</span>
+                      <span class="hint-pill-icon">＋</span>
+                    </summary>
+                    <div class="hint-pill-drawer">
+                      Shopify独自のテンプレート言語。HTMLの中にロジックを組み込み、商品情報や価格などを動的に表示するために使われる。
+                    </div>
+                  </details>
+                </div>
+
+                <div class="story-tech-footnotes">
+                  <span class="story-tech-tag highlight-stat">* $30/H PAID FREELANCE</span>
+                  <span class="story-tech-tag highlight-stat">* 14 TASKS COMPLETED</span>
+                  <span class="story-tech-tag highlight-stat">* 19H 20M LOGGED</span>
+                  <span class="story-tech-tag">* ENGLISH TECH REPORT</span>
                 </div>
               </div>
-
-              <!-- Center Column: 3D Product Spacer -->
-              <div class="reveal-col-center"></div>
-
-              <!-- Right Column: Investigation, English Tech Report & Value Delivery -->
-              <div class="reveal-col-right">
-                <div class="reveal-narrative-block">
-                  <div class="reveal-highlight-box">
-                    <span class="highlight-box-title">違和感を、そのままにしない</span>
-                    <p>諦めきれず、自分で原因を調べ始めた。何が起きているのか。どのコードが動いていないのか。どうすれば直るのか。</p>
-                  </div>
-                  <p class="reveal-story-text">
-                    調査結果を英語でレポートにまとめ、再現手順と修正コードを添えて開発元へ送った。<br />
-                    すると、相手の反応が変わった。
-                  </p>
-                  <blockquote class="reveal-punchline">
-                    「うちのコードを触ってみないか」
-                  </blockquote>
-                  <p class="reveal-story-text">
-                    そこから、時給30ドルの有償トライアルが決まり、14個のタスクを任されることになった。
-                  </p>
-                  <div class="reveal-core-design">
-                    <p class="core-design-quote"><strong>技術は、自分のためだけでなく、<br />誰かの事業を前へ進めるためにも使える。</strong><br />そう実感した経験だった。</p>
-                  </div>
-                  <div class="hint-badge-group">
-                    <div class="hint-badge">
-                      <span class="hint-badge-header">HINT — Reproduction Steps</span>
-                      <p class="hint-badge-desc">不具合を報告する時、最も重要なのは「相手の手元で確実に再現できること」。環境、手順、期待値、実際の挙動を分解して記述する。</p>
-                    </div>
-                    <div class="hint-badge">
-                      <span class="hint-badge-header">HINT — Liquid</span>
-                      <p class="hint-badge-desc">Shopify独自のテンプレート言語。HTMLの中にロジックを組み込み、商品情報や価格などを動的に表示するために使われる。</p>
-                    </div>
-                  </div>
-                  <hr class="hairline-divider" />
-                  <div class="spec-footnotes-grid">
-                    <span class="spec-footnote-item highlight-stat">* $30/H PAID FREELANCE</span>
-                    <span class="spec-footnote-item highlight-stat">* 14 TASKS COMPLETED</span>
-                    <span class="spec-footnote-item highlight-stat">* 19H 20M LOGGED</span>
-                    <span class="spec-footnote-item">* ENGLISH TECH REPORT</span>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
 
@@ -626,7 +578,7 @@
 
   </main>
 
-  <script src="./script.js?v=oryzo-darkroom-v36"></script>
+  <script src="./script.js?v=oryzo-darkroom-v37"></script>
 </body>
 
 </html>

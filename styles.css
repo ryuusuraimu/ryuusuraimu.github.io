@@ -437,8 +437,239 @@ a {
 }
 
 /* ==========================================================================
-   Product Reveal Grid (Three Columns: Left Heading / Centered Object / Right Body)
+   Product Reveal Layout (Plan A: Single-Side Storytelling Architecture)
    ========================================================================== */
+.story-panel-layout {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 72px;
+  position: relative;
+  z-index: 25;
+  pointer-events: none;
+}
+
+.story-narrative-col {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  z-index: 25;
+  pointer-events: auto;
+}
+
+.story-serial-badge {
+  font-family: var(--font-micro);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ember-accent);
+  margin-bottom: -4px;
+}
+
+.story-main-heading {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-warm-cream);
+  margin: 0;
+  font-feature-settings: "palt";
+}
+
+.story-meta-sublabel {
+  font-family: var(--font-micro);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-driftwood);
+  margin-top: -6px;
+}
+
+.story-narrative-lead {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.75;
+  color: var(--color-warm-cream);
+  margin: 0;
+}
+
+.story-narrative-body {
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: var(--color-warm-cream);
+  opacity: 0.88;
+  margin: 0;
+}
+
+.story-quote-punchline {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--color-warm-cream);
+  border-left: 2.5px solid var(--color-ember-accent);
+  padding: 4px 0 4px 16px;
+  margin: 4px 0;
+}
+
+.story-quote-punchline.manifesto-quote {
+  font-style: italic;
+  font-size: 16.5px;
+}
+
+/* Apple-style Interactive HINT Pills (Breathable & Expandable) */
+.apple-hint-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.apple-hint-pill {
+  border: 1px solid rgba(220, 80, 0, 0.35);
+  background: rgba(45, 28, 18, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 9999px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 100%;
+}
+
+.apple-hint-pill[open] {
+  border-color: rgba(220, 80, 0, 0.7);
+  background: rgba(36, 22, 14, 0.88);
+  border-radius: 12px;
+}
+
+.apple-hint-pill summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 11.5px;
+  color: var(--color-warm-cream);
+  outline: none;
+}
+
+.apple-hint-pill summary::-webkit-details-marker {
+  display: none;
+}
+
+.hint-pill-badge {
+  font-family: var(--font-micro);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-ember-accent);
+  text-transform: uppercase;
+}
+
+.hint-pill-title {
+  font-weight: 500;
+  color: var(--color-warm-cream);
+  opacity: 0.92;
+}
+
+.hint-pill-icon {
+  font-size: 12px;
+  color: var(--color-ember-accent);
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+
+.apple-hint-pill[open] .hint-pill-icon {
+  transform: rotate(45deg);
+}
+
+.hint-pill-drawer {
+  padding: 6px 16px 14px;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #ffedd7;
+  opacity: 0.88;
+  border-top: 1px dashed rgba(220, 80, 0, 0.2);
+  margin-top: 2px;
+}
+
+/* Compact Technical Footnotes */
+.story-tech-footnotes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin-top: 4px;
+}
+
+.story-tech-tag {
+  font-family: var(--font-micro);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-driftwood);
+  border: 1px dashed var(--color-cork-border);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.story-tech-tag.highlight-stat {
+  color: var(--color-ember-accent);
+  border-color: rgba(220, 80, 0, 0.4);
+}
+
+/* Compact Cycle 2 Metric Board for Single-Side Narrative */
+.story-metric-board {
+  background: rgba(28, 18, 12, 0.75);
+  border: 1px solid var(--color-cork-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 4px 0;
+}
+
+.story-metric-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(64, 55, 46, 0.4);
+}
+
+.story-metric-item:last-child {
+  border-bottom: none;
+}
+
+.story-metric-label {
+  color: var(--color-warm-cream);
+  font-weight: 500;
+}
+
+.story-metric-value {
+  font-family: var(--font-micro);
+  font-weight: 600;
+  color: var(--color-warm-cream);
+}
+
+.story-metric-value.winner {
+  color: #4ade80;
+}
+
+/* Backwards compatibility for legacy reveal classes */
 .reveal-grid {
   width: 100%;
   display: grid;
@@ -1255,7 +1486,50 @@ a {
     font-size: 10px;
   }
 
-  /* Project Reveal Panels: Unified Mobile Bottom Glass Card */
+  /* Project Reveal Panels: Single-Side Mobile Bottom Glass Card (Plan A) */
+  .story-panel-layout {
+    padding: 0 16px 20px;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .story-narrative-col {
+    max-width: 500px;
+    max-height: 48vh;
+    max-height: 48dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: rgba(16, 9, 4, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px dashed var(--color-cork-border);
+    border-radius: 18px;
+    padding: 18px 18px;
+    box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.7);
+    gap: 12px;
+  }
+
+  .story-main-heading {
+    font-size: 22px;
+    line-height: 1.2;
+  }
+
+  .story-narrative-lead {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .story-narrative-body {
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .story-quote-punchline {
+    font-size: 15px;
+    padding-left: 12px;
+  }
+
+  /* Legacy reveal-grid mobile fallback */
   .reveal-grid {
     display: flex;
     flex-direction: column;

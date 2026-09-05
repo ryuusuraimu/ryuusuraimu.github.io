@@ -3206,16 +3206,21 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseX += (targetMouseX - mouseX) * 0.05;
     mouseY += (targetMouseY - mouseY) * 0.05;
 
+    // Dynamic staging offset: On widescreen desktop, shift MacBook & desk smoothly to the right (+0.32)
+    // so the left half has generous breathing room for the unified story narrative.
+    const isMobile = camera.aspect < 1.15;
+    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.32 : 0.0);
+
     // Rotate and position the MacBook master group
     macRoot.rotation.x = macState.rotX + mouseY;
     macRoot.rotation.y = macState.rotY + mouseX;
     macRoot.rotation.z = macState.rotZ;
-    macRoot.position.x = macState.posX;
+    macRoot.position.x = macState.posX + desktopOffset;
     macRoot.position.y = macState.posY;
 
     // Desk group follows deskState with matching mouse parallax
     deskGroup.visible = deskState.opacity > 0.005;
-    deskGroup.position.x = deskState.posX;
+    deskGroup.position.x = deskState.posX + desktopOffset;
     deskGroup.position.y = deskState.posY;
     deskGroup.position.z = deskState.posZ;
     deskGroup.rotation.x = deskState.rotX + mouseY;
@@ -3281,10 +3286,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // On mobile portrait, shift look target slightly downward so the 3D MacBook
     // centers gracefully in the upper 52% of the screen above the bottom card
-    const isMobile = camera.aspect < 1.0;
     const mobileLookShift = isMobile ? 0.30 : 0.0;
     const targetLookY = macRoot.position.y + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
-    camera.lookAt(0, targetLookY, 0);
+    const targetLookX = isMobile ? 0.0 : (desktopOffset * 0.45);
+    camera.lookAt(targetLookX, targetLookY, 0);
 
     renderer.render(scene, camera);
   }
