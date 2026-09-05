@@ -173,6 +173,493 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function createAnchorShieldTexture() {
+    try {
+      const c = document.createElement('canvas');
+      c.width = 1024;
+      c.height = 665;
+      const ctx = c.getContext('2d');
+      if (!ctx) return null;
+
+      // Darkroom Deep Indigo Background
+      ctx.fillStyle = '#0a0d14';
+      ctx.fillRect(0, 0, c.width, c.height);
+
+      // Subtle top header bar
+      ctx.fillStyle = '#111724';
+      ctx.fillRect(0, 0, c.width, 44);
+
+      // macOS Traffic Lights
+      ctx.fillStyle = '#ff5f56';
+      ctx.beginPath(); ctx.arc(22, 22, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffbd2e';
+      ctx.beginPath(); ctx.arc(42, 22, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#27c93f';
+      ctx.beginPath(); ctx.arc(62, 22, 6, 0, Math.PI * 2); ctx.fill();
+
+      // Title & Status
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.fillText('⚓ Anchor — Emergency Shield Active Mode', 90, 27);
+
+      // Active status indicator pill
+      ctx.fillStyle = 'rgba(74, 222, 128, 0.15)';
+      ctx.strokeStyle = 'rgba(74, 222, 128, 0.45)';
+      ctx.lineWidth = 1;
+      if (ctx.roundRect) ctx.roundRect(c.width - 240, 9, 220, 26, 13);
+      else ctx.fillRect(c.width - 240, 9, 220, 26);
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#4ade80';
+      ctx.beginPath(); ctx.arc(c.width - 224, 22, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.font = 'bold 11px monospace';
+      ctx.fillText('CRISIS PROTOCOL ACTIVE', c.width - 212, 26);
+
+      // Emergency Statement Box (Zero-Friction Cognitive Notice)
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.12)';
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+      ctx.lineWidth = 1.5;
+      if (ctx.roundRect) ctx.roundRect(36, 60, c.width - 72, 76, 12);
+      else ctx.fillRect(36, 60, c.width - 72, 76);
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText('● EMERGENCE ASSISTANCE REQUIRED / 現在パニック発作中', 56, 84);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+      ctx.fillText('今、言葉が出せない状態です。落ち着くまで静かに見守ってください。', 56, 115);
+
+      // Two Column Decision Cards (DO vs DO NOT)
+      const cardW = 460;
+      const cardH = 310;
+      const cardY = 152;
+
+      // Card 1: してほしいこと (DO / WHAT HELPS)
+      ctx.fillStyle = '#111827';
+      ctx.strokeStyle = '#1f2937';
+      ctx.lineWidth = 1;
+      if (ctx.roundRect) ctx.roundRect(36, cardY, cardW, cardH, 12);
+      else ctx.fillRect(36, cardY, cardW, cardH);
+      ctx.fill(); ctx.stroke();
+
+      // Card 1 Header Pill
+      ctx.fillStyle = 'rgba(16, 185, 129, 0.18)';
+      ctx.strokeStyle = 'rgba(16, 185, 129, 0.5)';
+      if (ctx.roundRect) ctx.roundRect(36, cardY, cardW, 46, [12, 12, 0, 0]);
+      else ctx.fillRect(36, cardY, cardW, 46);
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle = '#34d399';
+      ctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+      ctx.fillText('✓  してほしいこと (WHAT HELPS)', 56, cardY + 29);
+
+      const doItems = [
+        { title: '静かな場所へ誘導する', desc: '音や光の刺激が少ない壁際やベンチなどへ案内してください。' },
+        { title: '急かさずそばにいて見守る', desc: '無理に立たせようとせず、座らせて安全を確保してください。' },
+        { title: '質問は「はい/いいえ」だけ', desc: '複雑な会話はできません。頷きで答えられる質問にしてください。' },
+        { title: 'ゆっくり長く息を吐く', desc: '本人の呼吸に合わせ、背中に軽く触れながらペースを整えてください。' }
+      ];
+
+      let dy = cardY + 76;
+      doItems.forEach((item, idx) => {
+        ctx.fillStyle = '#10b981';
+        ctx.beginPath(); ctx.arc(58, dy - 5, 8, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#0a0d14';
+        ctx.font = 'bold 10px monospace';
+        ctx.fillText(`${idx + 1}`, 55, dy - 2);
+
+        ctx.fillStyle = '#f1f5f9';
+        ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+        ctx.fillText(item.title, 76, dy);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '11.5px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+        ctx.fillText(item.desc, 76, dy + 18);
+        dy += 58;
+      });
+
+      // Card 2: してほしくないこと (DO NOT / WHAT TO AVOID)
+      const card2X = c.width - 36 - cardW;
+      ctx.fillStyle = '#111827';
+      ctx.strokeStyle = '#1f2937';
+      ctx.lineWidth = 1;
+      if (ctx.roundRect) ctx.roundRect(card2X, cardY, cardW, cardH, 12);
+      else ctx.fillRect(card2X, cardY, cardW, cardH);
+      ctx.fill(); ctx.stroke();
+
+      // Card 2 Header Pill
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.16)';
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
+      if (ctx.roundRect) ctx.roundRect(card2X, cardY, cardW, 46, [12, 12, 0, 0]);
+      else ctx.fillRect(card2X, cardY, cardW, 46);
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle = '#f87171';
+      ctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+      ctx.fillText('✕  してほしくないこと (WHAT TO AVOID)', card2X + 20, cardY + 29);
+
+      const dontItems = [
+        { title: '大声で問い詰めること', desc: '「どうしたの？」「何があったの？」と連続で話しかけないでください。' },
+        { title: '身体を強く揺さぶること', desc: '意識を取り戻させようと肩を激しく揺らすとパニックが悪化します。' },
+        { title: '人混みの中で取り囲むこと', desc: '周りに人が集まらないよう配慮し、パーソナルスペースを確保してください。' },
+        { title: '救急車をむやみに呼ぶこと', desc: '持病のパニック発作の場合、15分ほど安静にすれば落ち着くことが多いです。' }
+      ];
+
+      let dny = cardY + 76;
+      dontItems.forEach((item, idx) => {
+        ctx.fillStyle = '#ef4444';
+        ctx.beginPath(); ctx.arc(card2X + 22, dny - 5, 8, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 10px monospace';
+        ctx.fillText(`${idx + 1}`, card2X + 19, dny - 2);
+
+        ctx.fillStyle = '#f1f5f9';
+        ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+        ctx.fillText(item.title, card2X + 40, dny);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '11.5px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+        ctx.fillText(item.desc, card2X + 40, dny + 18);
+        dny += 58;
+      });
+
+      // Bottom Bar (Audio Message & Offline QR)
+      const botY = 478;
+      const botH = 135;
+
+      // Left: Audio Playback Widget
+      ctx.fillStyle = '#111827';
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      if (ctx.roundRect) ctx.roundRect(36, botY, 560, botH, 12);
+      else ctx.fillRect(36, botY, 560, botH);
+      ctx.fill(); ctx.stroke();
+
+      // Play button circle
+      ctx.fillStyle = '#0284c7';
+      ctx.beginPath(); ctx.arc(76, botY + 45, 24, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.moveTo(72, botY + 35);
+      ctx.lineTo(84, botY + 45);
+      ctx.lineTo(72, botY + 55);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText('▶︎ 保存済み音声メッセージ (Pre-recorded Voice)', 114, botY + 36);
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = '12px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+      ctx.fillText('「私は今パニック発作中です。命に別状はありません。静かに見守ってください。」', 114, botY + 56);
+
+      // Sound Waveform Bars
+      const waveX = 114;
+      const waveY = botY + 84;
+      const barHeights = [10, 18, 28, 14, 22, 34, 40, 26, 18, 30, 38, 22, 16, 26, 32, 18, 12, 24, 30, 20, 14, 8];
+      barHeights.forEach((bh, i) => {
+        ctx.fillStyle = i < 8 ? '#38bdf8' : '#334155';
+        ctx.fillRect(waveX + i * 18, waveY - bh / 2, 8, bh);
+      });
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10px monospace';
+      ctx.fillText('0:12 / 0:28 · SPATIAL AUDIO CAPABLE', waveX + barHeights.length * 18 + 12, waveY + 4);
+
+      // Right: Offline QR Widget
+      const qrBoxX = c.width - 36 - 360;
+      ctx.fillStyle = '#111827';
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      if (ctx.roundRect) ctx.roundRect(qrBoxX, botY, 360, botH, 12);
+      else ctx.fillRect(qrBoxX, botY, 360, botH);
+      ctx.fill(); ctx.stroke();
+
+      // Sharp QR Pattern Mockup
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(qrBoxX + 18, botY + 18, 98, 98);
+      ctx.fillStyle = '#000000';
+      // Corners
+      ctx.fillRect(qrBoxX + 24, botY + 24, 26, 26);
+      ctx.clearRect(qrBoxX + 28, botY + 28, 18, 18);
+      ctx.fillRect(qrBoxX + 32, botY + 32, 10, 10);
+
+      ctx.fillRect(qrBoxX + 84, botY + 24, 26, 26);
+      ctx.clearRect(qrBoxX + 88, botY + 28, 18, 18);
+      ctx.fillRect(qrBoxX + 92, botY + 32, 10, 10);
+
+      ctx.fillRect(qrBoxX + 24, botY + 84, 26, 26);
+      ctx.clearRect(qrBoxX + 28, botY + 88, 18, 18);
+      ctx.fillRect(qrBoxX + 32, botY + 92, 10, 10);
+
+      // Matrix dots
+      const dots = [
+        [56, 28], [64, 28], [72, 34], [60, 42], [68, 50], [56, 60], [74, 60],
+        [32, 60], [42, 66], [84, 64], [94, 72], [60, 78], [70, 84], [80, 94]
+      ];
+      dots.forEach(([dx, dy]) => {
+        ctx.fillRect(qrBoxX + dx, botY + dy, 6, 6);
+      });
+
+      // QR Text
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 11.5px monospace';
+      ctx.fillText('OFFLINE-FIRST QR', qrBoxX + 130, botY + 40);
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+      ctx.fillText('通信なしで支援情報を共有', qrBoxX + 130, botY + 62);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10.5px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+      ctx.fillText('QRそのものにテキストデータを格納。', qrBoxX + 130, botY + 82);
+      ctx.fillText('電波圏外でも相手のスマホで即読取可能。', qrBoxX + 130, botY + 98);
+
+      // Bottom Footer Bar
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10.5px monospace';
+      ctx.fillText('ANCHOR v1.4.2 · SWIFT 6 · SWIFTUI · COGNITIVE ACCESSIBILITY ARCHITECTURE · SSC 2026', 36, c.height - 18);
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.encoding = THREE.sRGBEncoding;
+      tex.generateMipmaps = true;
+      return tex;
+    } catch (err) {
+      console.warn('Could not generate Anchor Shield canvas texture, fallback to null', err);
+      return null;
+    }
+  }
+
+  function createMoftailAdsTexture() {
+    try {
+      const c = document.createElement('canvas');
+      c.width = 1024;
+      c.height = 665;
+      const ctx = c.getContext('2d');
+      if (!ctx) return null;
+
+      // Darkroom Meta Ads Theme Background
+      ctx.fillStyle = '#14171f';
+      ctx.fillRect(0, 0, c.width, c.height);
+
+      // Header Bar
+      ctx.fillStyle = '#1c212c';
+      ctx.fillRect(0, 0, c.width, 48);
+
+      // Traffic Lights
+      ctx.fillStyle = '#ff5f56';
+      ctx.beginPath(); ctx.arc(22, 24, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffbd2e';
+      ctx.beginPath(); ctx.arc(42, 24, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#27c93f';
+      ctx.beginPath(); ctx.arc(62, 24, 6, 0, Math.PI * 2); ctx.fill();
+
+      // Meta Ads Title
+      ctx.fillStyle = '#1877f2';
+      ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
+      ctx.fillText('∞ Meta Ads Manager', 88, 29);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px monospace';
+      ctx.fillText('› MOFTAIL_CYCLE_02_MOCKUP_TEST › A/B Split Test', 240, 29);
+
+      // Active status pill
+      ctx.fillStyle = 'rgba(74, 222, 128, 0.15)';
+      ctx.strokeStyle = 'rgba(74, 222, 128, 0.45)';
+      ctx.lineWidth = 1;
+      if (ctx.roundRect) ctx.roundRect(c.width - 230, 11, 210, 26, 13);
+      else ctx.fillRect(c.width - 230, 11, 210, 26);
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#4ade80';
+      ctx.beginPath(); ctx.arc(c.width - 215, 24, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.font = 'bold 11px monospace';
+      ctx.fillText('CYCLE 2 VERIFIED DATA', c.width - 202, 28);
+
+      // Summary Metric Cards (4 Cards Row)
+      const kpis = [
+        { label: 'TOTAL AD SPEND', val: '$597.87', sub: 'Verified Actual Spend', color: '#f87171' },
+        { label: 'IMPRESSIONS', val: '27,396', sub: 'US Target Audience', color: '#38bdf8' },
+        { label: 'LINK CLICKS', val: '1,142', sub: 'Avg CPC $0.52', color: '#fbbf24' },
+        { label: 'ADD TO CART', val: '78', sub: 'High Intent Signals', color: '#4ade80' }
+      ];
+
+      const kpiW = 222;
+      const kpiH = 78;
+      const kpiY = 64;
+      kpis.forEach((kpi, idx) => {
+        const kx = 36 + idx * (kpiW + 18);
+        ctx.fillStyle = '#1c2230';
+        ctx.strokeStyle = '#273142';
+        ctx.lineWidth = 1;
+        if (ctx.roundRect) ctx.roundRect(kx, kpiY, kpiW, kpiH, 10);
+        else ctx.fillRect(kx, kpiY, kpiW, kpiH);
+        ctx.fill(); ctx.stroke();
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = 'bold 10px monospace';
+        ctx.fillText(kpi.label, kx + 16, kpiY + 22);
+
+        ctx.fillStyle = kpi.color;
+        ctx.font = 'bold 22px monospace';
+        ctx.fillText(kpi.val, kx + 16, kpiY + 50);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = '10.5px sans-serif';
+        ctx.fillText(kpi.sub, kx + 16, kpiY + 68);
+      });
+
+      // Split Test Comparison Board
+      const boardY = 160;
+      const boardH = 340;
+      ctx.fillStyle = '#171c26';
+      ctx.strokeStyle = '#273142';
+      ctx.lineWidth = 1;
+      if (ctx.roundRect) ctx.roundRect(36, boardY, c.width - 72, boardH, 12);
+      else ctx.fillRect(36, boardY, c.width - 72, boardH);
+      ctx.fill(); ctx.stroke();
+
+      // Board Header
+      ctx.fillStyle = '#202735';
+      if (ctx.roundRect) ctx.roundRect(36, boardY, c.width - 72, 42, [12, 12, 0, 0]);
+      else ctx.fillRect(36, boardY, c.width - 72, 42);
+      ctx.fill();
+
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = 'bold 12px monospace';
+      ctx.fillText('ONE VARIABLE A/B TEST : FRAME MATERIAL & FINISH (COPY & LINK CONSTANT)', 56, boardY + 26);
+
+      // 3 Test Rows
+      const rows = [
+        {
+          name: 'Wood (Natural Ash Finish)',
+          tag: '★ PRIMARY WINNER',
+          tagBg: 'rgba(74, 222, 128, 0.2)',
+          tagColor: '#4ade80',
+          ctr: '5.26%',
+          barW: 420,
+          barColor: '#4ade80',
+          clicks: '534 Clicks',
+          atc: '42 ATC',
+          cpc: '$0.39',
+          action: 'PRIMARY FOCUS · SCALE TO HERO'
+        },
+        {
+          name: 'Matcha (Organic Green Texture)',
+          tag: 'RUNNER UP',
+          tagBg: 'rgba(56, 189, 248, 0.2)',
+          tagColor: '#38bdf8',
+          ctr: '4.21%',
+          barW: 336,
+          barColor: '#38bdf8',
+          clicks: '398 Clicks',
+          atc: '26 ATC',
+          cpc: '$0.50',
+          action: 'SECONDARY VARIANT · KEEP FOR NICHES'
+        },
+        {
+          name: 'Cork (Raw Surface Material)',
+          tag: 'DEPRIORITIZED',
+          tagBg: 'rgba(148, 163, 184, 0.15)',
+          tagColor: '#94a3b8',
+          ctr: '2.75%',
+          barW: 220,
+          barColor: '#64748b',
+          clicks: '210 Clicks',
+          atc: '10 ATC',
+          cpc: '$0.90',
+          action: 'PAUSE AD SPEND · REDUCE PRODUCTION'
+        }
+      ];
+
+      let ry = boardY + 62;
+      rows.forEach((r, idx) => {
+        // Row container
+        ctx.fillStyle = idx === 0 ? 'rgba(74, 222, 128, 0.05)' : '#1a202c';
+        ctx.strokeStyle = idx === 0 ? 'rgba(74, 222, 128, 0.3)' : '#232c3d';
+        ctx.lineWidth = 1;
+        if (ctx.roundRect) ctx.roundRect(52, ry, c.width - 104, 76, 8);
+        else ctx.fillRect(52, ry, c.width - 104, 76);
+        ctx.fill(); ctx.stroke();
+
+        // Variant Name & Tag
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+        ctx.fillText(r.name, 72, ry + 28);
+
+        // Tag pill
+        ctx.fillStyle = r.tagBg;
+        if (ctx.roundRect) ctx.roundRect(320, ry + 13, 150, 22, 6);
+        else ctx.fillRect(320, ry + 13, 150, 22);
+        ctx.fill();
+        ctx.fillStyle = r.tagColor;
+        ctx.font = 'bold 10.5px monospace';
+        ctx.fillText(r.tag, 332, ry + 28);
+
+        // CTR Big text
+        ctx.fillStyle = r.tagColor;
+        ctx.font = 'bold 20px monospace';
+        ctx.fillText(`CTR ${r.ctr}`, c.width - 240, ry + 30);
+
+        // Progress Bar (CTR visual representation)
+        const bx = 72;
+        const by = ry + 44;
+        ctx.fillStyle = '#263042';
+        if (ctx.roundRect) ctx.roundRect(bx, by, 500, 14, 7);
+        else ctx.fillRect(bx, by, 500, 14);
+        ctx.fill();
+
+        ctx.fillStyle = r.barColor;
+        if (ctx.roundRect) ctx.roundRect(bx, by, r.barW, 14, 7);
+        else ctx.fillRect(bx, by, r.barW, 14);
+        ctx.fill();
+
+        // Stats summary beside bar
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '11.5px monospace';
+        ctx.fillText(`${r.clicks}  |  ${r.atc}  |  CPC ${r.cpc}`, bx + 518, by + 11);
+
+        // Action note right
+        ctx.fillStyle = idx === 0 ? '#4ade80' : '#94a3b8';
+        ctx.font = 'bold 10px monospace';
+        ctx.fillText(r.action, c.width - 340, by + 11);
+
+        ry += 90;
+      });
+
+      // Bottom Insight Box: "Pretty isn't enough."
+      const insY = 518;
+      const insH = 110;
+      ctx.fillStyle = 'rgba(245, 158, 11, 0.08)';
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.35)';
+      ctx.lineWidth = 1;
+      if (ctx.roundRect) ctx.roundRect(36, insY, c.width - 72, insH, 10);
+      else ctx.fillRect(36, insY, c.width - 72, insH);
+      ctx.fill(); ctx.stroke();
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 11px monospace';
+      ctx.fillText('★ CORE DIRECTIVE : PRETTY ISN\'T ENOUGH. MOVE PEOPLE TO ACT.', 56, insY + 28);
+
+      ctx.fillStyle = '#f1f5f9';
+      ctx.font = '13.5px -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif';
+      ctx.fillText('「どれが一番綺麗か」ではなく「どれが人を動かしたか」。WoodはCorkに対し+91.3%のクリック率を実証。', 56, insY + 54);
+      ctx.fillText('直感や感覚を疑い、マーケットの冷徹な事実データ（CTR・ATC）に基づいてプロダクト方針を決定。', 56, insY + 76);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px monospace';
+      ctx.fillText('MOFTAIL LLC · ZERO-INVENTORY POD ARCHITECTURE · US COMMERCE VERIFICATION', 56, insY + 98);
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.encoding = THREE.sRGBEncoding;
+      tex.generateMipmaps = true;
+      return tex;
+    } catch (err) {
+      console.warn('Could not generate Moftail Ads canvas texture, fallback to null', err);
+      return null;
+    }
+  }
+
   function createShopifyThemeTexture() {
     try {
       const c = document.createElement('canvas');
@@ -328,9 +815,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const textures = {
     lockScreen: loadCleanTexture('./assets/mac-lockscreen.jpg'),
-    anchor: loadCleanTexture('./assets/anchor-xcode-simulator.png'),
+    anchor: createAnchorShieldTexture() || loadCleanTexture('./assets/anchor-xcode-simulator.png'),
     shopify: loadCleanTexture('./assets/moftail-shopify-admin.png'),
-    ads: loadCleanTexture('./assets/moftail-meta-ads.png'),
+    ads: createMoftailAdsTexture() || loadCleanTexture('./assets/moftail-meta-ads.png'),
     printify: loadCleanTexture('./assets/moftail-printify.png'),
     shopifyTheme: createShopifyThemeTexture()
   };

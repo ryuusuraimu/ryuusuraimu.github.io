@@ -69,15 +69,24 @@
           <!-- Slide 0: Hero Lockup -->
           <div class="story-panel panel-hero active" id="panel-hero">
             <div class="hero-top-lockup">
-              <p class="hero-tagline">PRODUCT BUILDER & EXPLORER — FACT BASE 2026</p>
+              <p class="hero-tagline">PRODUCT BUILDER & EXPLORER — 2026 SPEC</p>
               <h1 class="hero-display-headline">
-                FROM FRICTION<br />
-                TO SOFTWARE.
+                FROM FRICTION,<br />
+                SOMETHING BEGINS.
               </h1>
-              <p class="hero-sub-statement">
-                「なぜユーザーが困っているのか」「どこで行動が止まっているのか」——<br />
-                日常のコミュニケーション摩擦や事業のボトルネックを観察し、iOS開発・米国POD運営・Shopifyテーマ有償改善まで、技術と事実データで検証を繰り返す。
-              </p>
+              <div class="hero-manifesto-block">
+                <p class="hero-lead-phrase">便利なものを作りたい、から始まるわけじゃない。</p>
+                <ul class="hero-friction-list">
+                  <li>誰かが困っているのに、うまく言葉にできない。</li>
+                  <li>使えるはずのものが、なぜか使えない。</li>
+                  <li>良いと思って作ったものが、市場には選ばれない。</li>
+                </ul>
+                <p class="hero-sub-statement">
+                  そんな小さな違和感に気づくと、「なぜ？」が頭から離れなくなる。<br />
+                  調べる。仮説を立てる。作ってみる。現実に出す。そして、違っていたらまた考える。<br />
+                  <strong class="text-ember">失敗も、違和感も、次へ進むためのデータになる。</strong>
+                </p>
+              </div>
             </div>
 
             <!-- Hero Overlay Info Card (Bottom-Left) -->
@@ -87,11 +96,11 @@
                 <span class="hero-card-spec">M2 CHASSIS REVEAL</span>
               </div>
               <p class="hero-card-body">
-                当事者が発作時に説明できない摩擦（Anchor）や、広告費$597・78 ATC・購入0件の需要検証（Moftail）など、現実の摩擦と生データを中心に据えたプロダクト開発記録。
+                当事者が発作時に説明できない沈黙の摩擦（Anchor）、A/Bテストで行動の差を直視したD2C（Moftail）、違和感から有償依頼へ繋がったShopifyテーマ改善など、現実の摩擦と生データを中心に据えた開発記録。
               </p>
               <div class="hero-action-group">
                 <button class="btn-pill-filled" id="btn-open-macbook">
-                  <span>EXPLORE THE PROJECTS ↓</span>
+                  <span>EXPLORE THE STORY ↓</span>
                 </button>
                 <span class="scroll-hint-micro">SCROLL DOWN TO REVEAL</span>
               </div>
@@ -102,206 +111,315 @@
           <div class="story-panel" id="panel-anchor">
             <div class="reveal-grid">
               
-              <!-- Left Column: Display Heading & Core Observation -->
+              <!-- Left Column: Display Heading & Problem Narrative -->
               <div class="reveal-col-left">
-                <span class="project-serial-label">01 / IOS PRODUCT</span>
-                <h2 class="reveal-heading">ANCHOR.</h2>
-                <p class="reveal-sublabel">SWIFTUI · CALM TECH · SSC 2026</p>
+                <span class="project-serial-label">01 / ANCHOR</span>
+                <h2 class="reveal-heading">声が必要な瞬間に、<br />声を失ってしまったら？</h2>
+                <p class="reveal-sublabel">SWIFT 6 · SWIFTUI · SHORTCUTS · OFFLINE QR · SSC 2026</p>
                 <hr class="hairline-divider" />
-                <div class="reveal-point-item">
-                  <span class="reveal-point-title">01 / OBSERVATION</span>
-                  <p>身近な家族の経験から、「助けが必要な瞬間に本人が説明しなければならない」問題を観察。パニック時の認知的負荷を削るため、平常時準備と確定UI（Shield / Reset）を設計。</p>
+                <div class="reveal-narrative-block">
+                  <p class="reveal-story-lead">
+                    パニックの最中では、言葉が出ない。音が強く感じる。簡単な判断さえ難しくなる。
+                  </p>
+                  <p class="reveal-story-text">
+                    そして周りにいる人も、<strong>「助けたい。でも、何をすればいいのか分からない。」</strong>そんな状態になることがある。<br />
+                    身近な人の経験を聞く中で、僕が強く感じた問題は、発作そのものだけではなかった。
+                  </p>
+                  <blockquote class="reveal-punchline">
+                    必要なことを、必要な瞬間に伝えられない。<br />その“沈黙”だった。
+                  </blockquote>
                 </div>
               </div>
 
               <!-- Center Column: 3D Product Spacer -->
               <div class="reveal-col-center"></div>
 
-              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <!-- Right Column: Preparedness-first & Shield UI Solution -->
               <div class="reveal-col-right">
-                <p class="reveal-body-conversational">
-                  A native iOS tool designed for moments of panic, communicating essential care when the user cannot speak.
-                </p>
-                <div class="reveal-points-list">
-                  <div class="reveal-point-item">
-                    <span class="reveal-point-title">02 / CRAFT & EVOLUTION</span>
-                    <p>Swift Student Challenge 2026提出後も開発を継続。平常時準備フェーズでOpenAI音声（gpt-4o-mini-tts）を生成・ローカル保存し、危機時は通信を介さず保存音声で即時再生するフェイルセーフ設計を実装（Release Candidate）。</p>
+                <div class="reveal-narrative-block">
+                  <div class="reveal-highlight-box">
+                    <span class="highlight-box-title">PREPARED BEFORE CRISIS</span>
+                    <p>発作が起きてから本人に頑張って操作してもらうのではなく、<strong>何も起きていない時に、未来の自分のために準備できないか。</strong>その答えとして作ったのが、<strong>Anchor</strong>。</p>
                   </div>
-                </div>
-                <hr class="hairline-divider" />
-                <div class="spec-footnotes-grid">
-                  <span class="spec-footnote-item">* IOS / SWIFTUI</span>
-                  <span class="spec-footnote-item highlight-stat">* SSC 2026 SUBMISSION</span>
-                  <span class="spec-footnote-item highlight-stat">* OPENAI BUILD WEEK RC</span>
-                  <span class="spec-footnote-item">* OFFLINE FAILSAFE</span>
+                  <p class="reveal-story-text">
+                    危機時には、<strong>Shield</strong>を起動する。そこに表示されるのは、今、何が起きているのか。何をしてほしいのか。何をしてほしくないのか。複雑な状況を、短く、読める指示に変える。会話をしなくても、必要を伝えられるようにする。
+                  </p>
+                  <div class="reveal-core-design">
+                    <p class="core-design-quote"><strong>危機時に、考えなくても使えること。</strong><br />ワンタップShield / 高コントラスト大文字 / オフラインQR / 保存音声再生。便利さではなく、その瞬間に使えることを設計した。</p>
+                  </div>
+                  <div class="hint-badge-group">
+                    <div class="hint-badge">
+                      <span class="hint-badge-header">HINT — Cognitive Accessibility</span>
+                      <p class="hint-badge-desc">強いストレス下では、読む・判断する・細かく操作するといった能力が大きく落ちることがある。Anchorでは、それを例外ではなく前提条件としてUIを設計している。</p>
+                    </div>
+                    <div class="hint-badge">
+                      <span class="hint-badge-header">HINT — Offline First</span>
+                      <p class="hint-badge-desc">主要機能をネットワークに依存させない設計。QRにはリンクではなく情報そのものを持たせることで、通信できない状態でも支援情報を共有できる。</p>
+                    </div>
+                  </div>
+                  <hr class="hairline-divider" />
+                  <div class="spec-footnotes-grid">
+                    <span class="spec-footnote-item">* SWIFT 6</span>
+                    <span class="spec-footnote-item">* SWIFTUI</span>
+                    <span class="spec-footnote-item">* SHORTCUTS</span>
+                    <span class="spec-footnote-item highlight-stat">* OFFLINE QR</span>
+                    <span class="spec-footnote-item highlight-stat">* SWIFT STUDENT CHALLENGE 2026</span>
+                  </div>
                 </div>
               </div>
 
             </div>
           </div>
 
-          <!-- Slide 2A: Moftail Storefront & Setup -->
+          <!-- Slide 2A: Moftail Storefront & Market Reality -->
           <div class="story-panel" id="panel-moftail-storefront">
             <div class="reveal-grid">
 
-              <!-- Left Column: Display Heading & Storefront Pipeline -->
+              <!-- Left Column: Display Heading & Storefront Reality -->
               <div class="reveal-col-left">
-                <span class="project-serial-label">02 / US D2C BRAND</span>
-                <h2 class="reveal-heading">MOFTAIL.</h2>
-                <p class="reveal-sublabel">PHASE 01 · STOREFRONT & COMMERCE SETUP</p>
+                <span class="project-serial-label">02 / MOFTAIL</span>
+                <h2 class="reveal-heading">「良い」と思ったものは、<br />本当に人を動かすのか。</h2>
+                <p class="reveal-sublabel">PHASE 01 · US D2C BRAND & MARKET TESTING</p>
                 <hr class="hairline-divider" />
-                <div class="reveal-point-item">
-                  <span class="reveal-point-title">01 / STOREFRONT & PIPELINE</span>
-                  <p>Shopify × Printify（オンデマンド製造）で在庫ゼロのECブランドを立ち上げ。商品企画からテーマカスタマイズ、決済・受注連携パイプラインを迅速に構築。</p>
+                <div class="reveal-narrative-block">
+                  <p class="reveal-story-lead">
+                    Moftailは、米国市場に向けて実際に運営しているPODブランド。
+                  </p>
+                  <p class="reveal-story-text">
+                    Shopifyでストアを作る。商品を作る。広告を出す。ユーザーに見てもらう。そして、
+                  </p>
+                  <blockquote class="reveal-punchline">
+                    数字で答えをもらう。
+                  </blockquote>
                 </div>
               </div>
 
               <!-- Center Column: 3D Product Spacer -->
               <div class="reveal-col-center"></div>
 
-              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <!-- Right Column: Sensation vs Action -->
               <div class="reveal-col-right">
-                <p class="reveal-body-conversational">
-                  Zero-inventory apparel brand built from scratch—establishing an agile, scalable US commerce pipeline.
-                </p>
-                <div class="reveal-points-list">
-                  <div class="reveal-point-item">
-                    <span class="reveal-point-title">INFRASTRUCTURE</span>
-                    <p>物理的な在庫リスクを抱えずに米国市場で仮説検証を行うため、Shopifyと分散型POD（Print-on-Demand）をAPI連携し、即座に販売可能な基盤を整備。</p>
+                <div class="reveal-narrative-block">
+                  <div class="reveal-highlight-box">
+                    <span class="highlight-box-title">MARKET OVER SENSATION</span>
+                    <p>最初に学んだのは、<strong>自分の感覚と、市場の反応は同じではない</strong>ということだった。</p>
                   </div>
-                </div>
-                <hr class="hairline-divider" />
-                <div class="spec-footnotes-grid">
-                  <span class="spec-footnote-item">* SHOPIFY COMMERCE</span>
-                  <span class="spec-footnote-item">* ZERO INVENTORY SETUP</span>
-                  <span class="spec-footnote-item">* PRINTIFY INTEGRATION</span>
-                  <span class="spec-footnote-item">* US D2C PIPELINE</span>
+                  <p class="reveal-story-text">
+                    だからMoftailでは、「どれが一番綺麗か」ではなく、
+                  </p>
+                  <blockquote class="reveal-punchline">
+                    「どれが、人を動かしたか」
+                  </blockquote>
+                  <p class="reveal-story-text">
+                    で判断するようになった。自らの感覚を疑い、マーケットの冷徹な事実を直視するアプローチへの転換。
+                  </p>
+                  <hr class="hairline-divider" />
+                  <div class="spec-footnotes-grid">
+                    <span class="spec-footnote-item">* SHOPIFY COMMERCE</span>
+                    <span class="spec-footnote-item highlight-stat">* ZERO INVENTORY POD</span>
+                    <span class="spec-footnote-item">* US D2C PIPELINE</span>
+                    <span class="spec-footnote-item">* MARKET VALIDATION</span>
+                  </div>
                 </div>
               </div>
 
             </div>
           </div>
 
-          <!-- Slide 2B: Moftail Meta Ads & Demand Verification -->
+          <!-- Slide 2B: Moftail Meta Ads & A/B Testing Data -->
           <div class="story-panel" id="panel-moftail-ads">
             <div class="reveal-grid">
 
-              <!-- Left Column: Display Heading & Paid Verification -->
+              <!-- Left Column: Display Heading & Test Condition -->
               <div class="reveal-col-left">
-                <span class="project-serial-label">02 / US D2C BRAND</span>
-                <h2 class="reveal-heading">MOFTAIL.</h2>
-                <p class="reveal-sublabel">PHASE 02 · META ADS & DEMAND VERIFICATION</p>
+                <span class="project-serial-label">02 / MOFTAIL</span>
+                <h2 class="reveal-heading">One image.<br />One variable.<br />Real response.</h2>
+                <p class="reveal-sublabel">PHASE 02 · META ADS A/B TESTING & METRICS</p>
                 <hr class="hairline-divider" />
-                <div class="reveal-point-item">
-                  <span class="reveal-point-title">02 / PAID DEMAND TEST</span>
-                  <p>自腹で広告費 <strong>$597.87</strong> を実費投じ、Meta広告を運用。27,396 Imp / 1,067 Clicks / 78 Add to Cart を計測し、リアルな顧客ファネルを追跡。</p>
+                <div class="reveal-narrative-block">
+                  <p class="reveal-story-lead">
+                    モックアップテストでは、コピーやリンクなどの条件を揃え、変える要素を一つに絞る。
+                  </p>
+                  <p class="reveal-story-text">
+                    そのうえで広告を出し、実際の反応を見る。Cycle 2では明確な差が出た：
+                  </p>
+                  <div class="reveal-data-card">
+                    <div class="data-metric-row">
+                      <span class="metric-name">Wood (Natural Ash)</span>
+                      <span class="metric-val highlight-win">CTR 5.26% ★ PRIMARY</span>
+                    </div>
+                    <div class="data-metric-row">
+                      <span class="metric-name">Matcha (Organic Green)</span>
+                      <span class="metric-val">CTR 4.21% (次点)</span>
+                    </div>
+                    <div class="data-metric-row">
+                      <span class="metric-name">Cork (Raw Texture)</span>
+                      <span class="metric-val text-muted">CTR 2.75% (優先度下)</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <!-- Center Column: 3D Product Spacer -->
               <div class="reveal-col-center"></div>
 
-              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <!-- Right Column: Decision & Action -->
               <div class="reveal-col-right">
-                <p class="reveal-body-conversational">
-                  Verified market demand with $597.87 ad spend—turning cold analytics into an unfiltered PMF reality check.
-                </p>
-                <div class="reveal-points-list">
-                  <div class="reveal-point-item">
-                    <span class="reveal-point-title">THE COLD PMF GAP</span>
-                    <p>カート追加78件に対し購入0件。「上流の関心はあるが購買需要（PMF）は未証明」という冷徹な事実をデータから直視。憶測ではなくファクトに基づき次の一手を設計。</p>
+                <div class="reveal-narrative-block">
+                  <blockquote class="reveal-punchline">
+                    感覚ではなく、行動に差が出た。
+                  </blockquote>
+                  <p class="reveal-story-text">
+                    Woodを主軸にする。Matchaを次点にする。Corkの優先順位を下げる。数字を見て、次の判断を変えた。
+                  </p>
+                  <div class="hint-badge-group">
+                    <div class="hint-badge">
+                      <span class="hint-badge-header">HINT — CTR</span>
+                      <p class="hint-badge-desc">Click Through Rate。広告が表示された回数に対して、どれだけクリックされたかを見る指標。</p>
+                    </div>
+                    <div class="hint-badge">
+                      <span class="hint-badge-header">HINT — Add to Cart</span>
+                      <p class="hint-badge-desc">商品をカートへ追加した行動。クリックの次に、「実際に欲しいと思われたか」を見るための重要なシグナル。</p>
+                    </div>
                   </div>
-                </div>
-                <hr class="hairline-divider" />
-                <div class="spec-footnotes-grid">
-                  <span class="spec-footnote-item highlight-stat">* $597.87 AD SPEND</span>
-                  <span class="spec-footnote-item highlight-stat">* 78 ADD TO CARTS</span>
-                  <span class="spec-footnote-item highlight-stat">* 0 PURCHASES (PMF GAP)</span>
-                  <span class="spec-footnote-item">* 27,396 IMPRESSIONS</span>
+                  <hr class="hairline-divider" />
+                  <div class="spec-footnotes-grid">
+                    <span class="spec-footnote-item highlight-stat">* $597.87 AD SPEND</span>
+                    <span class="spec-footnote-item highlight-stat">* 78 ADD TO CARTS</span>
+                    <span class="spec-footnote-item">* 27,396 IMPRESSIONS</span>
+                    <span class="spec-footnote-item">* DATA-DRIVEN PIVOT</span>
+                  </div>
                 </div>
               </div>
 
             </div>
           </div>
 
-          <!-- Slide 2C: Moftail Supply POD & Birding Pivot -->
+          <!-- Slide 2C: Moftail Brand Philosophy & Balance of Life -->
           <div class="story-panel" id="panel-moftail-pod">
             <div class="reveal-grid">
 
-              <!-- Left Column: Display Heading & Supply Chain -->
+              <!-- Left Column: Display Heading & Pretty Isn't Enough -->
               <div class="reveal-col-left">
-                <span class="project-serial-label">02 / US D2C BRAND</span>
-                <h2 class="reveal-heading">MOFTAIL.</h2>
-                <p class="reveal-sublabel">PHASE 03 · SUPPLY POD & BIRDING PIVOT</p>
+                <span class="project-serial-label">02 / MOFTAIL</span>
+                <h2 class="reveal-heading">Pretty isn't enough.</h2>
+                <p class="reveal-sublabel">PHASE 03 · BRAND PHILOSOPHY & PROOF</p>
                 <hr class="hairline-divider" />
-                <div class="reveal-point-item">
-                  <span class="reveal-point-title">03 / SUPPLY CHAIN & PIVOT</span>
-                  <p>Printifyのオンデマンド製造網を活用。作り手のエゴを捨て、米国約9,630万人の野鳥愛好家（Birding）カルチャー特化へ市場・商品設計をピボット。</p>
+                <div class="reveal-narrative-block">
+                  <p class="reveal-story-lead">
+                    テストを重ねる中で見えてきたことがある。ただ綺麗なだけでは弱い。
+                  </p>
+                  <p class="reveal-story-text">
+                    商品が主役であること。生活の文脈があること。静かな空気があること。自然で、温かく、そこに商品が本当に存在しているように見えること。<br />
+                    Moftailのログには、こんな言葉を残している。
+                  </p>
+                  <blockquote class="reveal-punchline manifesto-quote">
+                    The best mockup is not the prettiest one.<br />
+                    It is the one that moves people to act.
+                  </blockquote>
                 </div>
               </div>
 
               <!-- Center Column: 3D Product Spacer -->
               <div class="reveal-col-center"></div>
 
-              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <!-- Right Column: Balance of Life & Proof -->
               <div class="reveal-col-right">
-                <p class="reveal-body-conversational">
-                  Pivoting toward an ultra-high affinity culture—matching on-demand fulfillment with passionate niche communities.
-                </p>
-                <div class="reveal-points-list">
-                  <div class="reveal-point-item">
-                    <span class="reveal-point-title">MARKET RE-ENGINEERING</span>
-                    <p>汎用アパレルから「野鳥観察者（Birders）の生活文脈」へポジショニングを転換。受注生産による身軽さを武器に、熱狂度の高い特定セグメントへ適合。</p>
+                <div class="reveal-narrative-block">
+                  <div class="reveal-highlight-box">
+                    <span class="highlight-box-title">BALANCE OF LIFE</span>
+                    <p>Moftailが扱いたいのは、服そのものだけではない。中心にあるのは、<strong>Balance of Life</strong>。<br />静けさ。意図。調和。AIや情報が増え続ける世界の中で、一度立ち止まり、自分に戻るための感覚を形にする。</p>
                   </div>
-                </div>
-                <hr class="hairline-divider" />
-                <div class="spec-footnotes-grid">
-                  <span class="spec-footnote-item highlight-stat">* 96.3M US BIRDERS</span>
-                  <span class="spec-footnote-item">* PRINTIFY POD NETWORK</span>
-                  <span class="spec-footnote-item">* BIRDING CULTURE PIVOT</span>
-                  <span class="spec-footnote-item">* DATA-DRIVEN STRATEGY</span>
+                  <blockquote class="reveal-punchline">
+                    Philosophy needs proof.
+                  </blockquote>
+                  <p class="reveal-story-text">
+                    でも、思想だけでは事業にならない。だから今は、勝つモックアップ、勝つデザイン、購入につながる商品ページ、広告から商品までの一貫性を一つずつ検証している。
+                  </p>
+                  <div class="hint-badge">
+                    <span class="hint-badge-header">HINT — POD</span>
+                    <p class="hint-badge-desc">Print on Demand。注文後に商品を製造する仕組み。在庫リスクを抑えながら、市場で商品仮説を検証できる。</p>
+                  </div>
+                  <hr class="hairline-divider" />
+                  <div class="spec-footnotes-grid">
+                    <span class="spec-footnote-item highlight-stat">* BALANCE OF LIFE</span>
+                    <span class="spec-footnote-item">* PRINTIFY NETWORK</span>
+                    <span class="spec-footnote-item highlight-stat">* PHILOSOPHY NEEDS PROOF</span>
+                    <span class="spec-footnote-item">* BRAND STRATEGY</span>
+                  </div>
                 </div>
               </div>
 
             </div>
           </div>
 
-          <!-- Slide 3: Shopify Theme Reveal -->
+          <!-- Slide 3: Shopify Theme & Client Work Reveal -->
           <div class="story-panel" id="panel-shopify-theme">
             <div class="reveal-grid">
 
               <!-- Left Column: Display Heading & Investigation -->
               <div class="reveal-col-left">
-                <span class="project-serial-label">03 / THEME ENGINEERING</span>
-                <h2 class="reveal-heading">SHOPIFY THEME.</h2>
+                <span class="project-serial-label">03 / CLIENT WORK</span>
+                <h2 class="reveal-heading">「Shopify側の問題です。」<br />本当に？</h2>
                 <p class="reveal-sublabel">PAID FREELANCE TRIAL · $30/H · 14 TASKS</p>
                 <hr class="hairline-divider" />
-                <div class="reveal-point-item">
-                  <span class="reveal-point-title">01 / INVESTIGATION</span>
-                  <p>Moftail運営中、商用テーマのバリエーション変更時に価格・カート不一致が発生する不具合を独自検証。Liquid・CSS・フロントエンド状態の根本原因を特定。</p>
+                <div class="reveal-narrative-block">
+                  <p class="reveal-story-lead">
+                    Moftailを運営していた時のこと。
+                  </p>
+                  <p class="reveal-story-text">
+                    ストアの画面で、サイズを変えても価格が変わらない問題を見つけた。<br />
+                    開発元に報告すると、返ってきた答えは<strong>「それはShopify側の仕様です」</strong>というものだった。
+                  </p>
+                  <p class="reveal-story-text">
+                    でも、コードと動きを見ていると、何かがおかしかった。
+                  </p>
+                  <blockquote class="reveal-punchline">
+                    本当にShopify側の問題なのか？
+                  </blockquote>
                 </div>
               </div>
 
               <!-- Center Column: 3D Product Spacer -->
               <div class="reveal-col-center"></div>
 
-              <!-- Right Column: Mixed-case Conversational Body & Technical Footnotes -->
+              <!-- Right Column: Investigation, English Tech Report & Value Delivery -->
               <div class="reveal-col-right">
-                <p class="reveal-body-conversational">
-                  Independent triage of commercial Shopify theme flaws led to an invitation for a $30/h paid trial.
-                </p>
-                <div class="reveal-points-list">
-                  <div class="reveal-point-item">
-                    <span class="reveal-point-title">02 / PAID FREELANCE DELIVERY</span>
-                    <p>再現手順・原因仮説・修正案を英語技術文書で納品し、開発元Product Managerから高評価を獲得。直接スカウトを受け時給$30の有償トライアルに参加。約1週間（19時間20分）で14タスクを完遂し、コードとNotion検証文書を納品。</p>
+                <div class="reveal-narrative-block">
+                  <div class="reveal-highlight-box">
+                    <span class="highlight-box-title">違和感を、そのままにしない</span>
+                    <p>諦めきれず、自分で原因を調べ始めた。何が起きているのか。どのコードが動いていないのか。どうすれば直るのか。</p>
                   </div>
-                </div>
-                <hr class="hairline-divider" />
-                <div class="spec-footnotes-grid">
-                  <span class="spec-footnote-item highlight-stat">* $30/H PAID FREELANCE</span>
-                  <span class="spec-footnote-item highlight-stat">* 14 TASKS COMPLETED</span>
-                  <span class="spec-footnote-item highlight-stat">* 19H 20M LOGGED</span>
-                  <span class="spec-footnote-item">* ENGLISH TECH REPORT</span>
+                  <p class="reveal-story-text">
+                    調査結果を英語でレポートにまとめ、再現手順と修正コードを添えて開発元へ送った。<br />
+                    すると、相手の反応が変わった。
+                  </p>
+                  <blockquote class="reveal-punchline">
+                    「うちのコードを触ってみないか」
+                  </blockquote>
+                  <p class="reveal-story-text">
+                    そこから、時給30ドルの有償トライアルが決まり、14個のタスクを任されることになった。
+                  </p>
+                  <div class="reveal-core-design">
+                    <p class="core-design-quote"><strong>技術は、自分のためだけでなく、<br />誰かの事業を前へ進めるためにも使える。</strong><br />そう実感した経験だった。</p>
+                  </div>
+                  <div class="hint-badge-group">
+                    <div class="hint-badge">
+                      <span class="hint-badge-header">HINT — Reproduction Steps</span>
+                      <p class="hint-badge-desc">不具合を報告する時、最も重要なのは「相手の手元で確実に再現できること」。環境、手順、期待値、実際の挙動を分解して記述する。</p>
+                    </div>
+                    <div class="hint-badge">
+                      <span class="hint-badge-header">HINT — Liquid</span>
+                      <p class="hint-badge-desc">Shopify独自のテンプレート言語。HTMLの中にロジックを組み込み、商品情報や価格などを動的に表示するために使われる。</p>
+                    </div>
+                  </div>
+                  <hr class="hairline-divider" />
+                  <div class="spec-footnotes-grid">
+                    <span class="spec-footnote-item highlight-stat">* $30/H PAID FREELANCE</span>
+                    <span class="spec-footnote-item highlight-stat">* 14 TASKS COMPLETED</span>
+                    <span class="spec-footnote-item highlight-stat">* 19H 20M LOGGED</span>
+                    <span class="spec-footnote-item">* ENGLISH TECH REPORT</span>
+                  </div>
                 </div>
               </div>
 
@@ -322,51 +440,75 @@
       </div>
     </div>
 
-    <!-- Section 2: Method & Mindset (Walnut Shadow Full-Bleed 3-Card Grid) -->
+    <!-- Section 2: Method & Mindset (Walnut Shadow Full-Bleed 5-Card Grid) -->
     <section class="section-how-i-build" id="how-i-work">
       <div class="container-narrow">
 
-        <span class="section-label-micro">MINDSET & PROCESS</span>
-        <h2 class="section-editorial-title">TURNING FRICTION INTO SOFTWARE.</h2>
+        <span class="section-label-micro">HOW I WORK</span>
+        <h2 class="section-editorial-title">FROM FRICTION, TO VALUE.</h2>
         <p class="section-editorial-desc">
-          指示されたコードを書くだけではなく、日常や事業の「摩擦」を観察し、問いを立て、小さく作って実環境で検証し、事実データから学ぶサイクルを一貫して回してきました。
+          便利なものを作りたい、から始まるわけじゃない。失敗も、違和感も、次へ進むためのデータになる。
         </p>
 
-        <div class="method-cards-grid">
+        <div class="method-cards-grid method-cards-5">
 
           <div class="method-card">
             <div class="card-step-num">01</div>
-            <div class="card-step-badge">OBSERVATION</div>
-            <h3 class="card-title-upper">日常や事業の「摩擦」を見つける</h3>
+            <div class="card-step-badge">OBSERVE</div>
+            <h3 class="card-title-upper">見つける</h3>
             <p class="card-desc-mixed">
-              「なぜ助けを呼べないのか」「なぜサポート回答と実際の挙動が食い違うのか」。当事者の切実なペインや業務上の違和感から、まだ言語化されていない課題の種を観察します。
+              日常や事業の中にある「違和感」や「摩擦」に気づく。
             </p>
             <div class="card-action-citation">
-              <span class="citation-lead">IN ACTION:</span> ANCHORの認知的負荷観察、商用Shopifyテーマの価格不整合発見
+              <span class="citation-lead">IN ACTION:</span> Anchorの“沈黙”、テーマの価格不一致
             </div>
           </div>
 
           <div class="method-card">
             <div class="card-step-num">02</div>
-            <div class="card-step-badge">FRAMING & BUILD</div>
-            <h3 class="card-title-upper">問いを構造化し、最適な形に落とす</h3>
+            <div class="card-step-badge">STRUCTURE</div>
+            <h3 class="card-title-upper">構造にする</h3>
             <p class="card-desc-mixed">
-              「誰が・どの瞬間に困り・なぜ不十分か」を言語化。SwiftUI（Anchor）、ShopifyテーマLiquid、React/TypeScript（Stockwise）など課題に応じた技術を選択し素早く具現化。
+              なぜ起きているのか。誰が困っているのか。問題の輪郭をはっきりさせる。
             </p>
             <div class="card-action-citation">
-              <span class="citation-lead">IN ACTION:</span> ANCHORの確定UI設計、STOCKWISEのUIと検索ロジック分離
+              <span class="citation-lead">IN ACTION:</span> 認知負荷前提のUI要件定義
             </div>
           </div>
 
           <div class="method-card">
             <div class="card-step-num">03</div>
-            <div class="card-step-badge">TEST & LEARN</div>
-            <h3 class="card-title-upper">実環境で試し、事実データから学ぶ</h3>
+            <div class="card-step-badge">BUILD</div>
+            <h3 class="card-title-upper">作る</h3>
             <p class="card-desc-mixed">
-              実機、Shopify実店舗、広告実費、海外開発元との実務など、リアルな環境で検証。購入0件という結果も直視し、ファネルに分解して次の仮説へ繋げます。
+              仮説を検証するために、必要な形にする。アプリ、ストア、コード。手段にはこだわらない。
             </p>
             <div class="card-action-citation">
-              <span class="citation-lead">IN ACTION:</span> META広告実費$597運用のファネル分析と野鳥愛好家（BIRDING）市場再設計
+              <span class="citation-lead">IN ACTION:</span> Swift 6、Liquid、React/TypeScript
+            </div>
+          </div>
+
+          <div class="method-card">
+            <div class="card-step-num">04</div>
+            <div class="card-step-badge">RELEASE</div>
+            <h3 class="card-title-upper">現実に出す</h3>
+            <p class="card-desc-mixed">
+              頭の中や手元にとどめず、実際の市場やユーザーの前に置く。
+            </p>
+            <div class="card-action-citation">
+              <span class="citation-lead">IN ACTION:</span> 米国D2C実店舗、Meta広告実費検証
+            </div>
+          </div>
+
+          <div class="method-card">
+            <div class="card-step-num">05</div>
+            <div class="card-step-badge">ITERATE</div>
+            <h3 class="card-title-upper">変える</h3>
+            <p class="card-desc-mixed">
+              結果を見て、違っていたら修正する。失敗したら、データが一つ増えたと考える。
+            </p>
+            <div class="card-action-citation">
+              <span class="citation-lead">IN ACTION:</span> Cycle 2 CTRデータに基づく次の判断
             </div>
           </div>
 
@@ -390,14 +532,43 @@
             </div>
 
             <div class="about-text-wrap">
-              <h2 class="about-name-display">中邨 隆之介 / RYUNOSUKE</h2>
-              <p class="about-role-statement">PRODUCT BUILDER / ENGINEER / FUTURE PRODUCT MANAGER</p>
+              <span class="project-serial-label">ABOUT</span>
+              <h2 class="about-name-display">作る人であり、探す人。</h2>
+              <p class="about-role-statement">PRODUCT BUILDER &amp; EXPLORER</p>
 
-              <p class="about-bio-mixed">
-                大阪電気通信大学で情報工学を学びながら、iOSアプリ「Anchor」、米国向けPODブランド「Moftail」、投資学習Webアプリ「Stockwise」などを個人で開発・運営しています。<br /><br />
-                Moftailの運営中には、利用していたShopifyテーマの不具合を独自に調査し、再現手順・原因仮説・修正案を英語ドキュメントで開発元へ共有。その調査をProduct Managerから高く評価され、時給$30の有償フリーランストライアルに参画し、約1週間（19時間20分）で14タスクを完遂・納品しました。<br /><br />
-                単に指示されたコードを書くのではなく、「なぜユーザーが困っているのか」「どこで行動が止まっているのか」を観察し、仮説を立て、小さく実装・検証して結果を次の改善へ繋げることを大切にしています。
-              </p>
+              <div class="about-bio-mixed">
+                <p>
+                  コードを書くことは好きだ。<br />
+                  でも、ただ言われた通りのコードを書く人にはなりたくない。
+                </p>
+                <p>
+                  「なぜこれを作るのか」<br />
+                  「誰のどんな問題を解いているのか」<br />
+                  「本当に使われるのか」<br />
+                  そこから考えたい。
+                </p>
+                <p>
+                  Anchorでは、声が出せない人のためのUIを考えた。<br />
+                  Moftailでは、市場の冷たい反応から学んだ。<br />
+                  テーマの改修では、違和感を追うことで仕事につながった。
+                </p>
+                <p>
+                  やっていることはバラバラに見えるかもしれない。<br />
+                  けれど、自分の中では全部つながっている。
+                </p>
+                <blockquote class="reveal-punchline">
+                  問題を見つけて、技術を使って、現実を変えようとしている。
+                </blockquote>
+                <p>
+                  技術を使って、事業を作れる人になりたい。<br />
+                  そのために、今日も違和感を探して、作って、試している。
+                </p>
+              </div>
+
+              <div class="about-manifesto-badge">
+                <span class="manifesto-sign">FROM FRICTION, TO VALUE.</span>
+                <span class="manifesto-author">RYUNOSUKE NAKAMURA — Product Builder &amp; Explorer</span>
+              </div>
 
               <div class="about-facts-grid">
                 <div class="fact-item">
@@ -409,8 +580,8 @@
                   <span class="fact-val-mixed">Anchor (SSC 2026 / OpenAI RC)</span>
                 </div>
                 <div class="fact-item">
-                  <span class="fact-label-upper">COMMERCE & DATA</span>
-                  <span class="fact-val-mixed">Moftail ($597.87 Ad Test / Birding)</span>
+                  <span class="fact-label-upper">COMMERCE &amp; DATA</span>
+                  <span class="fact-val-mixed">Moftail ($597.87 Ad Test / D2C)</span>
                 </div>
                 <div class="fact-item">
                   <span class="fact-label-upper">PAID TRIAL</span>
@@ -455,7 +626,7 @@
 
   </main>
 
-  <script src="./script.js?v=oryzo-darkroom-v35"></script>
+  <script src="./script.js?v=oryzo-darkroom-v36"></script>
 </body>
 
 </html>

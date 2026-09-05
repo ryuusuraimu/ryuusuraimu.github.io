@@ -558,6 +558,237 @@ a {
 }
 
 /* ==========================================================================
+   Editorial Narrative Typography & Components (Script Integration)
+   ========================================================================== */
+.text-ember {
+  color: var(--color-ember-accent);
+}
+
+.text-muted {
+  color: var(--color-driftwood);
+  opacity: 0.8;
+}
+
+.hero-manifesto-block {
+  margin-top: 18px;
+}
+
+.hero-lead-phrase {
+  font-size: 19px;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-warm-cream);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.hero-friction-list {
+  list-style: none;
+  padding: 0 0 0 16px;
+  margin: 0 0 18px;
+  border-left: 2px solid var(--color-ember-accent);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero-friction-list li {
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--color-warm-cream);
+  opacity: 0.92;
+}
+
+.reveal-narrative-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reveal-story-lead {
+  font-size: 15.5px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+  color: var(--color-warm-cream);
+}
+
+.reveal-story-text {
+  font-size: 13.5px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.6;
+  color: var(--color-warm-cream);
+  opacity: 0.88;
+}
+
+.reveal-punchline {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-warm-cream);
+  border-left: 2px solid var(--color-ember-accent);
+  padding: 4px 0 4px 14px;
+  margin: 10px 0;
+}
+
+.reveal-punchline.manifesto-quote {
+  font-style: italic;
+  font-size: 17px;
+  color: #ffedd7;
+}
+
+.reveal-highlight-box {
+  background: rgba(45, 28, 18, 0.65);
+  border: 1px dashed var(--color-cork-border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 8px 0;
+}
+
+.highlight-box-title {
+  font-family: var(--font-micro);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ember-accent);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.reveal-highlight-box p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-warm-cream);
+  margin: 0;
+}
+
+.reveal-core-design {
+  background: rgba(20, 12, 8, 0.85);
+  border-left: 3px solid var(--color-ember-accent);
+  padding: 10px 14px;
+  margin: 8px 0;
+}
+
+.core-design-quote {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--color-warm-cream);
+  margin: 0;
+}
+
+.hint-badge-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.hint-badge {
+  background: rgba(30, 20, 14, 0.75);
+  border: 1px dashed var(--color-cork-border);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.hint-badge-header {
+  font-family: var(--font-micro);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-ember-accent);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.hint-badge-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--color-warm-cream);
+  opacity: 0.88;
+  margin: 0;
+}
+
+.reveal-data-card {
+  background: rgba(28, 18, 12, 0.75);
+  border: 1px solid var(--color-cork-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.data-metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12.5px;
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(64, 55, 46, 0.4);
+}
+
+.data-metric-row:last-child {
+  border-bottom: none;
+}
+
+.metric-name {
+  color: var(--color-warm-cream);
+  font-weight: 500;
+}
+
+.metric-val {
+  font-family: var(--font-micro);
+  font-weight: 600;
+  color: var(--color-warm-cream);
+}
+
+.metric-val.highlight-win {
+  color: #4ade80;
+}
+
+/* 5 Cards Layout for Method */
+.method-cards-5 {
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 16px !important;
+}
+
+@media (max-width: 1200px) {
+  .method-cards-5 {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .method-cards-5 {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.about-manifesto-badge {
+  display: flex;
+  flex-direction: column;
+  border-left: 3px solid var(--color-ember-accent);
+  padding-left: 16px;
+  margin: 24px 0 28px;
+}
+
+.manifesto-sign {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-warm-cream);
+}
+
+.manifesto-author {
+  font-family: var(--font-micro);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-driftwood);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
    Section 2: How I Build / Mindset & Process
    ========================================================================== */
 .section-how-i-build {
