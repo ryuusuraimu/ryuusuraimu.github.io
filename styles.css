@@ -540,81 +540,122 @@ a {
   margin-top: -6px;
 }
 
-/* Progressive Disclosure: Story Detail Drawer */
-.story-detail-disclosure {
-  width: 100%;
-  margin-top: 2px;
+/* 3D iPad Detail Trigger Button & Floating Close Button */
+.story-trigger-wrap {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
 }
 
 .btn-story-detail {
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 18px;
-  background: rgba(220, 80, 0, 0.12);
-  border: 1px solid rgba(220, 80, 0, 0.38);
+  gap: 10px;
+  padding: 9px 20px;
+  background: rgba(220, 80, 0, 0.14);
+  border: 1px solid rgba(220, 80, 0, 0.42);
   border-radius: 9999px;
   color: var(--color-warm-cream);
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   cursor: pointer;
-  user-select: none;
-  list-style: none;
   outline: none;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-
-.btn-story-detail::-webkit-details-marker {
-  display: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .btn-story-detail:hover {
-  background: rgba(220, 80, 0, 0.24);
-  border-color: rgba(220, 80, 0, 0.7);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(220, 80, 0, 0.3);
-}
-
-.story-detail-disclosure[open] .btn-story-detail {
-  background: rgba(220, 80, 0, 0.20);
-  border-color: rgba(220, 80, 0, 0.65);
-  margin-bottom: 14px;
+  background: rgba(220, 80, 0, 0.28);
+  border-color: rgba(220, 80, 0, 0.75);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(220, 80, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
 .btn-detail-icon {
   font-size: 13px;
   color: var(--color-ember-accent);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
   line-height: 1;
+  transition: transform 0.3s ease;
 }
 
-.story-detail-disclosure[open] .btn-detail-icon {
-  transform: rotate(45deg);
+.btn-story-detail:hover .btn-detail-icon {
+  transform: rotate(15deg) scale(1.15);
 }
 
-.story-detail-content {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding-top: 4px;
-  animation: fadeInStoryDrawer 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+.btn-detail-arrow {
+  font-size: 12px;
+  color: var(--color-ember-accent);
+  opacity: 0.75;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-@keyframes fadeInStoryDrawer {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.btn-story-detail:hover .btn-detail-arrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+/* Floating Close Button for 3D iPad Handwritten Note Mode */
+.btn-ipad-close {
+  position: fixed;
+  top: 32px;
+  right: 36px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  background: rgba(26, 15, 8, 0.88);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(220, 80, 0, 0.50);
+  border-radius: 9999px;
+  color: var(--color-warm-cream);
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-12px) scale(0.96);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-ipad-close:hover {
+  background: rgba(45, 25, 12, 0.95);
+  border-color: rgba(220, 80, 0, 0.85);
+  transform: translateY(0) scale(1.02);
+  box-shadow: 0 16px 40px rgba(220, 80, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn-ipad-close-icon {
+  font-size: 12px;
+  color: var(--color-ember-accent);
+}
+
+/* When 3D iPad Detail Mode is Active */
+body.ipad-detail-active .btn-ipad-close {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+body.ipad-detail-active .story-narrative-col {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateX(-40px) scale(0.96) !important;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+body.ipad-detail-active .site-header {
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 .story-narrative-lead {
@@ -1490,6 +1531,14 @@ a {
 }
 
 @media (max-width: 860px) {
+  .btn-ipad-close {
+    top: 16px;
+    right: 16px;
+    padding: 8px 16px;
+    font-size: 10.5px;
+    gap: 8px;
+  }
+
   /* 1. Header Navigation */
   .site-header {
     padding: 14px 16px;
