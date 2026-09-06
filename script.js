@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     camera.updateProjectionMatrix();
 
-    const maxDpr = w <= 860 ? 1.75 : 2.0;
+    const maxDpr = w <= 860 ? 1.5 : 1.5;
     renderer.setSize(w, h);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxDpr));
   }
@@ -976,7 +976,10 @@ document.addEventListener('DOMContentLoaded', () => {
     lookOffsetY: 0.15  // Centered on floating MacBook
   };
 
+  let currentScreenTex = null;
   function updateScreenTexture(tex, bounceColor = null) {
+    if (currentScreenTex === tex) return;
+    currentScreenTex = tex;
     if (screenMaterial && tex) {
       tex.encoding = THREE.sRGBEncoding;
       screenMaterial.map = tex;
@@ -1786,11 +1789,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Focused golden amber pool of light on the workstation (2400K incandescent mood)
   const underShelfLight = new THREE.SpotLight(0xffaa48, 0.0, 5.2, Math.PI / 2.8, 0.90, 1.8);
   underShelfLight.position.set(0, 1.88, -1.30);
-  underShelfLight.castShadow = true;
-  underShelfLight.shadow.mapSize.width = 1024;
-  underShelfLight.shadow.mapSize.height = 1024;
-  underShelfLight.shadow.bias = -0.001;
-  underShelfLight.shadow.radius = 2.5;
+  underShelfLight.castShadow = false; // keyLight handles directional shadows; saves an entire 1024x1024 shadow pass every frame!
 
   const underShelfTarget = new THREE.Object3D();
   underShelfTarget.position.set(0, 0.35, -0.90);
@@ -2169,12 +2168,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   frameGlassMat = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    transmission: 0.95,
     roughness: 0.04,
-    ior: 1.52,
-    reflectivity: 0.9,
+    metalness: 0.05,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.04,
     transparent: true,
-    opacity: 0.40
+    opacity: 0.25
   });
   const frameGlass = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.50), frameGlassMat);
   frameGlass.position.z = 0.015;
@@ -2243,14 +2242,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   clockGlassMat = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    transmission: 0.92,
     roughness: 0.03,
-    ior: 1.52,
-    reflectivity: 0.92,
+    metalness: 0.05,
     clearcoat: 1.0,
     clearcoatRoughness: 0.04,
     transparent: true,
-    opacity: 0.45
+    opacity: 0.28
   });
   const clockGlass = new THREE.Mesh(new THREE.CylinderGeometry(0.128, 0.128, 0.004, 32), clockGlassMat);
   clockGlass.rotateX(Math.PI / 2);
@@ -3719,7 +3716,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOpen = document.getElementById('btn-open-macbook');
   const navItems = document.querySelectorAll('.nav-links .nav-item');
 
+  let currentActiveNav = null;
   function updateActiveNav(targetHref) {
+    if (currentActiveNav === targetHref) return;
+    currentActiveNav = targetHref;
     navItems.forEach(item => {
       if (item.getAttribute('href') === targetHref) item.classList.add('active');
       else item.classList.remove('active');
@@ -3735,7 +3735,10 @@ document.addEventListener('DOMContentLoaded', () => {
     panelShopifyTheme
   ];
 
+  let currentActivePanel = null;
   function setPanelActive(panel) {
+    if (currentActivePanel === panel) return;
+    currentActivePanel = panel;
     allPanels.forEach(p => {
       if (!p) return;
       if (p === panel) {
@@ -3760,7 +3763,7 @@ document.addEventListener('DOMContentLoaded', () => {
       trigger: scrollStage,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 1.2,
+      scrub: 0.35,
       onUpdate: (self) => {
         const p = self.progress;
 
@@ -4131,6 +4134,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   let prevScrollPos = window.scrollY;
+  let prevDeskOpacity = -1;
   window.addEventListener('scroll', () => {
     if (focusTarget !== null && Math.abs(window.scrollY - prevScrollPos) > 40) {
       focusTarget = null;
@@ -4174,7 +4178,8 @@ document.addEventListener('DOMContentLoaded', () => {
     deskGroup.rotation.y = deskState.rotY + mouseX;
     deskGroup.rotation.z = deskState.rotZ;
 
-    if (deskGroup.visible && deskMaterials) {
+    if (deskGroup.visible && deskMaterials && Math.abs(deskState.opacity - prevDeskOpacity) > 0.002) {
+      prevDeskOpacity = deskState.opacity;
       deskMaterials.forEach(m => {
         if (m === standShadowMat) {
           m.opacity = 0.45 * Math.min(1.0, deskState.opacity);
@@ -4256,13 +4261,15 @@ document.addEventListener('DOMContentLoaded', () => {
       targetLookY = 0.14;
     }
 
-    currentCamPos.x += (targetCamX - currentCamPos.x) * 0.08;
-    currentCamPos.y += (targetCamY - currentCamPos.y) * 0.08;
-    currentCamPos.z += (targetCamZ - currentCamPos.z) * 0.08;
+    // Responsive, silky-smooth camera tracking (0.25 normal / 0.12 focus)
+    const camLerp = focusTarget !== null ? 0.12 : 0.25;
+    currentCamPos.x += (targetCamX - currentCamPos.x) * camLerp;
+    currentCamPos.y += (targetCamY - currentCamPos.y) * camLerp;
+    currentCamPos.z += (targetCamZ - currentCamPos.z) * camLerp;
 
-    currentLookTarget.x += (targetLookX - currentLookTarget.x) * 0.08;
-    currentLookTarget.y += (targetLookY - currentLookTarget.y) * 0.08;
-    currentLookTarget.z += (0.0 - currentLookTarget.z) * 0.08;
+    currentLookTarget.x += (targetLookX - currentLookTarget.x) * camLerp;
+    currentLookTarget.y += (targetLookY - currentLookTarget.y) * camLerp;
+    currentLookTarget.z += (0.0 - currentLookTarget.z) * camLerp;
 
     camera.position.copy(currentCamPos);
     camera.lookAt(currentLookTarget);
