@@ -13,22 +13,21 @@
   --color-ember-accent: #dc5000;    /* Single vivid orange text accent for credit lines, tags, key phrases (never buttons) */
   --color-pure-black: #000000;      /* SVG icon fills and decorative vector elements only */
 
-  /* Typography — Font Families (All Handwritten) */
-  --font-display: 'Caveat', 'Zen Kurenaido', cursive, sans-serif;
-  --font-handwriting: 'Caveat', 'Zen Kurenaido', cursive, sans-serif;
-  --font-jp-handwriting: 'Zen Kurenaido', 'Caveat', cursive, sans-serif;
-  --font-micro: 'Caveat', 'Zen Kurenaido', cursive, sans-serif;
-  --font-body: 'Zen Kurenaido', 'Caveat', cursive, sans-serif;
+  /* Typography — Font Families */
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans JP', sans-serif;
+  --font-handwriting: 'Caveat', cursive, var(--font-display);
+  --font-jp-handwriting: 'Zen Kurenaido', 'Noto Sans JP', sans-serif;
+  --font-micro: 'Arial', -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
 
-  /* Typography — Scale (Calibrated for Handwritten Glyphs) */
-  --text-micro: 11px;
-  --text-label: 12.5px;
-  --text-nav: 14px;
-  --text-subheading: 19px;
-  --text-heading-sm: 25px;
-  --text-body: 24px;                /* Mixed-case conversational voice */
-  --text-heading: 42px;             /* Display heading */
-  --text-display: 52px;             /* Display hero */
+  /* Typography — Scale */
+  --text-micro: 8px;
+  --text-label: 10px;
+  --text-nav: 12px;
+  --text-subheading: 18px;
+  --text-heading-sm: 24px;
+  --text-body: 24px;                /* Mixed-case conversational voice (24-29px) */
+  --text-heading: 41px;             /* Display heading with line-height 0.9 */
+  --text-display: 51px;             /* Display hero with line-height 0.9 */
 
   /* Typography — Weights */
   --font-weight-regular: 400;
@@ -83,14 +82,11 @@ body {
   font-weight: var(--font-weight-medium);
   background-color: var(--color-walnut-shadow);
   color: var(--color-warm-cream);
-  line-height: 1.4;
+  line-height: 1.2;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-button, input, select, textarea {
-  font-family: inherit;
+  font-feature-settings: "ss01" on;
 }
 
 ::selection {
@@ -195,7 +191,7 @@ a {
   font-size: var(--text-label);
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   color: var(--color-driftwood);
   pointer-events: none;
   z-index: 90;
@@ -338,7 +334,7 @@ a {
 }
 
 .hero-top-lockup {
-  max-width: 820px;
+  max-width: 580px;
   z-index: 2;
   position: relative;
 }
@@ -348,9 +344,9 @@ a {
   align-items: center;
   gap: 8px;
   font-family: var(--font-micro);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.10em;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #ffedd5;
   margin-bottom: 22px;
@@ -374,36 +370,36 @@ a {
 
 .hero-display-headline {
   font-family: var(--font-handwriting);
-  font-size: clamp(66px, 8.8vw, 116px);
+  font-size: clamp(54px, 7.2vw, 94px);
   font-weight: 700;
   text-transform: none; /* Authentic handwritten flow */
-  line-height: 0.94;
+  line-height: 1.02;
   letter-spacing: -0.01em;
   margin-bottom: 20px;
   background: linear-gradient(
     135deg,
     #ffffff 0%,
-    #fff7ed 32%,
-    #fed7aa 60%,
-    #f59e0b 86%,
-    #ea580c 100%
+    #fff7ed 25%,
+    #fed7aa 52%,
+    #f59e0b 82%,
+    #d97706 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: #ffffff;
-  filter: drop-shadow(0 6px 36px rgba(245, 158, 11, 0.28));
+  filter: drop-shadow(0 6px 36px rgba(245, 158, 11, 0.32));
 }
 
 .hero-lead-phrase {
   font-family: var(--font-jp-handwriting);
-  font-size: clamp(20px, 2.3vw, 27px);
+  font-size: clamp(18px, 2.0vw, 24px);
   font-weight: 400;
   line-height: 1.6;
   letter-spacing: 0.08em;
   color: rgba(255, 242, 230, 0.94);
   margin: 0;
-  max-width: 620px;
+  max-width: 540px;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.75);
 }
 
@@ -556,39 +552,39 @@ a {
 
 .story-serial-badge {
   font-family: var(--font-micro);
-  font-size: 13.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-ember-accent);
   margin-bottom: -4px;
 }
 
 .story-primary-heading {
-  font-family: var(--font-jp-handwriting);
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 1.45;
-  letter-spacing: 0.02em;
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 600;
+  line-height: 1.38;
+  letter-spacing: -0.015em;
   color: var(--color-warm-cream);
   margin: 0;
+  font-feature-settings: "palt";
 }
 
 .story-meta-sublabel {
   font-family: var(--font-micro);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-driftwood);
   margin-top: -4px;
 }
 
 .story-primary-statement {
-  font-family: var(--font-jp-handwriting);
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.68;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.65;
   color: var(--color-warm-cream);
   opacity: 0.92;
   margin: 0;
@@ -645,18 +641,18 @@ a {
 
 .subtext-topic-tag {
   font-family: var(--font-micro);
-  font-size: 12.5px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-ember-accent);
 }
 
 .subtext-status-badge {
   font-family: var(--font-micro);
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   padding: 3px 8px;
   border-radius: 9999px;
   background: rgba(220, 80, 0, 0.15);
@@ -665,11 +661,10 @@ a {
 }
 
 .subtext-lead {
-  font-family: var(--font-jp-handwriting);
-  font-size: 15px;
+  font-size: 13.5px;
   line-height: 1.68;
   color: var(--color-warm-cream);
-  opacity: 0.90;
+  opacity: 0.88;
   margin: 0;
 }
 
@@ -681,9 +676,9 @@ a {
 
 .spec-pill {
   font-family: var(--font-micro);
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   padding: 3px 9px;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.06);
@@ -709,7 +704,7 @@ a {
 
 .metric-mini-val {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--color-warm-cream);
 }
@@ -719,7 +714,7 @@ a {
 }
 
 .metric-mini-name {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--color-driftwood);
 }
 
@@ -741,9 +736,9 @@ a {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
   font-family: var(--font-micro);
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   color: var(--color-warm-cream);
   text-decoration: none;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -757,7 +752,7 @@ a {
 }
 
 .link-badge-icon {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--color-ember-accent);
 }
 
@@ -775,7 +770,7 @@ a {
   border-radius: 9999px;
   color: var(--color-warm-cream);
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.03em;
   cursor: pointer;
@@ -1071,17 +1066,17 @@ body.modal-open {
 
 .dossier-doc-id {
   font-family: var(--font-micro);
-  font-size: 13px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   color: var(--color-ember-accent);
 }
 
 .dossier-status-badge {
   font-family: var(--font-micro);
-  font-size: 11px;
+  font-size: 9.5px;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   padding: 3px 9px;
   border-radius: 9999px;
   background: rgba(220, 80, 0, 0.18);
@@ -1090,19 +1085,20 @@ body.modal-open {
 }
 
 .dossier-title {
-  font-family: var(--font-jp-handwriting);
-  font-size: 28px;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
   line-height: 1.35;
   color: var(--color-warm-cream);
   margin: 0;
+  font-feature-settings: "palt";
 }
 
 .dossier-subtitle {
   font-family: var(--font-micro);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
   color: var(--color-driftwood);
   margin: 0;
 }
@@ -1124,7 +1120,7 @@ body.modal-open {
   background: rgba(220, 80, 0, 0.12);
   border: 1px solid rgba(220, 80, 0, 0.38);
   font-family: var(--font-micro);
-  font-size: 12.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--color-warm-cream);
@@ -1159,26 +1155,25 @@ body.modal-open {
 
 .dossier-section-num {
   font-family: var(--font-micro);
-  font-size: 13px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   color: var(--color-ember-accent);
 }
 
 .dossier-section-title {
-  font-family: var(--font-jp-handwriting);
-  font-size: 21px;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
   color: var(--color-warm-cream);
   margin: 0;
 }
 
 .dossier-p {
-  font-family: var(--font-jp-handwriting);
-  font-size: 16px;
+  font-size: 14.5px;
   line-height: 1.85;
   color: var(--color-warm-cream);
-  opacity: 0.92;
+  opacity: 0.90;
   margin: 0;
 }
 
@@ -1876,33 +1871,31 @@ body.modal-open {
 
 .section-label-micro {
   font-family: var(--font-micro);
-  font-size: 13px;
-  font-weight: 700;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   color: var(--color-ember-accent);
   margin-bottom: 8px;
   display: block;
 }
 
 .section-editorial-title {
-  font-family: var(--font-jp-handwriting);
   font-size: var(--text-heading);
-  font-weight: 400;
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  line-height: 1.15;
+  line-height: 0.9;
   letter-spacing: normal;
   color: var(--color-warm-cream);
   margin-bottom: 20px;
 }
 
 .section-editorial-desc {
-  font-family: var(--font-jp-handwriting);
   font-size: var(--text-subheading);
-  font-weight: 400;
-  line-height: 1.5;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.35;
   color: var(--color-warm-cream);
-  opacity: 0.88;
+  opacity: 0.85;
   max-width: 640px;
   margin-bottom: 60px;
 }
@@ -2040,20 +2033,18 @@ body.modal-open {
 }
 
 .about-name-display {
-  font-family: var(--font-display);
   font-size: var(--text-heading);
-  font-weight: 700;
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  line-height: 1.1;
+  line-height: 0.9;
   letter-spacing: normal;
   color: var(--color-warm-cream);
   margin-bottom: 8px;
 }
 
 .about-role-statement {
-  font-family: var(--font-micro);
-  font-size: 13.5px;
-  font-weight: 700;
+  font-size: var(--text-nav);
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-ember-accent);
@@ -2061,12 +2052,11 @@ body.modal-open {
 }
 
 .about-bio-mixed {
-  font-family: var(--font-jp-handwriting);
-  font-size: 16.5px;
-  font-weight: 400;
-  line-height: 1.75;
+  font-size: 16px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.65;
   color: var(--color-warm-cream);
-  opacity: 0.92;
+  opacity: 0.9;
   margin-bottom: 28px;
 }
 
