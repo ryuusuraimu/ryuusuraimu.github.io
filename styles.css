@@ -97,19 +97,6 @@ a {
   text-decoration: none;
 }
 
-/* Screen-reader and search accessibility (invisible visually, 100% indexed) */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
 /* ==========================================================================
    Fixed Top Navigation (Minimal, 4 items, uppercase micro-type)
    ========================================================================== */
@@ -450,7 +437,7 @@ a {
 }
 
 /* ==========================================================================
-   Product Reveal Layout (Plan A: Single-Side Storytelling Architecture)
+   Product Reveal Layout (3-Column Split: Left Headline / Center Mac / Right Subtext)
    ========================================================================== */
 .story-panel-layout {
   width: 100%;
@@ -459,57 +446,49 @@ a {
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 0 72px;
+  justify-content: space-between;
+  padding: 0 56px;
   position: relative;
   z-index: 25;
   pointer-events: none;
 }
 
-.story-narrative-col {
+.story-split-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  max-width: 480px;
+  height: 100%;
+}
+
+/* Left Column: Primary Punchy Headline & Statement */
+.story-primary-col {
+  width: 380px;
+  max-width: 30vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
   z-index: 25;
   pointer-events: auto;
 
-  /* VisionOS / Spatial UI Frosted Glass Card */
-  background: rgba(16, 10, 6, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* VisionOS / Spatial Frosted Glass Backing */
+  background: rgba(14, 9, 6, 0.76);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
   border: 1px solid rgba(245, 237, 224, 0.12);
   border-radius: 24px;
-  padding: 34px 38px;
+  padding: 32px 34px;
   box-shadow:
     0 24px 64px rgba(0, 0, 0, 0.65),
     0 2px 10px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.15),
     inset 0 -1px 0 rgba(0, 0, 0, 0.35);
-  max-height: min(84vh, 720px);
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(220, 80, 0, 0.3) transparent;
   transform: translateY(0);
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
 }
 
-.story-narrative-col::-webkit-scrollbar {
-  width: 4px;
-}
-
-.story-narrative-col::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.story-narrative-col::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.16);
-  border-radius: 4px;
-}
-
-.story-panel:not(.active) .story-narrative-col {
+.story-panel:not(.active) .story-primary-col {
   transform: translateY(16px);
   opacity: 0;
 }
@@ -519,7 +498,7 @@ a {
   height: 1px;
   border: none;
   background: linear-gradient(90deg, rgba(245, 237, 224, 0.15) 0%, rgba(245, 237, 224, 0.03) 100%);
-  margin: 4px 0 2px;
+  margin: 2px 0;
 }
 
 .story-serial-badge {
@@ -532,11 +511,11 @@ a {
   margin-bottom: -4px;
 }
 
-.story-main-heading {
+.story-primary-heading {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 23px;
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.38;
   letter-spacing: -0.015em;
   color: var(--color-warm-cream);
   margin: 0;
@@ -550,125 +529,676 @@ a {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-driftwood);
-  margin-top: -6px;
+  margin-top: -4px;
 }
 
-/* 3D iPad Detail Trigger Button & Floating Close Button */
-.story-trigger-wrap {
+.story-primary-statement {
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.65;
+  color: var(--color-warm-cream);
+  opacity: 0.92;
+  margin: 0;
+}
+
+/* Center Spacer: 3D MacBook Air stage is centered here */
+.story-center-spacer {
+  flex: 1 1 0;
+  min-width: 260px;
+  pointer-events: none;
+}
+
+/* Right Column: Context Subtext Card & CTA Button */
+.story-subtext-col {
+  width: 360px;
+  max-width: 28vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 25;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.story-panel:not(.active) .story-subtext-col {
+  transform: translateY(16px);
+  opacity: 0;
+}
+
+.subtext-glass-card {
+  background: rgba(14, 9, 6, 0.76);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(245, 237, 224, 0.12);
+  border-radius: 24px;
+  padding: 28px 30px;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.65),
+    0 2px 10px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.subtext-card-header {
   display: flex;
   align-items: center;
-  margin-top: 4px;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.btn-story-detail {
-  display: inline-flex;
+.subtext-topic-tag {
+  font-family: var(--font-micro);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ember-accent);
+}
+
+.subtext-status-badge {
+  font-family: var(--font-micro);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  background: rgba(220, 80, 0, 0.15);
+  border: 1px solid rgba(220, 80, 0, 0.4);
+  color: var(--color-warm-cream);
+}
+
+.subtext-lead {
+  font-size: 13.5px;
+  line-height: 1.68;
+  color: var(--color-warm-cream);
+  opacity: 0.88;
+  margin: 0;
+}
+
+.subtext-specs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.spec-pill {
+  font-family: var(--font-micro);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: var(--color-driftwood);
+}
+
+.subtext-metrics-mini {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.metric-mini-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.metric-mini-val {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-warm-cream);
+}
+
+.metric-mini-item.winner .metric-mini-val {
+  color: #4ade80;
+}
+
+.metric-mini-name {
+  font-size: 10px;
+  color: var(--color-driftwood);
+}
+
+/* Call-to-Action: Open iPad PDF Story Viewer */
+.btn-open-story {
+  position: relative;
+  display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 20px;
-  background: rgba(220, 80, 0, 0.14);
-  border: 1px solid rgba(220, 80, 0, 0.42);
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 18px;
+  margin-top: 2px;
+  background: linear-gradient(135deg, rgba(220, 80, 0, 0.22) 0%, rgba(180, 60, 0, 0.12) 100%);
+  border: 1px solid rgba(220, 80, 0, 0.55);
   border-radius: 9999px;
   color: var(--color-warm-cream);
   font-family: var(--font-display);
   font-size: 12.5px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   cursor: pointer;
   outline: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-.btn-story-detail:hover {
-  background: rgba(220, 80, 0, 0.28);
-  border-color: rgba(220, 80, 0, 0.75);
+.btn-open-story:hover {
+  background: linear-gradient(135deg, rgba(220, 80, 0, 0.40) 0%, rgba(220, 80, 0, 0.22) 100%);
+  border-color: rgba(220, 80, 0, 0.85);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(220, 80, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 24px rgba(220, 80, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-.btn-detail-icon {
+.btn-story-icon {
+  font-size: 12px;
+  color: var(--color-ember-accent);
+}
+
+.btn-story-label {
+  flex: 1;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.btn-story-arrow {
   font-size: 13px;
   color: var(--color-ember-accent);
-  line-height: 1;
   transition: transform 0.3s ease;
 }
 
-.btn-story-detail:hover .btn-detail-icon {
-  transform: rotate(15deg) scale(1.15);
+.btn-open-story:hover .btn-story-arrow {
+  transform: translateX(4px);
 }
 
-.btn-detail-arrow {
-  font-size: 12px;
-  color: var(--color-ember-accent);
-  opacity: 0.75;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.btn-story-detail:hover .btn-detail-arrow {
-  transform: translateX(3px);
-  opacity: 1;
-}
-
-/* Floating Close Button for 3D iPad Handwritten Note Mode */
-.btn-ipad-close {
+/* ==========================================================================
+   iPad Bezel PDF-Style Story Detail Viewer Modal
+   ========================================================================== */
+.ipad-detail-modal {
   position: fixed;
-  top: 32px;
-  right: 36px;
-  z-index: 999;
-  display: inline-flex;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 22px;
-  background: rgba(26, 15, 8, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(220, 80, 0, 0.50);
-  border-radius: 9999px;
-  color: var(--color-warm-cream);
-  font-family: var(--font-display);
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-12px) scale(0.96);
-  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, border-color 0.2s ease;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-ipad-close:hover {
-  background: rgba(45, 25, 12, 0.95);
-  border-color: rgba(220, 80, 0, 0.85);
-  transform: translateY(0) scale(1.02);
-  box-shadow: 0 16px 40px rgba(220, 80, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+.ipad-detail-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.btn-ipad-close-icon {
-  font-size: 12px;
+body.modal-open {
+  overflow: hidden !important;
+}
+
+.ipad-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 4, 3, 0.88);
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+}
+
+.ipad-modal-container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px 20px;
+  box-sizing: border-box;
+}
+
+/* Modal Top Navigation Bar */
+.ipad-modal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(92vw, calc((100vh - 100px) * (1024 / 785)), 1024px);
+  margin-bottom: 12px;
+  z-index: 20;
+}
+
+.btn-modal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+  color: var(--color-warm-cream);
+  font-family: var(--font-micro);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+}
+
+.btn-modal-back:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.30);
+  transform: translateX(-2px);
+}
+
+.key-hint {
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  font-size: 9px;
+  color: var(--color-driftwood);
+}
+
+.ipad-modal-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 4px 6px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(12px);
+}
+
+.tab-btn {
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  color: var(--color-driftwood);
+  font-family: var(--font-micro);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--color-warm-cream);
+}
+
+.tab-btn.active {
+  background: rgba(220, 80, 0, 0.3);
+  border: 1px solid rgba(220, 80, 0, 0.5);
+  color: var(--color-warm-cream);
+}
+
+.btn-modal-close-x {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--color-warm-cream);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+}
+
+.btn-modal-close-x:hover {
+  background: rgba(220, 80, 0, 0.35);
+  border-color: rgba(220, 80, 0, 0.6);
+  transform: rotate(90deg);
+}
+
+/* iPad Mockup Outer Frame */
+.ipad-mockup-wrapper {
+  position: relative;
+  width: min(92vw, calc((100vh - 100px) * (1024 / 785)), 1024px);
+  aspect-ratio: 1024 / 785;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.96) translateY(12px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ipad-detail-modal.is-open .ipad-mockup-wrapper {
+  transform: scale(1) translateY(0);
+}
+
+.ipad-mockup-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 36px;
+  box-shadow:
+    0 32px 100px rgba(0, 0, 0, 0.95),
+    0 0 0 1px rgba(255, 255, 255, 0.10),
+    0 10px 40px rgba(220, 80, 0, 0.15);
+  overflow: hidden;
+}
+
+.ipad-bezel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Inner Screen (PDF Scrollable Area) */
+.ipad-screen-scroll {
+  position: absolute;
+  top: 5.22%;
+  bottom: 5.22%;
+  left: 4.10%;
+  right: 4.10%;
+  border-radius: 18px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #0d0a07;
+  z-index: 5;
+  padding: 44px 50px 64px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(220, 80, 0, 0.4) transparent;
+}
+
+.ipad-screen-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.ipad-screen-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ipad-screen-scroll::-webkit-scrollbar-thumb {
+  background: rgba(220, 80, 0, 0.35);
+  border-radius: 9999px;
+}
+
+.ipad-screen-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(220, 80, 0, 0.6);
+}
+
+/* Dossier Article Styling */
+.ipad-dossier {
+  display: none;
+  flex-direction: column;
+  gap: 28px;
+  animation: fadeInDossier 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ipad-dossier.active {
+  display: flex;
+}
+
+@keyframes fadeInDossier {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dossier-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dossier-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dossier-doc-id {
+  font-family: var(--font-micro);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   color: var(--color-ember-accent);
 }
 
-/* When 3D iPad Detail Mode is Active */
-body.ipad-detail-active .btn-ipad-close {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0) scale(1);
+.dossier-status-badge {
+  font-family: var(--font-micro);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  background: rgba(220, 80, 0, 0.18);
+  border: 1px solid rgba(220, 80, 0, 0.45);
+  color: var(--color-warm-cream);
 }
 
-body.ipad-detail-active .story-narrative-col {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transform: translateX(-40px) scale(0.96) !important;
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+.dossier-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-warm-cream);
+  margin: 0;
+  font-feature-settings: "palt";
 }
 
-body.ipad-detail-active .site-header {
-  opacity: 0.25;
-  pointer-events: none;
+.dossier-subtitle {
+  font-family: var(--font-micro);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  color: var(--color-driftwood);
+  margin: 0;
+}
+
+.dossier-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(220, 80, 0, 0.4) 0%, rgba(255, 255, 255, 0.08) 60%, transparent 100%);
+}
+
+.dossier-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dossier-section-num {
+  font-family: var(--font-micro);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-ember-accent);
+}
+
+.dossier-section-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-warm-cream);
+  margin: 0;
+}
+
+.dossier-p {
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--color-warm-cream);
+  opacity: 0.90;
+  margin: 0;
+}
+
+.dossier-callout-quote {
+  font-size: 16.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--color-warm-cream);
+  border-left: 3px solid var(--color-ember-accent);
+  padding: 12px 18px;
+  margin: 8px 0;
+  background: rgba(220, 80, 0, 0.08);
+  border-radius: 0 12px 12px 0;
+}
+
+.dossier-callout-quote.en-quote {
+  font-style: italic;
+  font-size: 15.5px;
+}
+
+.dossier-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.dossier-feature-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-icon-pill {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(220, 80, 0, 0.25);
+  color: var(--color-ember-accent);
+  font-family: var(--font-micro);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-feature-title {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-warm-cream);
+  margin: 0;
+}
+
+.card-feature-desc {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-driftwood);
+  margin: 0;
+}
+
+/* Dossier Tables */
+.dossier-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin: 8px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.dossier-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.dossier-table th {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 10px 16px;
+  font-family: var(--font-micro);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-driftwood);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.dossier-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--color-warm-cream);
+}
+
+.highlight-row {
+  background: rgba(220, 80, 0, 0.10);
+}
+
+.ctr-winner {
+  color: #4ade80;
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+
+.badge-decision {
+  display: inline-block;
+  font-family: var(--font-micro);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.badge-decision.primary {
+  background: rgba(74, 222, 128, 0.15);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  color: #4ade80;
+}
+
+.badge-decision.runnerup {
+  background: rgba(220, 80, 0, 0.15);
+  border: 1px solid rgba(220, 80, 0, 0.4);
+  color: var(--color-ember-accent);
+}
+
+.badge-decision.low {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-driftwood);
+}
+
+.dossier-footer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.dossier-stamp {
+  font-family: var(--font-micro);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-ember-accent);
+  opacity: 0.8;
 }
 
 .story-narrative-lead {
@@ -1544,14 +2074,6 @@ body.ipad-detail-active .site-header {
 }
 
 @media (max-width: 860px) {
-  .btn-ipad-close {
-    top: 16px;
-    right: 16px;
-    padding: 8px 16px;
-    font-size: 10.5px;
-    gap: 8px;
-  }
-
   /* 1. Header Navigation */
   .site-header {
     padding: 14px 16px;
@@ -1676,52 +2198,133 @@ body.ipad-detail-active .site-header {
     display: none;
   }
 
-  /* Project Reveal Panels: Single-Side Mobile Bottom Glass Card (Plan A) */
+  /* Project Reveal Panels: Mobile Bottom Split Stacking */
   .story-panel-layout {
     padding: 0 16px 20px;
     align-items: flex-end;
     justify-content: center;
   }
 
-  .story-narrative-col {
-    max-width: 500px;
-    max-height: 54vh;
-    max-height: 54dvh;
+  .story-split-layout {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0 14px 18px;
+    max-height: 52vh;
+    max-height: 52dvh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    background: rgba(16, 10, 6, 0.88);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(245, 237, 224, 0.14);
-    border-radius: 20px;
-    padding: 18px 20px;
-    box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    gap: 12px;
+    pointer-events: auto;
   }
 
-  .story-main-heading {
-    font-size: 19px;
+  .story-primary-col,
+  .story-subtext-col {
+    width: 100%;
+    max-width: 480px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    gap: 10px;
+  }
+
+  .story-primary-col {
+    padding-bottom: 12px;
+  }
+
+  .story-primary-heading {
+    font-size: 16.5px;
     line-height: 1.35;
   }
 
-  .btn-story-detail {
-    padding: 7px 15px;
+  .story-primary-statement {
+    display: none;
+  }
+
+  .story-center-spacer {
+    display: none;
+  }
+
+  .subtext-glass-card {
+    padding: 14px 16px;
+    border-radius: 16px;
+    gap: 10px;
+  }
+
+  .subtext-lead {
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+
+  .btn-open-story {
+    padding: 8px 14px;
     font-size: 11.5px;
   }
 
-  .story-narrative-lead {
-    font-size: 13.5px;
-    line-height: 1.6;
+  /* iPad Detail Modal Mobile Adjustments */
+  .ipad-modal-container {
+    padding: 12px 10px 16px;
   }
 
-  .story-narrative-body {
+  .ipad-modal-topbar {
+    width: 100%;
+    gap: 6px;
+  }
+
+  .btn-modal-back {
+    padding: 6px 12px;
+    font-size: 10px;
+    gap: 5px;
+  }
+
+  .key-hint {
+    display: none;
+  }
+
+  .ipad-modal-tabs {
+    gap: 4px;
+    padding: 3px 4px;
+  }
+
+  .tab-btn {
+    padding: 4px 8px;
+    font-size: 9.5px;
+  }
+
+  .btn-modal-close-x {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .ipad-mockup-wrapper {
+    width: 100%;
+    border-radius: 20px;
+  }
+
+  .ipad-mockup-frame {
+    border-radius: 20px;
+  }
+
+  .ipad-screen-scroll {
+    padding: 20px 16px 36px;
+  }
+
+  .dossier-title {
+    font-size: 18px;
+  }
+
+  .dossier-section-title {
+    font-size: 15px;
+  }
+
+  .dossier-p {
     font-size: 13px;
-    line-height: 1.65;
+    line-height: 1.7;
   }
 
-  .story-quote-punchline {
-    font-size: 14.5px;
-    padding-left: 12px;
+  .dossier-callout-quote {
+    font-size: 14px;
+    padding: 8px 12px;
   }
 
   /* Legacy reveal-grid mobile fallback */

@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     camera.updateProjectionMatrix();
 
-    const maxDpr = w <= 860 ? 1.5 : 1.5;
+    const maxDpr = w <= 860 ? 1.75 : 2.0;
     renderer.setSize(w, h);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxDpr));
   }
@@ -158,16 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const sideFillLight = new THREE.DirectionalLight(0x3c2414, 0.08);
   sideFillLight.position.set(-5.0, 2.0, 2.0);
   scene.add(sideFillLight);
-
-  // 6. iPad Studio Key Light: Soft cool studio key light illuminating iPad chassis & chamfer
-  const ipadStudioKeyLight = new THREE.DirectionalLight(0xdbe8ff, 0.70);
-  ipadStudioKeyLight.position.set(-2.2, 4.5, 3.5);
-  scene.add(ipadStudioKeyLight);
-
-  // 7. iPad Contour Rim Light: Crisp edge specular defining iPad silhouette against dark void
-  const ipadEdgeRimLight = new THREE.DirectionalLight(0x8cb4e6, 0.55);
-  ipadEdgeRimLight.position.set(-3.5, 2.5, -2.0);
-  scene.add(ipadEdgeRimLight);
 
   /* ==========================================================================
      3. Project Screen & Hardware Textures (Authentic User Lock Screen & Apps)
@@ -979,27 +969,14 @@ document.addEventListener('DOMContentLoaded', () => {
     rotX: 1.22,        // ~70 deg: faces top lid & Apple logo directly towards the viewer
     rotY: 2.88,        // ~165 deg: leaf points straight UP (+Y), right-side up
     rotZ: -0.26,       // ~-15 deg: right-tilted dynamic diagonal posture
-    posX: 0.65,        // Elegantly framing the right half of the hero ("右にずらしてMac")
+    posX: 0.35,        // Floating in right half of hero section
     posY: 0.38,        // Generously high in the air above future desk position
     cameraZ: 4.10,     // Hero camera view framing floating laptop
     cameraY: 0.40,     // Elevated to view floating laptop
     lookOffsetY: 0.15  // Centered on floating MacBook
   };
 
-  // 3D iPad Pro M4 State (positioned in left-back of Mac, clear of typography, rear Apple logo visible)
-  const ipadState = {
-    posX: 0.12,        // Positioned to the left-back of the Mac ("左奥にiPad", safely clear of left text)
-    posY: 0.44,        // Floating at harmonious elevation
-    posZ: -0.65,       // Deep in background depth behind Mac ("左奥")
-    rotX: 0.08,        // Tilted back slightly
-    rotY: 2.95,        // Back facing camera with Apple logo clearly visible ("裏面でロゴが見える形")
-    rotZ: -0.04        // Subtle dynamic angle
-  };
-
-  let currentScreenTex = null;
   function updateScreenTexture(tex, bounceColor = null) {
-    if (currentScreenTex === tex) return;
-    currentScreenTex = tex;
     if (screenMaterial && tex) {
       tex.encoding = THREE.sRGBEncoding;
       screenMaterial.map = tex;
@@ -1809,7 +1786,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Focused golden amber pool of light on the workstation (2400K incandescent mood)
   const underShelfLight = new THREE.SpotLight(0xffaa48, 0.0, 5.2, Math.PI / 2.8, 0.90, 1.8);
   underShelfLight.position.set(0, 1.88, -1.30);
-  underShelfLight.castShadow = false; // keyLight handles directional shadows; saves an entire 1024x1024 shadow pass every frame!
+  underShelfLight.castShadow = true;
+  underShelfLight.shadow.mapSize.width = 1024;
+  underShelfLight.shadow.mapSize.height = 1024;
+  underShelfLight.shadow.bias = -0.001;
+  underShelfLight.shadow.radius = 2.5;
 
   const underShelfTarget = new THREE.Object3D();
   underShelfTarget.position.set(0, 0.35, -0.90);
@@ -2188,12 +2169,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   frameGlassMat = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
+    transmission: 0.95,
     roughness: 0.04,
-    metalness: 0.05,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.04,
+    ior: 1.52,
+    reflectivity: 0.9,
     transparent: true,
-    opacity: 0.25
+    opacity: 0.40
   });
   const frameGlass = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.50), frameGlassMat);
   frameGlass.position.z = 0.015;
@@ -2203,7 +2184,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Left Desk Accessory: Braun BC02 Inspired Minimalist Analog Desk Clock ---
   const clockGroup = new THREE.Group();
   // Elevated so the entire clock body and its angled base rest cleanly on top of the desk mat (y = -0.036), 0mm submerged
-  clockGroup.position.set(-2.15, 0.118, -0.38);
+  clockGroup.position.set(-1.62, 0.118, -0.38);
   clockGroup.rotation.x = -0.20; // 11.5 deg backward tilt towards user
 
   const clockBodyMat = new THREE.MeshPhysicalMaterial({
@@ -2262,12 +2243,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   clockGlassMat = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
+    transmission: 0.92,
     roughness: 0.03,
-    metalness: 0.05,
+    ior: 1.52,
+    reflectivity: 0.92,
     clearcoat: 1.0,
     clearcoatRoughness: 0.04,
     transparent: true,
-    opacity: 0.28
+    opacity: 0.45
   });
   const clockGlass = new THREE.Mesh(new THREE.CylinderGeometry(0.128, 0.128, 0.004, 32), clockGlassMat);
   clockGlass.rotateX(Math.PI / 2);
@@ -2308,7 +2291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     color: 0x8b6540
   });
 
-  const fullMatShape = createRoundedRectShape(4.24, 2.15, 0.14);
+  const fullMatShape = createRoundedRectShape(3.48, 2.15, 0.14);
   const fullMatGeo = new THREE.ExtrudeGeometry(fullMatShape, {
     depth: 0.014,
     bevelEnabled: true,
@@ -2326,8 +2309,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Grovemade Saddle Leather Left Inlay Panel with matched rounded outer corners (zero overhang)
   const leatherShape = new THREE.Shape();
-  const leftX = -2.112;
-  const rightX = -0.650;
+  const leftX = -1.732;
+  const rightX = -1.020;
   const topY = 1.066;
   const botY = -1.066;
   const cr = 0.135; // Matches fullMatShape corner radius (0.14) with 5mm interior margin
@@ -2433,1254 +2416,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   deskGroup.add(mugGroup);
 
-  /* ==========================================================================
-     3D iPad Pro M4 & Apple Pencil Pro (Dual-Screen Studio Workstation)
-     ========================================================================== */
-  const ipadMasterGroup = new THREE.Group();
-  scene.add(ipadMasterGroup); // Floats freely with Mac in hero and docks onto stand
-
-  const ipadBodyGroup = new THREE.Group();
-  ipadMasterGroup.add(ipadBodyGroup);
-
-  // iPad Dimensions: 13-inch Pro format (1.08 x 1.46, ultra-thin 0.016)
-  const ipadW = 1.08;
-  const ipadH = 1.46;
-  const ipadDepth = 0.016;
-  const ipadRadius = 0.055;
-  const hw = ipadW / 2, hh = ipadH / 2, ir = ipadRadius;
-
-  // Unibody chassis shape with rounded corners
-  const ipadShape = new THREE.Shape();
-  ipadShape.moveTo(-hw + ir, -hh);
-  ipadShape.lineTo(hw - ir, -hh);
-  ipadShape.quadraticCurveTo(hw, -hh, hw, -hh + ir);
-  ipadShape.lineTo(hw, hh - ir);
-  ipadShape.quadraticCurveTo(hw, hh, hw - ir, hh);
-  ipadShape.lineTo(-hw + ir, hh);
-  ipadShape.quadraticCurveTo(-hw, hh, -hw, hh - ir);
-  ipadShape.lineTo(-hw, -hh + ir);
-  ipadShape.quadraticCurveTo(-hw, -hh, -hw + ir, -hh);
-
-  const ipadExtrudeSettings = {
-    steps: 1,
-    depth: ipadDepth,
-    bevelEnabled: true,
-    bevelThickness: 0.0028,
-    bevelSize: 0.0028,
-    bevelOffset: 0,
-    bevelSegments: 4
-  };
-  const ipadChassisGeo = new THREE.ExtrudeGeometry(ipadShape, ipadExtrudeSettings);
-  ipadChassisGeo.center(); // Front face at Z = +0.010, Rear face at Z = -0.010
-
-  // Aerospace-grade Space Black anodized aluminum material
-  const ipadAlumMat = new THREE.MeshPhysicalMaterial({
-    color: 0x222630,               // Calibrated Space Black tone with distinct form
-    roughness: 0.32,               // Bead-blasted matte sheen
-    metalness: 0.68,               // Balanced metalness so diffuse form and specular bevels both pop
-    clearcoat: 0.35,
-    clearcoatRoughness: 0.20,
-    sheen: 0.35,
-    sheenColor: new THREE.Color(0x7088a8)
-  });
-  const ipadChassisMesh = new THREE.Mesh(ipadChassisGeo, ipadAlumMat);
-  ipadChassisMesh.castShadow = true;
-  ipadChassisMesh.receiveShadow = true;
-  ipadBodyGroup.add(ipadChassisMesh);
-
-  // --- Official Apple Mirrored Chrome Logo (Rear Chassis) ---
-  function createAppleLogoTexture() {
-    const c = document.createElement('canvas');
-    c.width = 512;
-    c.height = 512;
-    const ctx = c.getContext('2d');
-    ctx.clearRect(0, 0, 512, 512);
-
-    const leaf = new Path2D('M324,82 C342,60 354,30 351,0 C325,1 294,17 275,39 C258,58 244,88 248,118 C276,120 306,104 324,82 Z');
-    const body = new Path2D('M351,248 C352,192 397,163 399,161 C373,123 333,118 319,117 C284,113 251,138 233,138 C215,138 188,117 160,117 C122,117 87,139 67,174 C26,245 56,350 96,406 C115,434 137,465 167,464 C196,463 207,445 241,445 C275,445 285,464 316,463 C347,462 366,435 385,407 C408,374 417,341 418,340 C416,339 350,314 351,248 Z');
-
-    ctx.save();
-    ctx.translate(57, 45);
-    ctx.scale(0.85, 0.85);
-    ctx.fillStyle = '#ffffff';
-    ctx.fill(leaf);
-    ctx.fill(body);
-    ctx.restore();
-
-    const tex = new THREE.CanvasTexture(c);
-    tex.generateMipmaps = true;
-    return tex;
-  }
-
-  const ipadRearLogoMat = new THREE.MeshPhysicalMaterial({
-    map: createAppleLogoTexture(),
-    transparent: true,
-    color: 0x9ab2cf,            // Mirror chrome with liquid cool reflection
-    metalness: 0.98,
-    roughness: 0.03,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.02,
-    emissive: 0x222a36,         // Soft dark-titanium glow
-    emissiveIntensity: 0.40,
-    envMapIntensity: 2.5,
-    polygonOffset: true,
-    polygonOffsetFactor: -2,
-    polygonOffsetUnits: -2,
-    side: THREE.FrontSide
-  });
-  const ipadRearLogoMesh = new THREE.Mesh(new THREE.PlaneGeometry(0.32, 0.32), ipadRearLogoMat);
-  ipadRearLogoMesh.position.set(0, 0.04, -0.0112);
-  ipadRearLogoMesh.rotation.y = Math.PI; // Faces rear
-  ipadRearLogoMesh.renderOrder = 20;
-  ipadRearLogoMesh.castShadow = false;
-  ipadRearLogoMesh.receiveShadow = false;
-  ipadBodyGroup.add(ipadRearLogoMesh);
-
-  // --- Photorealistic Pro Camera Island on Rear ---
-  const camBumpW = 0.22, camBumpH = 0.22, camBumpR = 0.045;
-  const cbShape = new THREE.Shape();
-  const cbX = -camBumpW / 2, cbY = -camBumpH / 2;
-  cbShape.moveTo(cbX + camBumpR, cbY);
-  cbShape.lineTo(cbX + camBumpW - camBumpR, cbY);
-  cbShape.quadraticCurveTo(cbX + camBumpW, cbY, cbX + camBumpW, cbY + camBumpR);
-  cbShape.lineTo(cbX + camBumpW, cbY + camBumpH - camBumpR);
-  cbShape.quadraticCurveTo(cbX + camBumpW, cbY + camBumpH, cbX + camBumpW - camBumpR, cbY + camBumpH);
-  cbShape.lineTo(cbX + camBumpR, cbY + camBumpH);
-  cbShape.quadraticCurveTo(cbX, cbY + camBumpH, cbX, cbY + camBumpH - camBumpR);
-  cbShape.lineTo(cbX, cbY + camBumpR);
-  cbShape.quadraticCurveTo(cbX, cbY, cbX + camBumpR, cbY);
-
-  const camPlateGeo = new THREE.ExtrudeGeometry(cbShape, {
-    steps: 1,
-    depth: 0.005,
-    bevelEnabled: true,
-    bevelThickness: 0.0015,
-    bevelSize: 0.0015,
-    bevelSegments: 3
-  });
-  camPlateGeo.center();
-
-  const camPlateMat = new THREE.MeshPhysicalMaterial({
-    color: 0x111317,
-    roughness: 0.12,
-    metalness: 0.75,
-    clearcoat: 0.95,
-    clearcoatRoughness: 0.08
-  });
-  const camPlateMesh = new THREE.Mesh(camPlateGeo, camPlateMat);
-  // Positioned on rear chassis in upper corner (looking at back: top-left x = hw - 0.15)
-  camPlateMesh.position.set(hw - 0.15, hh - 0.15, -0.010 - 0.0025);
-  camPlateMesh.rotation.y = Math.PI;
-  ipadBodyGroup.add(camPlateMesh);
-
-  // Dual Camera Optics (Wide & Ultra-Wide)
-  const lensRimMat = new THREE.MeshPhysicalMaterial({
-    color: 0x1d2128,
-    metalness: 0.90,
-    roughness: 0.20,
-    clearcoat: 0.4
-  });
-  const lensOpticMat = new THREE.MeshPhysicalMaterial({
-    color: 0x05070e,
-    metalness: 0.95,
-    roughness: 0.04,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.04,
-    emissive: 0x081020,
-    emissiveIntensity: 0.25
-  });
-
-  function createCameraLens(xPos, yPos) {
-    const lensGroup = new THREE.Group();
-    const ring = new THREE.Mesh(new THREE.CylinderGeometry(0.038, 0.038, 0.004, 32), lensRimMat);
-    ring.rotation.x = Math.PI / 2;
-    lensGroup.add(ring);
-    const pupil = new THREE.Mesh(new THREE.CircleGeometry(0.032, 32), lensOpticMat);
-    pupil.position.z = -0.0022;
-    pupil.rotation.y = Math.PI;
-    lensGroup.add(pupil);
-    lensGroup.position.set(xPos, yPos, -0.010 - 0.0055);
-    return lensGroup;
-  }
-
-  ipadBodyGroup.add(createCameraLens(hw - 0.18, hh - 0.11));
-  ipadBodyGroup.add(createCameraLens(hw - 0.18, hh - 0.19));
-
-  // LiDAR Scanner (Deep matte black circular sensor window)
-  const lidarMesh = new THREE.Mesh(
-    new THREE.CircleGeometry(0.022, 24),
-    new THREE.MeshStandardMaterial({ color: 0x07080a, roughness: 0.85, metalness: 0.1 })
-  );
-  lidarMesh.position.set(hw - 0.11, hh - 0.19, -0.010 - 0.0051);
-  lidarMesh.rotation.y = Math.PI;
-  ipadBodyGroup.add(lidarMesh);
-
-  // True Tone Flash (Quad-LED diffuser module)
-  const flashMesh = new THREE.Mesh(
-    new THREE.CircleGeometry(0.022, 24),
-    new THREE.MeshStandardMaterial({ color: 0xeae2cf, roughness: 0.35, metalness: 0.2, emissive: 0x332815, emissiveIntensity: 0.3 })
-  );
-  flashMesh.position.set(hw - 0.11, hh - 0.11, -0.010 - 0.0051);
-  flashMesh.rotation.y = Math.PI;
-  ipadBodyGroup.add(flashMesh);
-
-  // Rear Microphone hole
-  const rearMic = new THREE.Mesh(
-    new THREE.CircleGeometry(0.004, 16),
-    new THREE.MeshBasicMaterial({ color: 0x020304 })
-  );
-  rearMic.position.set(hw - 0.11, hh - 0.15, -0.010 - 0.0051);
-  rearMic.rotation.y = Math.PI;
-  ipadBodyGroup.add(rearMic);
-
-  // Smart Connector (3 gold magnetic pogo pins on bottom rear)
-  const goldPinMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.95, roughness: 0.15 });
-  for (let i = -1; i <= 1; i++) {
-    const pin = new THREE.Mesh(new THREE.CircleGeometry(0.006, 16), goldPinMat);
-    pin.position.set(i * 0.028, -hh + 0.14, -0.0102);
-    pin.rotation.y = Math.PI;
-    ipadBodyGroup.add(pin);
-  }
-
-  // Antenna Break Lines (4 precision RF isolation strips on perimeter edges)
-  const antennaMat = new THREE.MeshBasicMaterial({ color: 0x0c0e12 });
-  function addAntennaLine(x, y, isHoriz) {
-    const geo = isHoriz ? new THREE.PlaneGeometry(0.012, 0.003) : new THREE.PlaneGeometry(0.003, 0.012);
-    const m = new THREE.Mesh(geo, antennaMat);
-    m.position.set(x, y, 0);
-    ipadBodyGroup.add(m);
-  }
-  addAntennaLine(hw + 0.001, hh - 0.28, false);
-  addAntennaLine(hw + 0.001, -hh + 0.28, false);
-  addAntennaLine(-hw - 0.001, hh - 0.28, false);
-  addAntennaLine(-hw - 0.001, -hh + 0.28, false);
-
-  // USB-C / Thunderbolt Port on bottom edge
-  const portMesh = new THREE.Mesh(
-    new THREE.BoxGeometry(0.06, 0.006, 0.010),
-    new THREE.MeshStandardMaterial({ color: 0x08090d, roughness: 0.7, metalness: 0.8 })
-  );
-  portMesh.position.set(0, -hh - 0.001, 0);
-  ipadBodyGroup.add(portMesh);
-
-  // Power Button / Touch ID on top edge
-  const powerBtn = new THREE.Mesh(
-    new THREE.BoxGeometry(0.08, 0.004, 0.007),
-    ipadAlumMat
-  );
-  powerBtn.position.set(hw - 0.18, hh + 0.001, 0);
-  ipadBodyGroup.add(powerBtn);
-
-  // Volume Rocker Buttons on right edge
-  const volUp = new THREE.Mesh(new THREE.BoxGeometry(0.004, 0.05, 0.007), ipadAlumMat);
-  volUp.position.set(hw + 0.001, hh - 0.16, 0);
-  ipadBodyGroup.add(volUp);
-
-  const volDown = new THREE.Mesh(new THREE.BoxGeometry(0.004, 0.05, 0.007), ipadAlumMat);
-  volDown.position.set(hw + 0.001, hh - 0.24, 0);
-  ipadBodyGroup.add(volDown);
-
-  // Dynamic High-Res CanvasTexture for iPad Screen
-  const ipadCanvas = document.createElement('canvas');
-  ipadCanvas.width = 1536;
-  ipadCanvas.height = 2048;
-  const ipadCtx = ipadCanvas.getContext('2d');
-
-  const ipadScreenTex = new THREE.CanvasTexture(ipadCanvas);
-  ipadScreenTex.colorSpace = THREE.SRGBColorSpace;
-  ipadScreenTex.generateMipmaps = true;
-  ipadScreenTex.minFilter = THREE.LinearMipmapLinearFilter;
-  ipadScreenTex.magFilter = THREE.LinearFilter;
-  if (renderer.capabilities && renderer.capabilities.getMaxAnisotropy) {
-    ipadScreenTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-  }
-
-  // Active Screen display plane
-  const screenW = 1.00;
-  const screenH = 1.333;
-  const ipadScreenGeo = new THREE.PlaneGeometry(screenW, screenH);
-  const ipadScreenMat = new THREE.MeshBasicMaterial({
-    map: ipadScreenTex,
-    toneMapped: false,
-    transparent: false,
-    side: THREE.FrontSide
-  });
-  const ipadScreenMesh = new THREE.Mesh(ipadScreenGeo, ipadScreenMat);
-  ipadScreenMesh.position.set(0, 0, 0.0118);
-  ipadScreenMesh.renderOrder = 10;
-  ipadBodyGroup.add(ipadScreenMesh);
-
-  // Sleek Black Screen Bezel border plane behind the screen
-  const bezelGeo = new THREE.PlaneGeometry(ipadW - 0.008, ipadH - 0.008);
-  const bezelMat = new THREE.MeshBasicMaterial({ color: 0x040507, side: THREE.FrontSide });
-  const bezelMesh = new THREE.Mesh(bezelGeo, bezelMat);
-  bezelMesh.position.set(0, 0, 0.0108);
-  bezelMesh.renderOrder = 5;
-  ipadBodyGroup.add(bezelMesh);
-
-  // TrueDepth Front Camera Lens & Sensor Dot on top bezel
-  const frontCamLens = new THREE.Mesh(
-    new THREE.CircleGeometry(0.007, 24),
-    new THREE.MeshPhysicalMaterial({ color: 0x060914, metalness: 0.95, roughness: 0.04, clearcoat: 1.0, emissive: 0x0a1024, emissiveIntensity: 0.2, side: THREE.FrontSide })
-  );
-  frontCamLens.position.set(0, hh - 0.020, 0.0112);
-  frontCamLens.renderOrder = 15;
-  ipadBodyGroup.add(frontCamLens);
-
-  const ambientSensor = new THREE.Mesh(
-    new THREE.CircleGeometry(0.004, 16),
-    new THREE.MeshBasicMaterial({ color: 0x020305, side: THREE.FrontSide })
-  );
-  ambientSensor.position.set(0.024, hh - 0.020, 0.0112);
-  ambientSensor.renderOrder = 15;
-  ipadBodyGroup.add(ambientSensor);
-
-  // Photorealistic Front Glass Specular Reflection Layer
-  const ipadGlassMat = new THREE.MeshPhysicalMaterial({
-    color: 0x080a12,
-    transparent: true,
-    opacity: 0.08,
-    roughness: 0.03,
-    metalness: 0.12,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.03,
-    depthWrite: false,
-    side: THREE.FrontSide
-  });
-  const ipadGlassMesh = new THREE.Mesh(new THREE.PlaneGeometry(ipadW - 0.004, ipadH - 0.004), ipadGlassMat);
-  ipadGlassMesh.position.set(0, 0, 0.0125);
-  ipadGlassMesh.renderOrder = 12;
-  ipadBodyGroup.add(ipadGlassMesh);
-
-  // Magnetic charging strip on right edge
-  const magnetStrip = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.006, 0.50),
-    new THREE.MeshStandardMaterial({ color: 0x0f1115, roughness: 0.5, metalness: 0.8 })
-  );
-  magnetStrip.rotateY(Math.PI / 2);
-  magnetStrip.position.set(hw + 0.001, 0, 0);
-  ipadBodyGroup.add(magnetStrip);
-
-  // Load official iPad Pro (2024) materials from assets/Ipad+Pro(2024).mtl
-  if (typeof THREE.MTLLoader !== 'undefined') {
-    const mtlLoader = new THREE.MTLLoader();
-    mtlLoader.load('assets/Ipad+Pro(2024).mtl', (materialsCreator) => {
-      materialsCreator.preload();
-      const mats = materialsCreator.materials;
-      if (mats) {
-        if (mats.body_gery) {
-          ipadAlumMat.metalness = 0.68;
-          ipadAlumMat.roughness = 0.32;
-          ipadAlumMat.color.setHex(0x222630);
-          ipadAlumMat.needsUpdate = true;
-        }
-        if (mats.apple_logo) {
-          ipadRearLogoMat.metalness = 0.98;
-          ipadRearLogoMat.roughness = 0.03;
-          ipadRearLogoMat.needsUpdate = true;
-        }
-        if (mats.copper_connector) {
-          if (mats.copper_connector.color) goldPinMat.color.copy(mats.copper_connector.color);
-          goldPinMat.metalness = 0.95;
-          goldPinMat.needsUpdate = true;
-        }
-        if (mats.antenna_cutout) {
-          if (mats.antenna_cutout.color) antennaMat.color.copy(mats.antenna_cutout.color);
-          antennaMat.needsUpdate = true;
-        }
-      }
-    }, undefined, (err) => {
-      console.warn('Ipad Pro MTL load notification:', err);
-    });
-  }
-
-  // --- 3D Precision Aluminum Stand for iPad Pro ---
-  const ipadStandGroup = new THREE.Group();
-  deskGroup.add(ipadStandGroup);
-
-  // Stand Base: Chamfered rectangular plate on the desk mat
-  const standBaseGeo = new THREE.BoxGeometry(0.52, 0.016, 0.38);
-  const standBaseMesh = new THREE.Mesh(standBaseGeo, ipadAlumMat);
-  standBaseMesh.position.set(-0.92, -0.0355 + 0.008, 0.08);
-  standBaseMesh.rotation.y = 0.0;
-  standBaseMesh.receiveShadow = true;
-  standBaseMesh.castShadow = true;
-  ipadStandGroup.add(standBaseMesh);
-
-  // Stand Upright Spine: Slender column rising from base
-  const standArmGeo = new THREE.BoxGeometry(0.12, 0.82, 0.018);
-  const standArmMesh = new THREE.Mesh(standArmGeo, ipadAlumMat);
-  standArmMesh.position.set(-0.92, 0.38, 0.06);
-  standArmMesh.rotation.set(-0.04, 0.0, 0.0);
-  standArmMesh.castShadow = true;
-  standArmMesh.receiveShadow = true;
-  ipadStandGroup.add(standArmMesh);
-
-  // Stand Magnetic Backplate
-  const standHeadGeo = new THREE.BoxGeometry(0.40, 0.30, 0.014);
-  const standHeadMesh = new THREE.Mesh(standHeadGeo, ipadAlumMat);
-  standHeadMesh.position.set(-0.92, 0.78, 0.08 - 0.016);
-  standHeadMesh.rotation.set(-0.04, 0.0, 0.0);
-  standHeadMesh.castShadow = true;
-  ipadStandGroup.add(standHeadMesh);
-
-  // Stand Contact Shadow on the felt desk mat
-  const standShadowGeo = new THREE.PlaneGeometry(0.66, 0.50);
-  standShadowGeo.rotateX(-Math.PI / 2);
-  const standShadowMat = new THREE.MeshBasicMaterial({
-    map: createContactShadowTexture(),
-    transparent: true,
-    opacity: 0.45,
-    depthWrite: false
-  });
-  const standShadowMesh = new THREE.Mesh(standShadowGeo, standShadowMat);
-  standShadowMesh.position.set(-0.92, -0.0345, 0.08);
-  standShadowMesh.rotation.set(0, 0.0, 0);
-  ipadStandGroup.add(standShadowMesh);
-
-  // --- Photorealistic 3D Apple Pencil Pro (2nd Generation) ---
-  const pencilGroup = new THREE.Group();
-  ipadMasterGroup.add(pencilGroup);
-
-  const pencilBodyLength = 0.60;
-  const pr = 0.014;       // pencil radius
-  const flatCut = 0.0105; // flat magnetic facet
-
-  // Exact 2D cross-section: Circle with one flat facet facing -X (iPad magnetic strip)
-  const pencilShape = new THREE.Shape();
-  const cutAngle = Math.acos(flatCut / pr);
-  pencilShape.moveTo(-flatCut, pr * Math.sin(cutAngle));
-  pencilShape.absarc(0, 0, pr, cutAngle, Math.PI * 2 - cutAngle, false);
-  pencilShape.lineTo(-flatCut, -pr * Math.sin(cutAngle));
-  pencilShape.closePath();
-
-  const pencilExtrudeSettings = {
-    steps: 1,
-    depth: pencilBodyLength,
-    bevelEnabled: true,
-    bevelThickness: 0.002,
-    bevelSize: 0.002,
-    bevelOffset: 0,
-    bevelSegments: 3
-  };
-  const pencilBodyGeo = new THREE.ExtrudeGeometry(pencilShape, pencilExtrudeSettings);
-  pencilBodyGeo.center();
-
-  // Signature Apple matte satin white polycarbonate material
-  const pencilMat = new THREE.MeshPhysicalMaterial({
-    color: 0xf2f3f6,
-    roughness: 0.36,
-    metalness: 0.02,
-    clearcoat: 0.12,
-    clearcoatRoughness: 0.40
-  });
-  const pencilBodyMesh = new THREE.Mesh(pencilBodyGeo, pencilMat);
-  pencilBodyMesh.rotation.x = Math.PI / 2;
-  pencilBodyMesh.castShadow = true;
-  pencilGroup.add(pencilBodyMesh);
-
-  // 1. Polished Chrome / Nickel Accent Ring between Body and Tip
-  const ringGeo = new THREE.CylinderGeometry(pr * 0.96, pr * 0.96, 0.003, 32);
-  const ringMat = new THREE.MeshStandardMaterial({
-    color: 0xd6d9e0,
-    roughness: 0.18,
-    metalness: 0.92
-  });
-  const ringMesh = new THREE.Mesh(ringGeo, ringMat);
-  ringMesh.position.y = -pencilBodyLength / 2 - 0.0015;
-  pencilGroup.add(ringMesh);
-
-  // 2. High-Grade Elastomer Drawing Tip Cone (Screw-on Nib Cone)
-  const tipLength = 0.052;
-  const pencilTipGeo = new THREE.CylinderGeometry(pr * 0.22, pr * 0.94, tipLength, 32);
-  const tipMat = new THREE.MeshPhysicalMaterial({
-    color: 0xeeeff2,
-    roughness: 0.48,
-    metalness: 0.02
-  });
-  const pencilTipMesh = new THREE.Mesh(pencilTipGeo, tipMat);
-  pencilTipMesh.position.y = -pencilBodyLength / 2 - tipLength / 2 - 0.003;
-  pencilTipMesh.castShadow = true;
-  pencilGroup.add(pencilTipMesh);
-
-  // 3. Graphite Silicone Drawing Nib Point
-  const nibLength = 0.012;
-  const nibGeo = new THREE.ConeGeometry(pr * 0.22, nibLength, 24);
-  const nibMat = new THREE.MeshStandardMaterial({
-    color: 0x24262a,
-    roughness: 0.68,
-    metalness: 0.05
-  });
-  const nibMesh = new THREE.Mesh(nibGeo, nibMat);
-  nibMesh.position.y = -pencilBodyLength / 2 - tipLength - nibLength / 2 - 0.003;
-  nibMesh.rotation.x = Math.PI;
-  pencilGroup.add(nibMesh);
-
-  // 4. Flat Top End Cap with Micro-Beveled Edge
-  const capGeo = new THREE.CylinderGeometry(pr * 0.96, pr * 0.96, 0.004, 32);
-  const capMesh = new THREE.Mesh(capGeo, pencilMat);
-  capMesh.position.y = pencilBodyLength / 2 + 0.002;
-  pencilGroup.add(capMesh);
-
-  // 5. Laser-etched " Pencil" Decal on the Flat Facet
-  const decalCanvas = document.createElement('canvas');
-  decalCanvas.width = 512;
-  decalCanvas.height = 128;
-  const decalCtx = decalCanvas.getContext('2d');
-  decalCtx.clearRect(0, 0, 512, 128);
-  decalCtx.font = '600 48px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
-  decalCtx.fillStyle = '#a8acb6';
-  decalCtx.textAlign = 'center';
-  decalCtx.textBaseline = 'middle';
-  decalCtx.fillText(' Pencil', 256, 64);
-  const decalTex = new THREE.CanvasTexture(decalCanvas);
-  const decalMat = new THREE.MeshBasicMaterial({
-    map: decalTex,
-    transparent: true,
-    opacity: 0.85
-  });
-  const decalGeo = new THREE.PlaneGeometry(0.016, 0.10);
-  const decalMesh = new THREE.Mesh(decalGeo, decalMat);
-  decalMesh.position.set(-flatCut - 0.0005, pencilBodyLength / 2 - 0.10, 0);
-  decalMesh.rotation.y = -Math.PI / 2;
-  pencilGroup.add(decalMesh);
-
-  // 6. Apple Pencil Pro Haptic Squeeze Sensor Indentation
-  const squeezeGroove = new THREE.Mesh(
-    new THREE.PlaneGeometry(0.006, 0.07),
-    new THREE.MeshStandardMaterial({ color: 0xdbdee6, roughness: 0.5, metalness: 0.05 })
-  );
-  squeezeGroove.position.set(-flatCut - 0.0003, -pencilBodyLength / 2 + 0.12, 0);
-  squeezeGroove.rotation.y = -Math.PI / 2;
-  pencilGroup.add(squeezeGroove);
-
-  // Initial 3D iPad Pro position & rotation in Hero space (synchronized with Mac)
-  ipadMasterGroup.position.set(ipadState.posX, ipadState.posY, ipadState.posZ);
-  ipadMasterGroup.rotation.set(ipadState.rotX, ipadState.rotY, ipadState.rotZ);
-
-  // Apple Pencil magnetically attached flush to the right edge facing the MacBook
-  pencilGroup.position.set(hw + 0.007, 0.04, 0.0);
-  pencilGroup.rotation.set(0, 0, 0);
-
-  // --- Dynamic High-DPI iPad Studio Screen Rendering Engine ---
-  let currentIpadSlide = 0;
-
-  function renderIpadScreen(slideIndex) {
-    const w = 1536;
-    const h = 2048;
-    const ctx = ipadCtx;
-
-    // 1. Deep Obsidian / Dark Slate Background
-    ctx.fillStyle = '#0f1117';
-    ctx.fillRect(0, 0, w, h);
-
-    // Subtle technical grid
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
-    ctx.lineWidth = 1.5;
-    for (let y = 140; y < h - 80; y += 48) {
-      ctx.beginPath();
-      ctx.moveTo(80, y);
-      ctx.lineTo(w - 80, y);
-      ctx.stroke();
-    }
-    for (let x = 80; x < w - 80; x += 48) {
-      ctx.beginPath();
-      ctx.moveTo(x, 140);
-      ctx.lineTo(x, h - 80);
-      ctx.stroke();
-    }
-
-    // Warm margin accent guide
-    ctx.strokeStyle = 'rgba(194, 91, 44, 0.28)';
-    ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    ctx.moveTo(120, 100);
-    ctx.lineTo(120, h - 80);
-    ctx.stroke();
-
-    // Fonts definition
-    const titleFont = '700 52px "Inter", "Noto Sans JP", sans-serif';
-    const subFont = '400 32px "Inter", "Noto Sans JP", sans-serif';
-    const handFont = '"Zen Kurenaido", "Caveat", "Noto Sans JP", cursive, sans-serif';
-    const codeFont = '"JetBrains Mono", "Courier New", monospace';
-    const microFont = '600 22px "Inter", sans-serif';
-
-    // 2. Status & Navigation Header Bar
-    if (slideIndex === 0) {
-      // --- SLIDE 0: APPLE STANDBY / STUDIO LOCK SCREEN ---
-      // Dynamic Island / Status Pill
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(w / 2 - 280, 50, 560, 60, 30);
-      else ctx.rect(w / 2 - 280, 50, 560, 60);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '700 24px "Inter", sans-serif';
-      ctx.fillStyle = '#f5f5f7';
-      ctx.textAlign = 'center';
-      ctx.fillText(' Studio Display · Connected to M2 Air', w / 2, 88);
-      ctx.textAlign = 'left';
-
-      // Big Apple Clock
-      ctx.font = '700 180px -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif';
-      ctx.fillStyle = '#ffffff';
-      ctx.textAlign = 'center';
-      ctx.fillText('09:41', w / 2, 420);
-
-      // Date
-      ctx.font = '600 36px "Inter", sans-serif';
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('SUNDAY, SEPTEMBER 6', w / 2, 490);
-
-      // Device status widgets
-      const widgetY = 590;
-      const widgetW = 580;
-      const widgetH = 140;
-
-      // Widget 1: Apple Pencil Pro
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(w / 2 - widgetW - 20, widgetY, widgetW, widgetH, 24);
-      else ctx.rect(w / 2 - widgetW - 20, widgetY, widgetW, widgetH);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.textAlign = 'left';
-      ctx.font = '700 28px "Inter", sans-serif';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(' Pencil Pro', w / 2 - widgetW + 20, widgetY + 55);
-      ctx.font = '500 24px "Inter", sans-serif';
-      ctx.fillStyle = '#4ade80';
-      ctx.fillText('● 100% · Magnetically Attached', w / 2 - widgetW + 20, widgetY + 100);
-
-      // Widget 2: M2 MacBook Air
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(w / 2 + 20, widgetY, widgetW, widgetH, 24);
-      else ctx.rect(w / 2 + 20, widgetY, widgetW, widgetH);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '700 28px "Inter", sans-serif';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText('M2 MacBook Air', w / 2 + 60, widgetY + 55);
-      ctx.font = '500 24px "Inter", sans-serif';
-      ctx.fillStyle = '#60a5fa';
-      ctx.fillText('● 100% · Sidecar Dual Display', w / 2 + 60, widgetY + 100);
-
-      // Central Notification / Focus Card
-      const cardY = 820;
-      ctx.fillStyle = 'rgba(26, 28, 38, 0.85)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(160, cardY, w - 320, 680, 32);
-      else ctx.rect(160, cardY, w - 320, 680);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(194, 91, 44, 0.45)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      ctx.font = '700 26px "Inter", sans-serif';
-      ctx.fillStyle = '#ff7733';
-      ctx.fillText('ENGINEERING WORKBOOK & RAW THOUGHTS', 210, cardY + 80);
-
-      ctx.font = '700 52px "Inter", "Noto Sans JP", sans-serif';
-      ctx.fillStyle = '#f8efe0';
-      ctx.fillText('声が出せない危機の瞬間に、', 210, cardY + 170);
-      ctx.fillText('必要な支援を届ける。', 210, cardY + 245);
-
-      ctx.font = '400 32px "Inter", "Noto Sans JP", sans-serif';
-      ctx.fillStyle = 'rgba(248, 239, 224, 0.75)';
-      ctx.fillText('パニック時の沈黙を前提にした認知アクセシビリティ。', 210, cardY + 330);
-      ctx.fillText('何もない平時に、未来の自分のための盾を備える。', 210, cardY + 385);
-
-      ctx.font = '400 34px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('「本人に操作を頑張らせない。未来の盾を平時に作る。」', 210, cardY + 480);
-      ctx.fillText('「助けを求める行為自体の認知負荷をゼロにする。」', 210, cardY + 540);
-
-      // Bottom cue
-      ctx.font = '600 28px "Inter", sans-serif';
-      ctx.fillStyle = '#ff7733';
-      ctx.textAlign = 'center';
-      ctx.fillText('SCROLL DOWN TO EXPAND DUAL-SCREEN WORKSTATION ↓', w / 2, cardY + 625);
-      ctx.textAlign = 'left';
-
-      // Home Bar Indicator
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(w / 2 - 160, h - 50, 320, 10, 5);
-      else ctx.rect(w / 2 - 160, h - 50, 320, 10);
-      ctx.fill();
-
-      ipadScreenTex.needsUpdate = true;
-      return;
-    }
-
-    let badgeText = '01 / ANCHOR';
-    let categoryText = 'COGNITIVE ACCESSIBILITY ARCHITECTURE';
-    if (slideIndex === 2) {
-      badgeText = '02 / MOFTAIL · 01';
-      categoryText = 'US D2C COMMERCE · MARKET VALIDATION';
-    } else if (slideIndex === 3) {
-      badgeText = '02 / MOFTAIL · 02';
-      categoryText = 'PAID TRAFFIC · A/B TEST DATA METRICS';
-    } else if (slideIndex === 4) {
-      badgeText = '02 / MOFTAIL · 03';
-      categoryText = 'BRAND PHILOSOPHY & BALANCE OF LIFE';
-    } else if (slideIndex === 5) {
-      badgeText = '03 / CLIENT WORK';
-      categoryText = 'SHOPIFY THEME DEV · $30/H PAID TRIAL';
-    }
-
-    // Draw Left Pill Badge
-    ctx.fillStyle = '#c25b2c';
-    ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(140, 60, 240, 48, 24);
-    else ctx.rect(140, 60, 240, 48);
-    ctx.fill();
-
-    ctx.font = '700 24px "Inter", sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(badgeText, 164, 93);
-
-    // Category
-    ctx.font = microFont;
-    ctx.fillStyle = '#8e867b';
-    ctx.fillText(categoryText, 410, 93);
-
-    // Right Status
-    ctx.font = '500 22px "Inter", sans-serif';
-    ctx.fillStyle = '#c25b2c';
-    ctx.fillText('● 9:41 AM · STUDIO DUAL', w - 420, 93);
-
-    // Header Divider
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(100, 130);
-    ctx.lineTo(w - 100, 130);
-    ctx.stroke();
-
-    // 3. Main Headline & Content by Slide
-    if (slideIndex === 1) {
-      // --- SLIDE 1: ANCHOR ---
-      ctx.font = titleFont;
-      ctx.fillStyle = '#f8efe0';
-      ctx.fillText('声が出せない危機の瞬間に、', 140, 220);
-      ctx.fillText('必要な支援をワンタップで相手へ届ける。', 140, 290);
-
-      ctx.font = subFont;
-      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
-      ctx.fillText('パニック時の“沈黙”を前提に、何もない平時に未来の自分の盾を備える。', 140, 360);
-
-      // Thinking Log Card
-      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
-      else ctx.rect(140, 420, w - 280, 260);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '700 22px "Inter", sans-serif';
-      ctx.fillStyle = '#ff7733';
-      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
-
-      ctx.font = '400 34px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('「パニックの最中、人は言葉を失う。音が刺さり、判断が止まる。」', 170, 520);
-      ctx.fillText('「本人に操作を頑張らせない。何もない平時のうちに未来の自分の盾を作る。」', 170, 580);
-      ctx.fillText('「助けを求める行為そのものが最も高い認知負荷になる矛盾をなくす。」', 170, 640);
-
-      // Technical Showcase: Emergency Shield Active Card
-      ctx.fillStyle = 'rgba(26, 14, 12, 0.92)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
-      else ctx.rect(140, 720, w - 280, 940);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(235, 60, 40, 0.65)';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-
-      // Shield Active Red Badge
-      ctx.fillStyle = 'rgba(220, 40, 20, 0.25)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 760, 360, 54, 12);
-      else ctx.rect(180, 760, 360, 54);
-      ctx.fill();
-      ctx.font = '800 26px "Inter", sans-serif';
-      ctx.fillStyle = '#ff4433';
-      ctx.fillText('SHIELD PROTOCOL ACTIVE', 204, 796);
-
-      // Big Emergency Message
-      ctx.font = '700 46px ' + handFont;
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText('「声が出せません。静かな場所へ移動させてください」', 180, 890);
-
-      // 4 Key Architectural Points
-      const specs1 = [
-        '発作時の操作負荷ゼロ：ワンタップで全画面SOSカードに切替',
-        '視野狭窄に対応する高コントラスト黒赤デュアルカラー設計',
-        '触覚（Haptics）フィードバックにより視覚遮断時も起動を確認可能',
-        'オフライン完結：機内モードでもローカルストレージから即座に起動'
-      ];
-      ctx.font = '400 32px "Inter", "Noto Sans JP", sans-serif';
-      specs1.forEach((text, i) => {
-        ctx.fillStyle = '#4ade80';
-        ctx.fillText('✓', 180, 990 + i * 75);
-        ctx.fillStyle = 'rgba(248, 239, 224, 0.90)';
-        ctx.fillText(text, 225, 990 + i * 75);
-      });
-
-      // Wireframe QR Box
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(180, 1330, 220, 220);
-      ctx.font = '500 24px ' + codeFont;
-      ctx.fillStyle = '#8e867b';
-      ctx.fillText('EMERGENCY QR', 205, 1435);
-      ctx.fillText('(OFFLINE V-CARD)', 195, 1475);
-
-      ctx.font = '400 32px ' + handFont;
-      ctx.fillStyle = 'rgba(248, 239, 224, 0.85)';
-      ctx.fillText('救急隊員・周囲の人へ渡すだけで完結するエマージェンシースクリーン。', 440, 1400);
-      ctx.fillText('日常の安心を、コードで具体化する。', 440, 1470);
-
-    } else if (slideIndex === 2) {
-      // --- SLIDE 2: MOFTAIL STOREFRONT ---
-      ctx.font = titleFont;
-      ctx.fillStyle = '#f8efe0';
-      ctx.fillText('自分の「良い」ではなく、', 140, 220);
-      ctx.fillText('市場が実際に動いた数字で意思決定する。', 140, 290);
-
-      ctx.font = subFont;
-      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
-      ctx.fillText('米国向けD2Cブランドを実運用し、主観とマーケットの冷徹な事実の差を直視した。', 140, 360);
-
-      // Thinking Log Card
-      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
-      else ctx.rect(140, 420, w - 280, 260);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '700 22px "Inter", sans-serif';
-      ctx.fillStyle = '#ff7733';
-      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
-
-      ctx.font = '400 34px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('「『自分の良い』≠『市場の数字』」', 170, 520);
-      ctx.fillText('「一番綺麗なものを作るな。人を動かすものを作れ。」', 170, 580);
-      ctx.fillText('「在庫リスクを持たずに最速で仮説をぶつけ、リアルな行動データを得る。」', 170, 640);
-
-      // Technical Showcase: Supply Chain & Market Validation
-      ctx.fillStyle = 'rgba(18, 23, 30, 0.92)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
-      else ctx.rect(140, 720, w - 280, 940);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(110, 231, 183, 0.50)';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-
-      ctx.fillStyle = 'rgba(110, 231, 183, 0.20)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 760, 380, 54, 12);
-      else ctx.rect(180, 760, 380, 54);
-      ctx.fill();
-      ctx.font = '800 26px "Inter", sans-serif';
-      ctx.fillStyle = '#6ee7b7';
-      ctx.fillText('ZERO-INVENTORY PIPELINE', 204, 796);
-
-      // Diagram Box
-      ctx.fillStyle = 'rgba(10, 13, 18, 0.85)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 850, w - 360, 200, 16);
-      else ctx.rect(180, 850, w - 360, 200);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '600 28px ' + codeFont;
-      ctx.fillStyle = '#9cdcfe';
-      ctx.fillText('[ Shopify Storefront ]', 220, 920);
-      ctx.fillStyle = '#ce9178';
-      ctx.fillText('── (REST Webhook) ──>', 570, 920);
-      ctx.fillStyle = '#4ade80';
-      ctx.fillText('[ Printify POD ]', 980, 920);
-
-      ctx.font = '400 24px "Inter", sans-serif';
-      ctx.fillStyle = '#8e867b';
-      ctx.fillText('US Direct-to-Consumer / Zero Upfront Capital / Global Automated Fulfillment', 220, 980);
-
-      // 4 Key Learnings
-      const specs2 = [
-        '在庫リスク完全ゼロ：注文が入ってから自動オンデマンド製造＆即発送',
-        'カート離脱（Abandonment）要因の特定：配送コスト摩擦（$8.99+）を検出',
-        '主観的なこだわりを捨て、顧客が実際に支払う価格感度を計測',
-        'デザインが優れているだけでは売れないというビジネスの冷徹な現実を体得'
-      ];
-      ctx.font = '400 32px "Inter", "Noto Sans JP", sans-serif';
-      specs2.forEach((text, i) => {
-        ctx.fillStyle = '#6ee7b7';
-        ctx.fillText('✓', 180, 1150 + i * 75);
-        ctx.fillStyle = 'rgba(248, 239, 224, 0.90)';
-        ctx.fillText(text, 225, 1150 + i * 75);
-      });
-
-      ctx.font = '600 36px ' + handFont;
-      ctx.fillStyle = '#ff9944';
-      ctx.fillText('「失敗を恐れず市場に晒す。真実の答えはユーザーのクリックにしかない。」', 180, 1530);
-
-    } else if (slideIndex === 3) {
-      // --- SLIDE 3: MOFTAIL META ADS ---
-      ctx.font = titleFont;
-      ctx.fillStyle = '#f8efe0';
-      ctx.fillText('変える要素を1つに絞り、', 140, 220);
-      ctx.fillText('クリックと行動の差をデータで掴む。', 140, 290);
-
-      ctx.font = subFont;
-      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
-      ctx.fillText('Wood（木目）がCTR 5.26%を記録し主軸へ昇格。主観ではなく実測データが次を決める。', 140, 360);
-
-      // Thinking Log Card
-      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
-      else ctx.rect(140, 420, w - 280, 260);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '700 22px "Inter", sans-serif';
-      ctx.fillStyle = '#ff7733';
-      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
-
-      ctx.font = '400 34px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('「変数を『素材の質感』1点に限定してMeta広告を出稿。明確な差が出た。」', 170, 520);
-      ctx.fillText('「自分が推していたCork（コルク）が最下位。直感は平気で裏切る。」', 170, 580);
-      ctx.fillText('「感覚で議論するな。データで次の手を決める。」', 170, 640);
-
-      // Technical Showcase: Real A/B Test CTR Bar Chart & Stats
-      ctx.fillStyle = 'rgba(16, 22, 32, 0.92)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
-      else ctx.rect(140, 720, w - 280, 940);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(96, 165, 250, 0.55)';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-
-      ctx.fillStyle = 'rgba(96, 165, 250, 0.22)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 760, 360, 54, 12);
-      else ctx.rect(180, 760, 360, 54);
-      ctx.fill();
-      ctx.font = '800 26px "Inter", sans-serif';
-      ctx.fillStyle = '#60a5fa';
-      ctx.fillText('REAL CAMPAIGN METRICS', 204, 796);
-
-      // Stat row
-      ctx.font = '700 32px ' + codeFont;
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText('TOTAL SPEND: $597.87', 180, 870);
-      ctx.fillStyle = '#9cdcfe';
-      ctx.fillText('·  ATC: 78件  ·  PURCHASE: 0件', 640, 870);
-
-      // CTR Bar Chart
-      const barY = 940;
-      // 1. Wood
-      ctx.font = '600 30px "Inter", sans-serif';
-      ctx.fillStyle = '#4ade80';
-      ctx.fillText('WOOD (木目調)', 180, barY);
-      ctx.fillStyle = 'rgba(74, 222, 128, 0.25)';
-      ctx.fillRect(440, barY - 26, 680, 36);
-      ctx.fillStyle = '#4ade80';
-      ctx.fillRect(440, barY - 26, 680 * (5.26 / 6.0), 36);
-      ctx.fillText('5.26% CTR  [★ WINNER]', 1080, barY);
-
-      // 2. Matcha
-      ctx.font = '600 30px "Inter", sans-serif';
-      ctx.fillStyle = '#60a5fa';
-      ctx.fillText('MATCHA (抹茶調)', 180, barY + 80);
-      ctx.fillStyle = 'rgba(96, 165, 250, 0.25)';
-      ctx.fillRect(440, barY + 80 - 26, 680, 36);
-      ctx.fillStyle = '#60a5fa';
-      ctx.fillRect(440, barY + 80 - 26, 680 * (4.21 / 6.0), 36);
-      ctx.fillText('4.21% CTR', 1080, barY + 80);
-
-      // 3. Cork
-      ctx.font = '600 30px "Inter", sans-serif';
-      ctx.fillStyle = '#8e867b';
-      ctx.fillText('CORK (コルク調)', 180, barY + 160);
-      ctx.fillStyle = 'rgba(142, 134, 123, 0.25)';
-      ctx.fillRect(440, barY + 160 - 26, 680, 36);
-      ctx.fillStyle = '#8e867b';
-      ctx.fillRect(440, barY + 160 - 26, 680 * (2.75 / 6.0), 36);
-      ctx.fillText('2.75% CTR', 1080, barY + 160);
-
-      // Findings Box
-      ctx.fillStyle = 'rgba(10, 14, 22, 0.85)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 1240, w - 360, 220, 16);
-      else ctx.rect(180, 1240, w - 360, 220);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '500 28px "Inter", "Noto Sans JP", sans-serif';
-      ctx.fillStyle = 'rgba(248, 239, 224, 0.92)';
-      ctx.fillText('・変数を「素材の質感」のみに限定したため、勝因がクリアに特定できた。', 210, 1295);
-      ctx.fillText('・木目がコルクの1.91倍の反応を獲得。クリエイティブの主軸へ即時昇格。', 210, 1355);
-      ctx.fillText('・78件のカート追加（ATC）に対し購入ゼロ：決済UIの配送摩擦を特定。', 210, 1415);
-
-      ctx.font = '600 36px ' + handFont;
-      ctx.fillStyle = '#ffaa33';
-      ctx.fillText('「データは嘘をつかない。冷徹な数字こそが、次に進む勇気をくれる。」', 180, 1540);
-
-    } else if (slideIndex === 4) {
-      // --- SLIDE 4: MOFTAIL POD ---
-      ctx.font = titleFont;
-      ctx.fillStyle = '#f8efe0';
-      ctx.fillText('綺麗さだけでは人は動かない。', 140, 220);
-      ctx.fillText('思想を事業として成立させるために検証を重ねる。', 140, 290);
-
-      ctx.font = subFont;
-      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
-      ctx.fillText('AI時代に自分を取り戻す『Balance of Life』を掲げ、勝つビジュアルと事業性を両立。', 140, 360);
-
-      // Thinking Log Card
-      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
-      else ctx.rect(140, 420, w - 280, 260);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '700 22px "Inter", sans-serif';
-      ctx.fillStyle = '#ff7733';
-      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
-
-      ctx.font = '400 34px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('"The best mockup is not the prettiest one. It is the one that moves people to act."', 170, 520);
-      ctx.fillText('「AI時代だからこそ、静けさと調和を服とビジュアルに宿す。」', 170, 580);
-      ctx.fillText('「思想だけでは事業にならない。だから数字で証明する。」', 170, 640);
-
-      // Technical Showcase: Brand Philosophy & Viability
-      ctx.fillStyle = 'rgba(22, 20, 28, 0.92)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
-      else ctx.rect(140, 720, w - 280, 940);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(165, 180, 252, 0.55)';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-
-      ctx.fillStyle = 'rgba(165, 180, 252, 0.22)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 760, 360, 54, 12);
-      else ctx.rect(180, 760, 360, 54);
-      ctx.fill();
-      ctx.font = '800 26px "Inter", sans-serif';
-      ctx.fillStyle = '#a5b4fc';
-      ctx.fillText('PHILOSOPHY & PROOF', 204, 796);
-
-      // Quote Banner
-      ctx.fillStyle = 'rgba(12, 10, 16, 0.85)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 850, w - 360, 160, 16);
-      else ctx.rect(180, 850, w - 360, 160);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(165, 180, 252, 0.3)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '700 36px "Inter", sans-serif';
-      ctx.fillStyle = '#ffeed8';
-      ctx.fillText('“ PRETTY ISN’T ENOUGH. MAKE IT MOVE PEOPLE. ”', 220, 940);
-
-      // 3 Pillars
-      const pillars = [
-        { label: '01. 静けさと調和', desc: 'AI時代に押し寄せる情報ノイズに対し、生活空間に溶け込む上質な世界観を追求。' },
-        { label: '02. 勝つビジュアル', desc: '単なる服の画像ではなく、身に纏ったときの安心感や手触りまで想起させる演出。' },
-        { label: '03. 思想の事業化', desc: 'どれほど美しい思想も、売上が立たなければ続かない。持続可能な供給網で支える。' }
-      ];
-
-      pillars.forEach((p, i) => {
-        const py = 1070 + i * 130;
-        ctx.fillStyle = '#a5b4fc';
-        ctx.font = '700 30px "Inter", "Noto Sans JP", sans-serif';
-        ctx.fillText(p.label, 180, py);
-        ctx.fillStyle = 'rgba(248, 239, 224, 0.88)';
-        ctx.font = '400 28px "Inter", "Noto Sans JP", sans-serif';
-        ctx.fillText(p.desc, 180, py + 46);
-      });
-
-      ctx.font = '600 36px ' + handFont;
-      ctx.fillStyle = '#ffaa33';
-      ctx.fillText('「美学と収益性は対立しない。両者が揃ったとき、ブランドは永続する。」', 180, 1530);
-
-    } else if (slideIndex === 5) {
-      // --- SLIDE 5: SHOPIFY THEME CLIENT WORK ---
-      ctx.font = titleFont;
-      ctx.fillStyle = '#f8efe0';
-      ctx.fillText('「仕様です」という回答の違和感を突き詰め、', 140, 220);
-      ctx.fillText('修正コードを添えて時給30ドルの有償案件に変えた。', 140, 290);
-
-      ctx.font = subFont;
-      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
-      ctx.fillText('ストア運営で見つけた不具合を自らコード解析し、海外開発元から14タスクを受注。', 140, 360);
-
-      // Thinking Log Card
-      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
-      else ctx.rect(140, 420, w - 280, 260);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '700 22px "Inter", sans-serif';
-      ctx.fillStyle = '#ff7733';
-      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
-
-      ctx.font = '400 34px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('「バリアント変更で価格が変わらない。『仕様です』の回答への強い違和感。」', 170, 520);
-      ctx.fillText('「原因を特定し、英語レポート ＋ 再現手順 ＋ 修正コードを添えて送付。」', 170, 580);
-      ctx.fillText('「開発元から時給30ドルの有償トライアル打診 -> 14個のタスクを任されることに。」', 170, 640);
-
-      // Technical Showcase: Liquid Bug Code & Freelance Result
-      ctx.fillStyle = 'rgba(16, 22, 30, 0.92)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
-      else ctx.rect(140, 720, w - 280, 940);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(96, 165, 250, 0.60)';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-
-      ctx.fillStyle = 'rgba(96, 165, 250, 0.22)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 760, 440, 54, 12);
-      else ctx.rect(180, 760, 440, 54);
-      ctx.fill();
-      ctx.font = '800 26px "Inter", sans-serif';
-      ctx.fillStyle = '#60a5fa';
-      ctx.fillText('SHOPIFY THEME ENGINEERING', 204, 796);
-
-      // Code Editor Box
-      ctx.fillStyle = '#0c1017';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 850, w - 360, 360, 16);
-      else ctx.rect(180, 850, w - 360, 360);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.font = '500 28px ' + codeFont;
-      ctx.fillStyle = '#8e857b';
-      ctx.fillText('01  {% comment %} price.liquid DOM Selector Fix {% endcomment %}', 210, 905);
-      ctx.fillStyle = '#569cd6';
-      ctx.fillText('02  assign', 210, 955);
-      ctx.fillStyle = '#9cdcfe';
-      ctx.fillText('target_variant = product.selected_or_first_available_variant', 320, 955);
-      ctx.fillStyle = '#ce9178';
-      ctx.fillText('03  <div class="price price--large" id="price-{{ section.id }}" data-instant-sync="true">', 210, 1005);
-      ctx.fillStyle = '#dcdcaa';
-      ctx.fillText('04    data-instant-variant-sync="true"', 250, 1055);
-      ctx.fillStyle = '#ce9178';
-      ctx.fillText('05    <span class="price-item price-item--regular">', 250, 1105);
-      ctx.fillStyle = '#4ade80';
-      ctx.fillText('06      {{ target_variant.price | money }}  <-- DOMセレクター修正！', 290, 1155);
-
-      // Client Work Outcome Box
-      ctx.fillStyle = 'rgba(10, 14, 22, 0.85)';
-      ctx.beginPath();
-      if (ctx.roundRect) ctx.roundRect(180, 1250, w - 360, 180, 16);
-      else ctx.rect(180, 1250, w - 360, 180);
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(74, 222, 128, 0.35)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      ctx.font = '700 32px "Inter", sans-serif';
-      ctx.fillStyle = '#4ade80';
-      ctx.fillText('★ $30/H PAID FREELANCE TRIAL · 14 TASKS COMPLETED', 210, 1310);
-
-      ctx.font = '400 28px "Inter", "Noto Sans JP", sans-serif';
-      ctx.fillStyle = 'rgba(248, 239, 224, 0.90)';
-      ctx.fillText('海外開発元のCTOから「うちのコードを触ってみないか？」と直接オファーを獲得。', 210, 1370);
-
-      ctx.font = '600 36px ' + handFont;
-      ctx.fillStyle = '#ffaa33';
-      ctx.fillText('「技術は自分のためだけでなく、誰かの事業を前へ進めるために使える。」', 180, 1530);
-    }
-
-    // 5. Global Footer on iPad Screen
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(100, 1860);
-    ctx.lineTo(w - 100, 1860);
-    ctx.stroke();
-
-    ctx.font = '600 24px "Inter", sans-serif';
-    ctx.fillStyle = '#8e867b';
-    ctx.fillText('RYUNOSUKE NAKAMURA · FACT BASE 2026', 140, 1920);
-
-    // Slide indicator dots
-    for (let d = 1; d <= 5; d++) {
-      ctx.beginPath();
-      ctx.arc(w - 240 + (d - 1) * 32, 1912, d === slideIndex ? 8 : 4, 0, Math.PI * 2);
-      ctx.fillStyle = d === slideIndex ? '#ff7733' : 'rgba(255, 255, 255, 0.25)';
-      ctx.fill();
-    }
-
-    ipadScreenTex.needsUpdate = true;
-  }
-
-  function updateIpadSlide(idx) {
-    if (currentIpadSlide === idx) return;
-    currentIpadSlide = idx;
-    renderIpadScreen(idx);
-  }
-
-  // Initial render of default slide (Apple Standby in Hero)
-  renderIpadScreen(0);
-
-  if (document.fonts) {
-    document.fonts.load('32px "Zen Kurenaido"').then(() => {
-      renderIpadScreen(currentIpadSlide);
-    });
-    document.fonts.load('32px "Caveat"').then(() => {
-      renderIpadScreen(currentIpadSlide);
-    });
-    document.fonts.ready.then(() => {
-      renderIpadScreen(currentIpadSlide);
-    });
-  }
+  /* --- 6. Architectural Nordic Study Room (Reference: media_1788589474255.png) --- */
+  // 6a. Nordic Smoked Oak Plank Hardwood Floor (Deep rich warm wood with dark grooves)
   const floorTex = createHardwoodFloorTexture();
   const floorMat = new THREE.MeshStandardMaterial({
     map: floorTex,
@@ -3825,16 +2562,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Collect all unique materials across the entire deskGroup to support smooth gradual manifestation
   const deskMaterials = new Set();
   deskGroup.traverse((child) => {
-    // Exclude iPad and Apple Pencil so their screen texture, laser decals, and shaders are never zeroed
-    if (child === ipadMasterGroup) return;
-    let p = child.parent;
-    let isInsideIpad = false;
-    while (p) {
-      if (p === ipadMasterGroup) { isInsideIpad = true; break; }
-      p = p.parent;
-    }
-    if (isInsideIpad) return;
-
     if (child.isMesh && child.material) {
       if (Array.isArray(child.material)) {
         child.material.forEach(m => deskMaterials.add(m));
@@ -3848,7 +2575,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (m !== contactShadowMaterial) {
       m.transparent = true;
       m.opacity = 0.0;
-      if (m !== clockGlassMat && m !== frameGlassMat && m !== standShadowMat) {
+      if (m !== clockGlassMat && m !== frameGlassMat) {
         m.depthWrite = true;
       }
     }
@@ -4107,10 +2834,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOpen = document.getElementById('btn-open-macbook');
   const navItems = document.querySelectorAll('.nav-links .nav-item');
 
-  let currentActiveNav = null;
   function updateActiveNav(targetHref) {
-    if (currentActiveNav === targetHref) return;
-    currentActiveNav = targetHref;
     navItems.forEach(item => {
       if (item.getAttribute('href') === targetHref) item.classList.add('active');
       else item.classList.remove('active');
@@ -4126,17 +2850,11 @@ document.addEventListener('DOMContentLoaded', () => {
     panelShopifyTheme
   ];
 
-  let currentActivePanel = null;
   function setPanelActive(panel) {
-    if (currentActivePanel === panel) return;
-    currentActivePanel = panel;
     allPanels.forEach(p => {
       if (!p) return;
-      if (p === panel) {
-        p.classList.add('active');
-      } else {
-        p.classList.remove('active');
-      }
+      if (p === panel) p.classList.add('active');
+      else p.classList.remove('active');
     });
   }
 
@@ -4154,7 +2872,7 @@ document.addEventListener('DOMContentLoaded', () => {
       trigger: scrollStage,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 0.65,
+      scrub: 1.2,
       onUpdate: (self) => {
         const p = self.progress;
 
@@ -4162,32 +2880,26 @@ document.addEventListener('DOMContentLoaded', () => {
           setPanelActive(panelHero);
           updateScreenTexture(textures.lockScreen, 0xffeed8);
           updateActiveNav('#panel-hero');
-          updateIpadSlide(0);
         } else if (p >= 0.27 && p < 0.42) {
           setPanelActive(panelAnchor);
           updateScreenTexture(textures.anchor, 0x82b4ff);
           updateActiveNav('#scroll-stage');
-          updateIpadSlide(1);
         } else if (p >= 0.42 && p < 0.55) {
           setPanelActive(panelMoftailStorefront);
           updateScreenTexture(textures.shopify, 0x6ee7b7);
           updateActiveNav('#scroll-stage');
-          updateIpadSlide(2);
         } else if (p >= 0.55 && p < 0.68) {
           setPanelActive(panelMoftailAds);
           updateScreenTexture(textures.ads, 0x60a5fa);
           updateActiveNav('#scroll-stage');
-          updateIpadSlide(3);
         } else if (p >= 0.68 && p < 0.81) {
           setPanelActive(panelMoftailPod);
           updateScreenTexture(textures.printify, 0xa5b4fc);
           updateActiveNav('#scroll-stage');
-          updateIpadSlide(4);
         } else {
           setPanelActive(panelShopifyTheme);
           updateScreenTexture(textures.shopifyTheme, 0x60a5fa);
           updateActiveNav('#scroll-stage');
-          updateIpadSlide(5);
         }
       }
     }
@@ -4195,8 +2907,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // =========================================================================
   // Step 1a: Mid-Air Rotation & Subtle Dark Desk Manifestation (0.0 -> 0.80s)
-  // Mac & iPad smoothly rotate horizontally in mid-air in tandem (~165° spin)!
-  // Simultaneously, the desk begins as a very faint, dark silhouette in deep shadow.
+  // Mac smoothly rotates in mid-air from diagonal to horizontal (staying high!).
+  // Simultaneously, the desk begins as a very faint, dark silhouette in deep shadow ("暗くして存在感を薄くする").
+  // Desk lighting stays completely OFF.
   // =========================================================================
   tl.to(macState, {
     rotX: 0.06,         // Rotates to level horizontal in mid-air
@@ -4207,17 +2920,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cameraZ: 4.60,      // Begins expanding view
     cameraY: 0.50,
     lookOffsetY: 0.26,
-    ease: 'power1.inOut',
-    duration: 0.80
-  }, 0);
-
-  tl.to(ipadState, {
-    rotX: 0.04,         // Leveling pitch
-    rotY: -0.03,        // Rotates horizontally in unison with Mac (~165° spin)!
-    rotZ: 0.0,
-    posX: -0.68,        // Glides outward towards the left
-    posY: 0.65,         // Stays elevated in mid-air
-    posZ: -0.16,        // Advances towards foreground
     ease: 'power1.inOut',
     duration: 0.80
   }, 0);
@@ -4235,14 +2937,6 @@ document.addEventListener('DOMContentLoaded', () => {
     duration: 0.80
   }, 0);
 
-  // Fade out Hero typography cleanly as soon as scrolling begins so it never overlaps the desk or docked iPad
-  tl.to(panelHero, {
-    opacity: 0,
-    y: -40,
-    ease: 'power1.out',
-    duration: 0.50
-  }, 0.05);
-
   // =========================================================================
   // Step 1b: Generous Flight & Gentle Cushioned Landing ("フワッとおく", 0.80 -> 2.15s)
   // The Mac travels down through a generous vertical distance (~35cm),
@@ -4255,17 +2949,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cameraY: 0.58,
     lookOffsetY: 0.36,
     ease: 'power2.out', // Smooth cushioned deceleration — "フワッとおく"
-    duration: 1.35
-  }, 0.80);
-
-  tl.to(ipadState, {
-    posX: -0.92,        // Docks softly onto magnetic studio stand position
-    posY: 0.78,
-    posZ: 0.08,
-    rotX: -0.04,        // Upright studio stand tilt
-    rotY: 0.0,          // Perfectly forward facing
-    rotZ: 0.0,
-    ease: 'power2.out',
     duration: 1.35
   }, 0.80);
 
@@ -4327,35 +3010,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 2.75);
 
   // =========================================================================
-  // Step 2: Dynamic Dual-Screen Presentation of Anchor (3.65 -> 5.75s)
-  // iPad on left shows engineering notes, Mac on right shows live web app
+  // Step 2: Dynamic Zoom-in Dive into Anchor (3.65 -> 5.75s)
+  // Camera dives into the screen, making the code & architecture prominent
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.04,
-    rotY: -0.06,
-    cameraZ: 3.65,      // Dual-screen workstation view showing both iPad & MacBook in crisp, complete detail
-    cameraY: 0.32,
-    lookOffsetY: 0.78,  // Screen-centered vertical framing for both displays
+    rotX: 0.05,
+    rotY: -0.03,
+    cameraZ: 3.16,      // Close-up hero screen view between Left & Right cards
+    cameraY: 0.22,
+    lookOffsetY: 0.44,  // Screen-centered vertical framing
     posY: -0.46,
     posX: 0.00,
     ease: 'power2.inOut',
     duration: 2.10
   }, 3.65);
 
-  tl.to(ipadState, {
-    posX: -0.92,
-    posY: 0.78,
-    posZ: 0.08,
-    rotX: -0.04,
-    rotY: 0.0,
-    rotZ: 0.0,
-    ease: 'power2.inOut',
-    duration: 2.10
-  }, 3.65);
-
   tl.to(deskState, {
-    rotX: 0.04,
-    rotY: -0.06,
+    rotX: 0.05,
+    rotY: -0.03,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -4369,11 +3041,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Subtle right perspective shift showcasing midnight unibody & storefront
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.04,
-    rotY: -0.04,         // Elegant slight tilt showcasing midnight aluminum anodized finish
-    cameraZ: 3.65,
-    cameraY: 0.32,
-    lookOffsetY: 0.78,
+    rotX: 0.06,
+    rotY: 0.03,         // Elegant slight tilt showcasing midnight aluminum anodized finish
+    cameraZ: 3.16,
+    cameraY: 0.22,
+    lookOffsetY: 0.44,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -4381,8 +3053,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 5.75);
 
   tl.to(deskState, {
-    rotX: 0.04,
-    rotY: -0.04,
+    rotX: 0.06,
+    rotY: 0.03,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -4393,14 +3065,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // =========================================================================
   // Step 3b: Moftail Phase 2 - Meta Ads & Demand Verification (7.45 -> 9.15s)
-  // Subtle angle change highlighting the analytics dashboard & iPad A/B CTR chart
+  // Subtle left tilt as user examines real ad analytics ($597.87 / 78 ATC / 0 purchase)
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.04,
-    rotY: -0.06,        // Nuanced angle change
-    cameraZ: 3.62,
-    cameraY: 0.32,
-    lookOffsetY: 0.78,
+    rotX: 0.05,
+    rotY: -0.02,        // Nuanced angle change highlighting the analytics dashboard
+    cameraZ: 3.14,
+    cameraY: 0.22,
+    lookOffsetY: 0.44,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -4408,8 +3080,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 7.45);
 
   tl.to(deskState, {
-    rotX: 0.04,
-    rotY: -0.06,
+    rotX: 0.05,
+    rotY: -0.02,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -4420,14 +3092,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // =========================================================================
   // Step 3c: Moftail Phase 3 - Supply POD & Birding Pivot (9.15 -> 10.85s)
-  // Balanced centered framing showcasing Printify supply network & brand philosophy
+  // Balanced centered framing showcasing Printify supply network & market pivot
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.04,
-    rotY: -0.05,         // Centered balanced view
-    cameraZ: 3.65,
-    cameraY: 0.32,
-    lookOffsetY: 0.78,
+    rotX: 0.06,
+    rotY: 0.01,         // Centered balanced view
+    cameraZ: 3.16,
+    cameraY: 0.22,
+    lookOffsetY: 0.44,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -4435,8 +3107,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 9.15);
 
   tl.to(deskState, {
-    rotX: 0.04,
-    rotY: -0.05,
+    rotX: 0.06,
+    rotY: 0.01,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -4449,11 +3121,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Step 4: Direct frontal close-up on Shopify Theme Engineering (10.85 -> 12.65s)
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.03,
-    rotY: -0.05,        // Direct frontal alignment to maximize readability
-    cameraZ: 3.62,
-    cameraY: 0.32,
-    lookOffsetY: 0.78,
+    rotX: 0.04,
+    rotY: -0.01,        // Direct frontal alignment to maximize readability
+    cameraZ: 3.14,
+    cameraY: 0.22,
+    lookOffsetY: 0.44,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -4461,8 +3133,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 10.85);
 
   tl.to(deskState, {
-    rotX: 0.03,
-    rotY: -0.05,
+    rotX: 0.04,
+    rotY: -0.01,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -4478,8 +3150,8 @@ document.addEventListener('DOMContentLoaded', () => {
     rotX: 0.08,
     rotY: 0.03,
     cameraZ: 4.80,      // Pull back to showcase whole creator workspace
-    cameraY: 0.70,
-    lookOffsetY: 0.55,
+    cameraY: 0.52,
+    lookOffsetY: 0.36,
     posY: -0.46,
     posX: 0.00,
     ease: 'power2.out',
@@ -4525,76 +3197,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const clock = new THREE.Clock();
 
-  // Click-to-Focus Raycaster (Interact with iPad or MacBook)
-  const raycaster = new THREE.Raycaster();
-  const mouseVec = new THREE.Vector2();
-  let focusTarget = null; // 'ipad' | 'mac' | null
-
-  const currentCamPos = new THREE.Vector3(0, macState.cameraY, macState.cameraZ);
-  const currentLookTarget = new THREE.Vector3(0, 0.14, 0);
-
-  window.addEventListener('click', (e) => {
-    if (e.target.closest('a, button, input, textarea, select, nav, .header-minimal')) return;
-    if (macState.lidOpen < 0.3) return;
-
-    mouseVec.x = (e.clientX / window.innerWidth) * 2 - 1;
-    mouseVec.y = -(e.clientY / window.innerHeight) * 2 + 1;
-    raycaster.setFromCamera(mouseVec, camera);
-
-    const ipadHits = raycaster.intersectObjects(ipadMasterGroup.children, true);
-    if (ipadHits.length > 0) {
-      focusTarget = (focusTarget === 'ipad') ? null : 'ipad';
-      return;
-    }
-
-    const macHits = raycaster.intersectObjects(macRoot.children, true);
-    if (macHits.length > 0) {
-      focusTarget = (focusTarget === 'mac') ? null : 'mac';
-      return;
-    }
-
-    if (focusTarget !== null) {
-      focusTarget = null;
-    }
-  });
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && focusTarget !== null) {
-      focusTarget = null;
-    }
-  });
-
-  let prevScrollPos = window.scrollY;
-  let prevDeskOpacity = -1;
-  window.addEventListener('scroll', () => {
-    if (focusTarget !== null && Math.abs(window.scrollY - prevScrollPos) > 40) {
-      focusTarget = null;
-    }
-    prevScrollPos = window.scrollY;
-  }, { passive: true });
-
-  // Physics-damped momentum state variables for organic, continuous motion
-  let smoothMacX = macState.posX;
-  let smoothMacY = macState.posY;
-  let smoothMacRotX = macState.rotX;
-  let smoothMacRotY = macState.rotY;
-  let smoothMacRotZ = macState.rotZ;
-  let smoothLidOpen = macState.lidOpen;
-
-  let smoothIpadX = ipadState.posX;
-  let smoothIpadY = ipadState.posY;
-  let smoothIpadZ = ipadState.posZ;
-  let smoothIpadRotX = ipadState.rotX;
-  let smoothIpadRotY = ipadState.rotY;
-  let smoothIpadRotZ = ipadState.rotZ;
-
-  let smoothDeskX = deskState.posX;
-  let smoothDeskY = deskState.posY;
-  let smoothDeskZ = deskState.posZ;
-  let smoothDeskRotX = deskState.rotX;
-  let smoothDeskRotY = deskState.rotY;
-  let smoothDeskRotZ = deskState.rotZ;
-
   function animate() {
     requestAnimationFrame(animate);
 
@@ -4604,89 +3206,35 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseX += (targetMouseX - mouseX) * 0.05;
     mouseY += (targetMouseY - mouseY) * 0.05;
 
-    // Dual-screen layout: MacBook smoothly glides to right (+0.70) as the lid opens, balancing the propped iPad on the left
+    // In the 3-column split layout (Left: Primary Headline / Center: 3D MacBook Air / Right: Subtext),
+    // the MacBook and desk remain perfectly centered at posX: 0.00.
     const isMobile = camera.aspect < 1.15;
-    const smoothLidProgress = THREE.MathUtils.smoothstep(macState.lidOpen, 0.0, 1.0);
-    const desktopOffset = isMobile ? 0.0 : 0.70 * smoothLidProgress;
+    const desktopOffset = 0.0;
 
-    // Zero-G ambient breathing when floating in mid-air (cushions softly to zero upon landing on desk)
-    const floatWeight = THREE.MathUtils.clamp((macState.posY - (-0.46)) / 0.84, 0.0, 1.0);
-    const elapsedTime = clock.getElapsedTime();
-    const floatBobY = Math.sin(elapsedTime * 1.4) * 0.016 * floatWeight;
-    const floatTiltZ = Math.cos(elapsedTime * 1.0) * 0.008 * floatWeight;
-    const floatTiltX = Math.sin(elapsedTime * 0.9) * 0.005 * floatWeight;
+    // Rotate and position the MacBook master group
+    macRoot.rotation.x = macState.rotX + mouseY;
+    macRoot.rotation.y = macState.rotY + mouseX;
+    macRoot.rotation.z = macState.rotZ;
+    macRoot.position.x = macState.posX + desktopOffset;
+    macRoot.position.y = macState.posY;
 
-    // Target positions and rotations with organic momentum
-    const targetMacX = macState.posX + desktopOffset;
-    const targetMacY = macState.posY + floatBobY;
-    const targetMacRotX = macState.rotX + mouseY + floatTiltX;
-    const targetMacRotY = macState.rotY + mouseX;
-    const targetMacRotZ = macState.rotZ + floatTiltZ;
-
-    const modelDamping = 0.12;
-    smoothMacX += (targetMacX - smoothMacX) * modelDamping;
-    smoothMacY += (targetMacY - smoothMacY) * modelDamping;
-    smoothMacRotX += (targetMacRotX - smoothMacRotX) * modelDamping;
-    smoothMacRotY += (targetMacRotY - smoothMacRotY) * modelDamping;
-    smoothMacRotZ += (targetMacRotZ - smoothMacRotZ) * modelDamping;
-
-    macRoot.scale.setScalar(1.0);
-    macRoot.position.set(smoothMacX, smoothMacY, 0);
-    macRoot.rotation.set(smoothMacRotX, smoothMacRotY, smoothMacRotZ);
-
-    // Contact shadow follows MacBook smoothly
-    if (contactShadowMesh) {
-      contactShadowMesh.position.x = smoothMacX;
-    }
-
-    // iPad follows with synchronized momentum & zero-G drift
-    const targetIpadX = isMobile ? (ipadState.posX * 0.75) : ipadState.posX;
-    const targetIpadY = ipadState.posY + floatBobY;
-    const targetIpadZ = ipadState.posZ;
-    const targetIpadRotX = ipadState.rotX + mouseY + floatTiltX;
-    const targetIpadRotY = ipadState.rotY + mouseX;
-    const targetIpadRotZ = ipadState.rotZ + floatTiltZ;
-
-    smoothIpadX += (targetIpadX - smoothIpadX) * modelDamping;
-    smoothIpadY += (targetIpadY - smoothIpadY) * modelDamping;
-    smoothIpadZ += (targetIpadZ - smoothIpadZ) * modelDamping;
-    smoothIpadRotX += (targetIpadRotX - smoothIpadRotX) * modelDamping;
-    smoothIpadRotY += (targetIpadRotY - smoothIpadRotY) * modelDamping;
-    smoothIpadRotZ += (targetIpadRotZ - smoothIpadRotZ) * modelDamping;
-
-    ipadMasterGroup.position.set(smoothIpadX, smoothIpadY, smoothIpadZ);
-    ipadMasterGroup.rotation.set(smoothIpadRotX, smoothIpadRotY, smoothIpadRotZ);
-
-    // Desk follows with synchronized momentum damping
-    const targetDeskX = deskState.posX;
-    const targetDeskY = deskState.posY;
-    const targetDeskZ = deskState.posZ;
-    const targetDeskRotX = deskState.rotX + mouseY;
-    const targetDeskRotY = deskState.rotY + mouseX;
-    const targetDeskRotZ = deskState.rotZ;
-
-    smoothDeskX += (targetDeskX - smoothDeskX) * modelDamping;
-    smoothDeskY += (targetDeskY - smoothDeskY) * modelDamping;
-    smoothDeskZ += (targetDeskZ - smoothDeskZ) * modelDamping;
-    smoothDeskRotX += (targetDeskRotX - smoothDeskRotX) * modelDamping;
-    smoothDeskRotY += (targetDeskRotY - smoothDeskRotY) * modelDamping;
-    smoothDeskRotZ += (targetDeskRotZ - smoothDeskRotZ) * modelDamping;
-
+    // Desk group follows deskState with matching mouse parallax
     deskGroup.visible = deskState.opacity > 0.005;
-    deskGroup.position.set(smoothDeskX, smoothDeskY, smoothDeskZ);
-    deskGroup.rotation.set(smoothDeskRotX, smoothDeskRotY, smoothDeskRotZ);
+    deskGroup.position.x = deskState.posX + desktopOffset;
+    deskGroup.position.y = deskState.posY;
+    deskGroup.position.z = deskState.posZ;
+    deskGroup.rotation.x = deskState.rotX + mouseY;
+    deskGroup.rotation.y = deskState.rotY + mouseX;
+    deskGroup.rotation.z = deskState.rotZ;
 
-    if (deskGroup.visible && deskMaterials && Math.abs(deskState.opacity - prevDeskOpacity) > 0.002) {
-      prevDeskOpacity = deskState.opacity;
+    if (deskGroup.visible && deskMaterials) {
       deskMaterials.forEach(m => {
-        if (m === standShadowMat) {
-          m.opacity = 0.45 * Math.min(1.0, deskState.opacity);
+        if (m !== contactShadowMaterial && m !== clockGlassMat && m !== frameGlassMat) {
+          m.opacity = Math.min(1.0, deskState.opacity);
         } else if (m === clockGlassMat) {
           m.opacity = 0.45 * Math.min(1.0, deskState.opacity);
         } else if (m === frameGlassMat) {
           m.opacity = 0.40 * Math.min(1.0, deskState.opacity);
-        } else if (m !== contactShadowMaterial) {
-          m.opacity = Math.min(1.0, deskState.opacity);
         }
       });
     }
@@ -4722,56 +3270,26 @@ document.addEventListener('DOMContentLoaded', () => {
       contactShadowMaterial.opacity = deskState.contactShadowOpacity;
     }
 
-    // Control Lid Opening with hydraulic hinge damping
-    smoothLidOpen += (macState.lidOpen - smoothLidOpen) * 0.10;
+    // Control Lid Opening:
     if (lidNode) {
       if (isObjModel) {
-        lidNode.rotation.x = THREE.MathUtils.lerp(closedLidRot, openLidRot, smoothLidOpen);
+        // Apple CAD model: closedLidRot (+1.5805 rad / 90.55 deg forward) is closed 100% flush on base,
+        // openLidRot (-0.384 rad / -22 deg backwards) is open at 112 deg facing user
+        lidNode.rotation.x = THREE.MathUtils.lerp(closedLidRot, openLidRot, macState.lidOpen);
       } else {
-        lidNode.rotation.x = -smoothLidOpen * 2.02;
+        lidNode.rotation.x = -macState.lidOpen * 2.02;
       }
     }
 
-    // Base camera framing for dual-screen workstation (pans smoothly as lid opens)
-    const baseLookX = isMobile ? 0.0 : -0.18 * smoothLidProgress;
-    const baseCamX = isMobile ? 0.0 : -0.18 * smoothLidProgress;
-    const mobileLookShift = isMobile ? 0.20 : 0.0;
-    const baseLookY = smoothMacY + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
-    const baseCamZ = isMobile ? 4.20 : macState.cameraZ;
-    const baseCamY = macState.cameraY;
+    camera.position.z = macState.cameraZ;
+    camera.position.y = macState.cameraY;
 
-    let targetCamX = baseCamX;
-    let targetCamY = baseCamY;
-    let targetCamZ = baseCamZ;
-    let targetLookX = baseLookX;
-    let targetLookY = baseLookY;
-
-    if (focusTarget === 'ipad') {
-      targetCamX = smoothIpadX;
-      targetCamY = smoothIpadY;
-      targetCamZ = 2.85;
-      targetLookX = smoothIpadX;
-      targetLookY = smoothIpadY;
-    } else if (focusTarget === 'mac') {
-      targetCamX = smoothMacX;
-      targetCamY = 0.18;
-      targetCamZ = 2.70;
-      targetLookX = smoothMacX;
-      targetLookY = 0.18;
-    }
-
-    // Responsive, silky-smooth camera tracking (0.16 normal / 0.10 focus)
-    const camLerp = focusTarget !== null ? 0.10 : 0.16;
-    currentCamPos.x += (targetCamX - currentCamPos.x) * camLerp;
-    currentCamPos.y += (targetCamY - currentCamPos.y) * camLerp;
-    currentCamPos.z += (targetCamZ - currentCamPos.z) * camLerp;
-
-    currentLookTarget.x += (targetLookX - currentLookTarget.x) * camLerp;
-    currentLookTarget.y += (targetLookY - currentLookTarget.y) * camLerp;
-    currentLookTarget.z += (0.0 - currentLookTarget.z) * camLerp;
-
-    camera.position.copy(currentCamPos);
-    camera.lookAt(currentLookTarget);
+    // On mobile portrait, shift look target slightly downward so the 3D MacBook
+    // centers gracefully in the upper 52% of the screen above the bottom card
+    const mobileLookShift = isMobile ? 0.30 : 0.0;
+    const targetLookY = macRoot.position.y + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
+    const targetLookX = isMobile ? 0.0 : (desktopOffset * 0.32);
+    camera.lookAt(targetLookX, targetLookY, 0);
 
     renderer.render(scene, camera);
   }
@@ -4790,5 +3308,73 @@ document.addEventListener('DOMContentLoaded', () => {
       updateCameraAspect();
       ScrollTrigger.refresh();
     }, 200);
+  });
+
+  /* ==========================================================================
+     8. iPad Detail Dossier Modal Controller
+     ========================================================================== */
+  const ipadModal = document.getElementById('ipad-detail-modal');
+  const modalBackdrop = document.getElementById('ipad-modal-backdrop');
+  const btnCloseTop = document.getElementById('btn-modal-close-top');
+  const btnCloseX = document.getElementById('btn-modal-close-x');
+  const modalTabs = document.querySelectorAll('.ipad-modal-tabs .tab-btn');
+  const ipadScreenScroll = document.getElementById('ipad-screen-scroll');
+  const dossiers = document.querySelectorAll('.ipad-dossier');
+  const openStoryBtns = document.querySelectorAll('.btn-open-story');
+
+  function switchDossier(targetId) {
+    modalTabs.forEach(tab => {
+      if (tab.dataset.tab === targetId) tab.classList.add('active');
+      else tab.classList.remove('active');
+    });
+    dossiers.forEach(dossier => {
+      if (dossier.id === targetId) dossier.classList.add('active');
+      else dossier.classList.remove('active');
+    });
+    if (ipadScreenScroll) {
+      ipadScreenScroll.scrollTop = 0;
+    }
+  }
+
+  function openModal(targetStoryId) {
+    if (!ipadModal) return;
+    if (targetStoryId) {
+      switchDossier(targetStoryId);
+    }
+    ipadModal.classList.add('is-open');
+    ipadModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeModal() {
+    if (!ipadModal) return;
+    ipadModal.classList.remove('is-open');
+    ipadModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  }
+
+  openStoryBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetStory = btn.dataset.storyTarget || 'dossier-anchor';
+      openModal(targetStory);
+    });
+  });
+
+  modalTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      if (target) switchDossier(target);
+    });
+  });
+
+  if (btnCloseTop) btnCloseTop.addEventListener('click', closeModal);
+  if (btnCloseX) btnCloseX.addEventListener('click', closeModal);
+  if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && ipadModal && ipadModal.classList.contains('is-open')) {
+      closeModal();
+    }
   });
 });

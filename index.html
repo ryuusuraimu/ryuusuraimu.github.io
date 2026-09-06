@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kurenaido&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
     rel="stylesheet" />
 
   <!-- GSAP & ScrollTrigger -->
@@ -25,15 +25,13 @@
   <!-- Three.js & 3D Loaders -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/MTLLoader.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/fflate.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FBXLoader.js"></script>
 
-  <link rel="stylesheet" href="./styles.css?v=oryzo-darkroom-v46" />
+  <link rel="stylesheet" href="./styles.css?v=oryzo-ipad-dossier-v50" />
 </head>
 
 <body>
-
 
   <!-- Fixed Top Navigation: ORYZO Minimal Wordmark & 4 items -->
   <header class="site-header">
@@ -109,53 +107,213 @@
             </div>
           </div>
 
-          <!-- Slide 1: Anchor Reveal (Sidecar 3D Dual Stage) -->
+          <!-- Slide 1: Anchor Reveal (3-Column Split Layout) -->
           <div class="story-panel" id="panel-anchor">
-            <div class="sr-only">
-              <span class="story-serial-badge">01 / ANCHOR</span>
-              <h2>声が出せない危機の瞬間に、必要な支援をワンタップで相手へ届ける。</h2>
-              <p>PREPARED BEFORE CRISIS · COGNITIVE ACCESSIBILITY</p>
-              <p>パニック時の“沈黙”を前提に、何もない平時に未来の自分のために備える認知アクセシビリティ設計。</p>
+            <div class="story-panel-layout story-split-layout">
+              <!-- Left: Primary Headline -->
+              <div class="story-primary-col">
+                <span class="story-serial-badge">01 / ANCHOR</span>
+                <h2 class="story-primary-heading">声が出せない危機の瞬間に、<br class="desktop-only" />必要な支援をワンタップで相手へ届ける。</h2>
+                <p class="story-meta-sublabel">PREPARED BEFORE CRISIS · COGNITIVE ACCESSIBILITY</p>
+                <hr class="story-divider" />
+                <p class="story-primary-statement">発作が起きてから頑張るのではなく、平時に未来の自分のために準備する。</p>
+              </div>
+
+              <!-- Center: Spacer for 3D MacBook Air -->
+              <div class="story-center-spacer" aria-hidden="true"></div>
+
+              <!-- Right: Subtext & CTA Card -->
+              <div class="story-subtext-col">
+                <div class="subtext-glass-card">
+                  <div class="subtext-card-header">
+                    <span class="subtext-topic-tag">PROBLEM & ARCHITECTURE</span>
+                    <span class="subtext-status-badge">SHIELD UI</span>
+                  </div>
+                  <p class="subtext-lead">
+                    パニック時の“沈黙”を前提に、言葉が出ない極限状態でも相手に的確な支援を仰げる高コントラストUIと、完全オフラインQR設計。
+                  </p>
+                  <div class="subtext-specs-row">
+                    <span class="spec-pill">OFFLINE FIRST</span>
+                    <span class="spec-pill">HIGH CONTRAST</span>
+                    <span class="spec-pill">COGNITIVE A11Y</span>
+                  </div>
+                  <button class="btn-open-story" data-story-target="dossier-anchor">
+                    <span class="btn-story-glow"></span>
+                    <span class="btn-story-icon">✦</span>
+                    <span class="btn-story-label">詳しく見る (View Story)</span>
+                    <span class="btn-story-arrow">→</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Slide 2A: Moftail Storefront & Market Reality -->
           <div class="story-panel" id="panel-moftail-storefront">
-            <div class="sr-only">
-              <span class="story-serial-badge">02 / MOFTAIL</span>
-              <h2>自分の「良い」ではなく、市場が実際に動いた数字で意思決定する。</h2>
-              <p>PHASE 01 · US D2C BRAND & MARKET TESTING</p>
-              <p>米国向けD2Cブランドを実運用し、主観とマーケットの冷徹な事実の差を直視した。</p>
+            <div class="story-panel-layout story-split-layout">
+              <!-- Left: Primary Headline -->
+              <div class="story-primary-col">
+                <span class="story-serial-badge">02 / MOFTAIL</span>
+                <h2 class="story-primary-heading">自分の「良い」ではなく、<br class="desktop-only" />市場が実際に動いた数字で意思決定する。</h2>
+                <p class="story-meta-sublabel">PHASE 01 · US D2C BRAND & MARKET TESTING</p>
+                <hr class="story-divider" />
+                <p class="story-primary-statement">「どれが一番綺麗か」ではなく、「どれが人を動かしたか」。</p>
+              </div>
+
+              <!-- Center: Spacer for 3D MacBook Air -->
+              <div class="story-center-spacer" aria-hidden="true"></div>
+
+              <!-- Right: Subtext & CTA Card -->
+              <div class="story-subtext-col">
+                <div class="subtext-glass-card">
+                  <div class="subtext-card-header">
+                    <span class="subtext-topic-tag">MARKET REALITY</span>
+                    <span class="subtext-status-badge">LIVE STORE</span>
+                  </div>
+                  <p class="subtext-lead">
+                    米国市場向けPODブランドを実運用。Shopifyストア構築から商品企画、広告計測まで一貫して自ら回し、主観と市場の冷徹な差を直視。
+                  </p>
+                  <div class="subtext-specs-row">
+                    <span class="spec-pill">SHOPIFY D2C</span>
+                    <span class="spec-pill">US MARKET</span>
+                    <span class="spec-pill">PRINT ON DEMAND</span>
+                  </div>
+                  <button class="btn-open-story" data-story-target="dossier-moftail">
+                    <span class="btn-story-glow"></span>
+                    <span class="btn-story-icon">✦</span>
+                    <span class="btn-story-label">詳しく見る (View Story)</span>
+                    <span class="btn-story-arrow">→</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Slide 2B: Moftail Meta Ads & A/B Testing Data -->
           <div class="story-panel" id="panel-moftail-ads">
-            <div class="sr-only">
-              <span class="story-serial-badge">02 / MOFTAIL</span>
-              <h2>変える要素を1つに絞り、クリックと行動の差をデータで掴む。</h2>
-              <p>PHASE 02 · META ADS A/B TESTING & METRICS</p>
-              <p>Wood（木目）がCTR 5.26%を記録し主軸へ昇格。主観ではなく実測データが次の手を決める。</p>
+            <div class="story-panel-layout story-split-layout">
+              <!-- Left: Primary Headline -->
+              <div class="story-primary-col">
+                <span class="story-serial-badge">02 / MOFTAIL</span>
+                <h2 class="story-primary-heading">変える要素を1つに絞り、<br class="desktop-only" />クリックと行動の差をデータで掴む。</h2>
+                <p class="story-meta-sublabel">PHASE 02 · META ADS A/B TESTING & METRICS</p>
+                <hr class="story-divider" />
+                <p class="story-primary-statement">感覚ではなく、行動に差が出た。Wood（木目）がCTR 5.26%を記録し主軸へ。</p>
+              </div>
+
+              <!-- Center: Spacer for 3D MacBook Air -->
+              <div class="story-center-spacer" aria-hidden="true"></div>
+
+              <!-- Right: Subtext & CTA Card -->
+              <div class="story-subtext-col">
+                <div class="subtext-glass-card">
+                  <div class="subtext-card-header">
+                    <span class="subtext-topic-tag">A/B TEST METRICS</span>
+                    <span class="subtext-status-badge">CTR 5.26% ★</span>
+                  </div>
+                  <p class="subtext-lead">
+                    変数を1つに限定したクリエイティブ検証。直感ではなく実測CTRの差で主軸素材（Wood 5.26%）と次点（Matcha 4.21%）を特定。
+                  </p>
+                  <div class="subtext-metrics-mini">
+                    <div class="metric-mini-item winner">
+                      <span class="metric-mini-val">5.26%</span>
+                      <span class="metric-mini-name">Wood (Winner)</span>
+                    </div>
+                    <div class="metric-mini-item">
+                      <span class="metric-mini-val">4.21%</span>
+                      <span class="metric-mini-name">Matcha (Runner-up)</span>
+                    </div>
+                  </div>
+                  <button class="btn-open-story" data-story-target="dossier-moftail">
+                    <span class="btn-story-glow"></span>
+                    <span class="btn-story-icon">✦</span>
+                    <span class="btn-story-label">詳しく見る (View Story)</span>
+                    <span class="btn-story-arrow">→</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Slide 2C: Moftail Brand Philosophy & Balance of Life -->
           <div class="story-panel" id="panel-moftail-pod">
-            <div class="sr-only">
-              <span class="story-serial-badge">02 / MOFTAIL</span>
-              <h2>綺麗さだけでは人は動かない。思想を事業として成立させるために検証を重ねる。</h2>
-              <p>PHASE 03 · BRAND PHILOSOPHY & PROOF</p>
-              <p>AI時代に自分を取り戻す感覚『Balance of Life』を掲げ、勝つデザインと商品ページの一貫性を追求。</p>
+            <div class="story-panel-layout story-split-layout">
+              <!-- Left: Primary Headline -->
+              <div class="story-primary-col">
+                <span class="story-serial-badge">02 / MOFTAIL</span>
+                <h2 class="story-primary-heading">綺麗さだけでは人は動かない。<br class="desktop-only" />思想を事業として成立させるために検証を重ねる。</h2>
+                <p class="story-meta-sublabel">PHASE 03 · BRAND PHILOSOPHY & PROOF</p>
+                <hr class="story-divider" />
+                <p class="story-primary-statement">“The best mockup is not the prettiest one. It is the one that moves people to act.”</p>
+              </div>
+
+              <!-- Center: Spacer for 3D MacBook Air -->
+              <div class="story-center-spacer" aria-hidden="true"></div>
+
+              <!-- Right: Subtext & CTA Card -->
+              <div class="story-subtext-col">
+                <div class="subtext-glass-card">
+                  <div class="subtext-card-header">
+                    <span class="subtext-topic-tag">PHILOSOPHY & VALUE</span>
+                    <span class="subtext-status-badge">BALANCE OF LIFE</span>
+                  </div>
+                  <p class="subtext-lead">
+                    AI時代に自分を取り戻す感覚『Balance of Life』を掲げ、勝つデザインと購入につながる商品ページの一貫性を徹底追求。
+                  </p>
+                  <div class="subtext-specs-row">
+                    <span class="spec-pill">BALANCE OF LIFE</span>
+                    <span class="spec-pill">CONVERSION DESIGN</span>
+                    <span class="spec-pill">LOGISTICS SYNC</span>
+                  </div>
+                  <button class="btn-open-story" data-story-target="dossier-moftail">
+                    <span class="btn-story-glow"></span>
+                    <span class="btn-story-icon">✦</span>
+                    <span class="btn-story-label">詳しく見る (View Story)</span>
+                    <span class="btn-story-arrow">→</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Slide 3: Shopify Theme & Client Work Reveal -->
           <div class="story-panel" id="panel-shopify-theme">
-            <div class="sr-only">
-              <span class="story-serial-badge">03 / CLIENT WORK</span>
-              <h2>「仕様です」という回答の違和感を突き詰め、修正コードを添えて時給30ドルの有償案件に変えた。</h2>
-              <p>PAID FREELANCE TRIAL · $30/H · 14 TASKS</p>
-              <p>ストア運営で見つけた不具合を自らコード解析・英語レポート化し、海外開発元から14個の開発タスクを受注。</p>
+            <div class="story-panel-layout story-split-layout">
+              <!-- Left: Primary Headline -->
+              <div class="story-primary-col">
+                <span class="story-serial-badge">03 / CLIENT WORK</span>
+                <h2 class="story-primary-heading">「仕様です」という回答の違和感を突き詰め、<br class="desktop-only" />修正コードを添えて時給30ドルの有償案件に変えた。</h2>
+                <p class="story-meta-sublabel">PAID FREELANCE TRIAL · $30/H · 14 TASKS DELIVERED</p>
+                <hr class="story-divider" />
+                <p class="story-primary-statement">技術は、自分のためだけでなく、誰かの事業を前へ進めるためにも使える。</p>
+              </div>
+
+              <!-- Center: Spacer for 3D MacBook Air -->
+              <div class="story-center-spacer" aria-hidden="true"></div>
+
+              <!-- Right: Subtext & CTA Card -->
+              <div class="story-subtext-col">
+                <div class="subtext-glass-card">
+                  <div class="subtext-card-header">
+                    <span class="subtext-topic-tag">INVESTIGATION & CONTRACT</span>
+                    <span class="subtext-status-badge">$30 / HR</span>
+                  </div>
+                  <p class="subtext-lead">
+                    ストア運営で見つけた価格更新の不具合を自らコード解析・英語レポート化し、海外開発元から14個のタスクを受注。
+                  </p>
+                  <div class="subtext-specs-row">
+                    <span class="spec-pill">REPRODUCTION REPORT</span>
+                    <span class="spec-pill">LIQUID & JS</span>
+                    <span class="spec-pill">14 TASKS</span>
+                  </div>
+                  <button class="btn-open-story" data-story-target="dossier-shopify">
+                    <span class="btn-story-glow"></span>
+                    <span class="btn-story-icon">✦</span>
+                    <span class="btn-story-label">詳しく見る (View Story)</span>
+                    <span class="btn-story-arrow">→</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -357,9 +515,275 @@
       </div>
     </footer>
 
+    <!-- iPad Bezel PDF-Style Story Viewer Modal -->
+    <div id="ipad-detail-modal" class="ipad-detail-modal" aria-hidden="true" role="dialog" aria-modal="true">
+      <div class="ipad-modal-backdrop" id="ipad-modal-backdrop"></div>
+
+      <div class="ipad-modal-container">
+        <!-- Top Navigation Controls -->
+        <div class="ipad-modal-topbar">
+          <button class="btn-modal-back" id="btn-modal-close-top">
+            <span class="back-arrow">←</span>
+            <span class="back-text">BACK TO OVERVIEW</span>
+            <span class="key-hint">ESC</span>
+          </button>
+          <div class="ipad-modal-tabs">
+            <button class="tab-btn active" data-tab="dossier-anchor">01 ANCHOR</button>
+            <button class="tab-btn" data-tab="dossier-moftail">02 MOFTAIL</button>
+            <button class="tab-btn" data-tab="dossier-shopify">03 CLIENT WORK</button>
+          </div>
+          <button class="btn-modal-close-x" id="btn-modal-close-x" aria-label="閉じる">✕</button>
+        </div>
+
+        <!-- iPad Device Frame Wrapper -->
+        <div class="ipad-mockup-wrapper">
+          <div class="ipad-mockup-frame">
+            <!-- Photorealistic 2D iPad Bezel Image -->
+            <img src="./assets/ipad_bezel_frame.png" alt="iPad Pro Bezel" class="ipad-bezel-overlay" />
+
+            <!-- PDF-Style Scrollable Screen Area -->
+            <div class="ipad-screen-scroll" id="ipad-screen-scroll">
+              
+              <!-- Dossier 1: Anchor -->
+              <article class="ipad-dossier active" id="dossier-anchor">
+                <header class="dossier-header">
+                  <div class="dossier-meta-row">
+                    <span class="dossier-doc-id">DOC-2026-ANC01 // SPEC & ARCHITECTURE</span>
+                    <span class="dossier-status-badge">PRODUCTION VERIFIED</span>
+                  </div>
+                  <h1 class="dossier-title">Anchor — 発作時の“沈黙”を打破する<br />認知アクセシビリティ設計</h1>
+                  <p class="dossier-subtitle">PREPARED BEFORE CRISIS · OFFLINE FIRST EMERGENCY SYSTEM</p>
+                </header>
+
+                <div class="dossier-divider"></div>
+
+                <section class="dossier-section">
+                  <span class="dossier-section-num">01 / THE CORE OBSERVATION</span>
+                  <h2 class="dossier-section-title">極限状態では、言葉も論理も機能しない。</h2>
+                  <p class="dossier-p">
+                    パニックの最中では、言葉が出ない。音が強く感じる。簡単な判断さえ難しくなる。<br />
+                    そして周りにいる人も、<strong>「助けたい。でも、何をすればいいのか分からない。」</strong>そんな状態になることがある。<br />
+                    身近な人の経験を聞く中で強く感じた問題は、発作そのものだけでなく、<strong>必要なことを必要な瞬間に伝えられない“沈黙”</strong>でした。
+                  </p>
+                  <blockquote class="dossier-callout-quote">
+                    「発作が起きてから頑張るのではなく、平時に未来の自分のために準備する。」
+                  </blockquote>
+                  <p class="dossier-p">
+                    危機時には、<strong>Shield</strong>を起動する。今何が起きているか、何をしてほしいか・ほしくないかを会話なしで伝えられる高コントラストの指示画面へ変換。便利さではなく、その極限状態で確実に機能することを設計しました。
+                  </p>
+                </section>
+
+                <section class="dossier-section">
+                  <span class="dossier-section-num">02 / THREE TECHNICAL PILLARS</span>
+                  <h2 class="dossier-section-title">安全性を支える3つの実装原則</h2>
+
+                  <div class="dossier-cards-grid">
+                    <div class="dossier-feature-card">
+                      <div class="card-icon-pill">01</div>
+                      <h3 class="card-feature-title">Cognitive Accessibility</h3>
+                      <p class="card-feature-desc">
+                        強いストレス下では、読む・判断する・細かく操作する認知機能が大きく低下します。Anchorでは、それを例外ではなく前提条件としてワンアクションで全画面が切り替わるUIを設計しています。
+                      </p>
+                    </div>
+
+                    <div class="dossier-feature-card">
+                      <div class="card-icon-pill">02</div>
+                      <h3 class="card-feature-title">Offline First & Air-Gapped</h3>
+                      <p class="card-feature-desc">
+                        主要機能をネットワーク接続に一切依存させない設計。生成されるQRコードには外部リンクではなく医療・緊急指示テキストそのものを暗号化して内包し、圏外や地下鉄でも即座に共有可能です。
+                      </p>
+                    </div>
+
+                    <div class="dossier-feature-card">
+                      <div class="card-icon-pill">03</div>
+                      <h3 class="card-feature-title">Zero-Latency Shield UI</h3>
+                      <p class="card-feature-desc">
+                        極限状態で迷わないフルブリードのハイコントラスト色彩設計。周囲の介助者が遠目からでも一目で要救護内容を理解できる視認性を実現しています。
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="dossier-section">
+                  <span class="dossier-section-num">03 / PRODUCT CONCLUSION</span>
+                  <p class="dossier-p">
+                    テクノロジーが本当に人を助ける瞬間とは、複雑な機能を誇示することではなく、人間が最も脆弱になる瞬間に静かに寄り添い、確実に機能することだと確信しています。
+                  </p>
+                </section>
+
+                <footer class="dossier-footer">
+                  <div class="dossier-stamp">VERIFIED ON PHYSICAL DEVICE // 2026</div>
+                </footer>
+              </article>
+
+              <!-- Dossier 2: Moftail -->
+              <article class="ipad-dossier" id="dossier-moftail">
+                <header class="dossier-header">
+                  <div class="dossier-meta-row">
+                    <span class="dossier-doc-id">DOC-2026-MFT02 // MARKET VALIDATION</span>
+                    <span class="dossier-status-badge">LIVE STORE & TESTING</span>
+                  </div>
+                  <h1 class="dossier-title">Moftail — 主観を捨て、<br />市場の数字で意思決定するUS D2C実践</h1>
+                  <p class="dossier-subtitle">US MARKET D2C · PRINT ON DEMAND · META ADS A/B METRICS</p>
+                </header>
+
+                <div class="dossier-divider"></div>
+
+                <section class="dossier-section">
+                  <span class="dossier-section-num">01 / THE EXPERIMENT</span>
+                  <h2 class="dossier-section-title">自分の「良い」と市場の事実は違う。</h2>
+                  <p class="dossier-p">
+                    Moftailは、米国市場に向けて実際に運営しているPODブランド。<br />
+                    Shopifyでストアを構築し、商品を企画し、広告を出し、ユーザーの反応を計測する。そして、<strong>数字で答えをもらう。</strong>
+                  </p>
+                  <blockquote class="dossier-callout-quote">
+                    「どれが一番綺麗か」ではなく、「どれが人を動かしたか」。
+                  </blockquote>
+                  <p class="dossier-p">
+                    最初に学んだのは、<strong>自分の感覚と市場の反応は同じではない</strong>ということでした。自らの主観を疑い、マーケットの実測データを最優先するアプローチへと転換しました。
+                  </p>
+                </section>
+
+                <section class="dossier-section">
+                  <span class="dossier-section-num">02 / META ADS A/B TESTING DATA</span>
+                  <h2 class="dossier-section-title">実測ログ：単一変数の広告検証結果</h2>
+                  <p class="dossier-p">
+                    コピーやリンクなどの条件を完全に揃え、検証する素材変数のみを切り替えてMeta広告を配信。実際のクリック行動を計測しました：
+                  </p>
+
+                  <div class="dossier-table-wrap">
+                    <table class="dossier-table">
+                      <thead>
+                        <tr>
+                          <th>Material Variant</th>
+                          <th>Measured CTR</th>
+                          <th>Market Action</th>
+                          <th>Strategic Decision</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="highlight-row">
+                          <td><strong>Wood (Natural Ash Finish)</strong></td>
+                          <td class="ctr-winner"><strong>5.26%</strong></td>
+                          <td>高エンゲージメント獲得</td>
+                          <td><span class="badge-decision primary">★ PRIMARY 採用</span></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Matcha (Organic Green Texture)</strong></td>
+                          <td><strong>4.21%</strong></td>
+                          <td>安定したクリック率</td>
+                          <td><span class="badge-decision runnerup">次点バリエーション</span></td>
+                        </tr>
+                        <tr>
+                          <td><strong>Cork (Raw Surface Material)</strong></td>
+                          <td class="text-muted">2.75%</td>
+                          <td>反応低下</td>
+                          <td><span class="badge-decision low">優先度引き下げ</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <blockquote class="dossier-callout-quote">
+                    「感覚ではなく、行動に差が出た。」
+                  </blockquote>
+                  <p class="dossier-p">
+                    Woodを主軸にし、Matchaを次点へ。Corkの優先度を下げる。実測データをもとに次のクリエイティブと商品ページの導線を決定しました。
+                  </p>
+                </section>
+
+                <section class="dossier-section">
+                  <span class="dossier-section-num">03 / PHILOSOPHY & PROOF</span>
+                  <h2 class="dossier-section-title">思想を事業として成立させるための執着</h2>
+                  <blockquote class="dossier-callout-quote en-quote">
+                    “The best mockup is not the prettiest one.<br />It is the one that moves people to act.”
+                  </blockquote>
+                  <p class="dossier-p">
+                    Moftailの中心にあるのは、<strong>Balance of Life</strong>。<br />
+                    静けさ。意図。調和。情報が増え続ける世界で、一度立ち止まり自分に戻るための感覚を形にする。<br /><br />
+                    <strong>「Philosophy needs proof.」</strong><br />
+                    でも、思想だけでは事業にならない。だからこそ、勝つモックアップ、勝つデザイン、購入につながる商品ページ、広告から届くまでの一貫性を一つずつ泥臭く検証しています。
+                  </p>
+                </section>
+
+                <footer class="dossier-footer">
+                  <div class="dossier-stamp">LIVE DATA LOGGED // 2026</div>
+                </footer>
+              </article>
+
+              <!-- Dossier 3: Shopify Client Work -->
+              <article class="ipad-dossier" id="dossier-shopify">
+                <header class="dossier-header">
+                  <div class="dossier-meta-row">
+                    <span class="dossier-doc-id">DOC-2026-SHP03 // FREELANCE CONTRACT</span>
+                    <span class="dossier-status-badge">$30/H PAID TRIAL</span>
+                  </div>
+                  <h1 class="dossier-title">Shopifyテーマの仕様の壁を越え、<br />海外有償案件（時給$30・14タスク）へ</h1>
+                  <p class="dossier-subtitle">CODE INVESTIGATION · REPRODUCTION REPORTING · PAID CLIENT TRIAL</p>
+                </header>
+
+                <div class="dossier-divider"></div>
+
+                <section class="dossier-section">
+                  <span class="dossier-section-num">01 / THE TURNING POINT</span>
+                  <h2 class="dossier-section-title">「仕様です」という回答への違和感</h2>
+                  <p class="dossier-p">
+                    Moftailのストア画面で、サイズバリアントを変えても画面上の価格が再計算されない不具合を発見。<br />
+                    海外開発元に問い合わせたところ、返ってきた答えは<strong>「それはShopify側の仕様です」</strong>という素っ気ないものだった。<br />
+                    しかし、LiquidテンプレートとブラウザのDOM更新コードを丹念にトレースしていくと、明らかにクライアントサイドのイベントハンドリングに論理的欠陥がありました。
+                  </p>
+                  <blockquote class="dossier-callout-quote">
+                    「本当にShopify側の問題なのか？」
+                  </blockquote>
+                  <p class="dossier-p">
+                    諦めきれず自分で原因調査を開始。どのコードが動いていないのかを特定し、英語の技術レポート・完全な再現手順・修正コード差分を添えて開発元へ送付しました。
+                  </p>
+                </section>
+
+                <section class="dossier-section">
+                  <span class="dossier-section-num">02 / OUTCOME & DELIVERED VALUE</span>
+                  <h2 class="dossier-section-title">信頼を勝ち取り、14個の開発タスクを受注</h2>
+                  <p class="dossier-p">
+                    すると開発元の態度が一変。<strong>「うちのテーマコードを直接触ってみないか」</strong>と打診があり、時給30ドルの有償トライアルとして計14個の開発タスクを任されることになりました。
+                  </p>
+
+                  <div class="dossier-cards-grid">
+                    <div class="dossier-feature-card">
+                      <div class="card-icon-pill">★</div>
+                      <h3 class="card-feature-title">Reproduction Steps</h3>
+                      <p class="card-feature-desc">
+                        不具合報告で最も価値があるのは「相手の手元で100%再現できること」。OS環境、ブラウザ、ステップ順、期待挙動、実挙動を構造化して提供。
+                      </p>
+                    </div>
+
+                    <div class="dossier-feature-card">
+                      <div class="card-icon-pill">★</div>
+                      <h3 class="card-feature-title">Liquid & Dynamic DOM</h3>
+                      <p class="card-feature-desc">
+                        Shopify独自のテンプレート言語Liquidと動的バリアント切り替えJSの非同期競合を解消し、コンバージョン漏れを防止。
+                      </p>
+                    </div>
+                  </div>
+
+                  <blockquote class="dossier-callout-quote">
+                    「技術は、自分のためだけでなく、誰かの事業を前へ進めるためにも使える。」
+                  </blockquote>
+                </section>
+
+                <footer class="dossier-footer">
+                  <div class="dossier-stamp">CONTRACT COMPLETED // 14 TASKS DELIVERED</div>
+                </footer>
+              </article>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
-  <script src="./script.js?v=oryzo-darkroom-v50"></script>
+  <script src="./script.js?v=oryzo-ipad-dossier-v50"></script>
 </body>
 
 </html>
