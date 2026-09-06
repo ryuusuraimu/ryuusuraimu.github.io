@@ -969,21 +969,21 @@ document.addEventListener('DOMContentLoaded', () => {
     rotX: 1.22,        // ~70 deg: faces top lid & Apple logo directly towards the viewer
     rotY: 2.88,        // ~165 deg: leaf points straight UP (+Y), right-side up
     rotZ: -0.26,       // ~-15 deg: right-tilted dynamic diagonal posture
-    posX: 0.35,        // Floating in right half of hero section
+    posX: 0.68,        // Shifted right as requested ("右にずらしてMac")
     posY: 0.38,        // Generously high in the air above future desk position
     cameraZ: 4.10,     // Hero camera view framing floating laptop
     cameraY: 0.40,     // Elevated to view floating laptop
     lookOffsetY: 0.15  // Centered on floating MacBook
   };
 
-  // 3D iPad Pro M4 State (synchronized with MacBook Air presentation)
+  // 3D iPad Pro M4 State (positioned in left-back, rear facing camera with Apple logo visible)
   const ipadState = {
-    posX: -0.18,        // Floating beside & behind Mac in hero section
-    posY: 0.48,         // Elevated slightly above Mac so upper chassis & Apple Pencil emerge
-    posZ: -0.48,        // Positioned behind Mac in depth
-    rotX: 1.22,         // Identical dynamic pitch angle to Mac
-    rotY: 2.88,         // Identical ~165° horizontal angle (rear Space Black unibody & Apple logo face viewer)
-    rotZ: -0.26         // Identical dynamic roll angle to Mac
+    posX: -0.72,       // Positioned in the left-back ("左奥にiPad")
+    posY: 0.40,        // Floating at comfortable height
+    posZ: -0.65,       // Deep in background depth ("左奥")
+    rotX: 0.08,        // Tilted back slightly
+    rotY: 2.95,        // Back facing camera with Apple logo clearly visible ("裏面でロゴが見える形")
+    rotZ: -0.04        // Subtle dynamic angle
   };
 
   let currentScreenTex = null;
@@ -2489,7 +2489,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = new Path2D('M351,248 C352,192 397,163 399,161 C373,123 333,118 319,117 C284,113 251,138 233,138 C215,138 188,117 160,117 C122,117 87,139 67,174 C26,245 56,350 96,406 C115,434 137,465 167,464 C196,463 207,445 241,445 C275,445 285,464 316,463 C347,462 366,435 385,407 C408,374 417,341 418,340 C416,339 350,314 351,248 Z');
 
     ctx.save();
-    ctx.translate(45, 12);
+    ctx.translate(57, 45);
     ctx.scale(0.85, 0.85);
     ctx.fillStyle = '#ffffff';
     ctx.fill(leaf);
@@ -2504,16 +2504,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const ipadRearLogoMat = new THREE.MeshPhysicalMaterial({
     map: createAppleLogoTexture(),
     transparent: true,
-    color: 0xe0e6f0,
+    color: 0x9ab2cf,            // Mirror chrome with liquid cool reflection
     metalness: 0.98,
     roughness: 0.03,
     clearcoat: 1.0,
     clearcoatRoughness: 0.02,
-    envMapIntensity: 2.0
+    emissive: 0x222a36,         // Soft dark-titanium glow
+    emissiveIntensity: 0.40,
+    envMapIntensity: 2.5,
+    polygonOffset: true,
+    polygonOffsetFactor: -2,
+    polygonOffsetUnits: -2,
+    side: THREE.FrontSide
   });
-  const ipadRearLogoMesh = new THREE.Mesh(new THREE.PlaneGeometry(0.24, 0.24), ipadRearLogoMat);
-  ipadRearLogoMesh.position.set(0, 0, -0.0102);
+  const ipadRearLogoMesh = new THREE.Mesh(new THREE.PlaneGeometry(0.32, 0.32), ipadRearLogoMat);
+  ipadRearLogoMesh.position.set(0, 0.04, -0.0112);
   ipadRearLogoMesh.rotation.y = Math.PI; // Faces rear
+  ipadRearLogoMesh.renderOrder = 20;
+  ipadRearLogoMesh.castShadow = false;
+  ipadRearLogoMesh.receiveShadow = false;
   ipadBodyGroup.add(ipadRearLogoMesh);
 
   // --- Photorealistic Pro Camera Island on Rear ---
@@ -2683,7 +2692,7 @@ document.addEventListener('DOMContentLoaded', () => {
     map: ipadScreenTex,
     toneMapped: false,
     transparent: false,
-    side: THREE.DoubleSide
+    side: THREE.FrontSide
   });
   const ipadScreenMesh = new THREE.Mesh(ipadScreenGeo, ipadScreenMat);
   ipadScreenMesh.position.set(0, 0, 0.0118);
@@ -2692,7 +2701,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Sleek Black Screen Bezel border plane behind the screen
   const bezelGeo = new THREE.PlaneGeometry(ipadW - 0.008, ipadH - 0.008);
-  const bezelMat = new THREE.MeshBasicMaterial({ color: 0x040507 });
+  const bezelMat = new THREE.MeshBasicMaterial({ color: 0x040507, side: THREE.FrontSide });
   const bezelMesh = new THREE.Mesh(bezelGeo, bezelMat);
   bezelMesh.position.set(0, 0, 0.0108);
   bezelMesh.renderOrder = 5;
@@ -2701,7 +2710,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // TrueDepth Front Camera Lens & Sensor Dot on top bezel
   const frontCamLens = new THREE.Mesh(
     new THREE.CircleGeometry(0.007, 24),
-    new THREE.MeshPhysicalMaterial({ color: 0x060914, metalness: 0.95, roughness: 0.04, clearcoat: 1.0, emissive: 0x0a1024, emissiveIntensity: 0.2 })
+    new THREE.MeshPhysicalMaterial({ color: 0x060914, metalness: 0.95, roughness: 0.04, clearcoat: 1.0, emissive: 0x0a1024, emissiveIntensity: 0.2, side: THREE.FrontSide })
   );
   frontCamLens.position.set(0, hh - 0.020, 0.0112);
   frontCamLens.renderOrder = 15;
@@ -2709,7 +2718,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const ambientSensor = new THREE.Mesh(
     new THREE.CircleGeometry(0.004, 16),
-    new THREE.MeshBasicMaterial({ color: 0x020305 })
+    new THREE.MeshBasicMaterial({ color: 0x020305, side: THREE.FrontSide })
   );
   ambientSensor.position.set(0.024, hh - 0.020, 0.0112);
   ambientSensor.renderOrder = 15;
@@ -2724,7 +2733,8 @@ document.addEventListener('DOMContentLoaded', () => {
     metalness: 0.12,
     clearcoat: 1.0,
     clearcoatRoughness: 0.03,
-    depthWrite: false
+    depthWrite: false,
+    side: THREE.FrontSide
   });
   const ipadGlassMesh = new THREE.Mesh(new THREE.PlaneGeometry(ipadW - 0.004, ipadH - 0.004), ipadGlassMat);
   ipadGlassMesh.position.set(0, 0, 0.0125);
@@ -2739,6 +2749,40 @@ document.addEventListener('DOMContentLoaded', () => {
   magnetStrip.rotateY(Math.PI / 2);
   magnetStrip.position.set(hw + 0.001, 0, 0);
   ipadBodyGroup.add(magnetStrip);
+
+  // Load official iPad Pro (2024) materials from assets/Ipad+Pro(2024).mtl
+  if (typeof THREE.MTLLoader !== 'undefined') {
+    const mtlLoader = new THREE.MTLLoader();
+    mtlLoader.load('assets/Ipad+Pro(2024).mtl', (materialsCreator) => {
+      materialsCreator.preload();
+      const mats = materialsCreator.materials;
+      if (mats) {
+        if (mats.body_gery) {
+          const bg = mats.body_gery;
+          if (bg.color) ipadAlumMat.color.copy(bg.color);
+          ipadAlumMat.metalness = 0.86;
+          ipadAlumMat.roughness = 0.25;
+          ipadAlumMat.needsUpdate = true;
+        }
+        if (mats.apple_logo) {
+          ipadRearLogoMat.metalness = 0.98;
+          ipadRearLogoMat.roughness = 0.03;
+          ipadRearLogoMat.needsUpdate = true;
+        }
+        if (mats.copper_connector) {
+          if (mats.copper_connector.color) goldPinMat.color.copy(mats.copper_connector.color);
+          goldPinMat.metalness = 0.95;
+          goldPinMat.needsUpdate = true;
+        }
+        if (mats.antenna_cutout) {
+          if (mats.antenna_cutout.color) antennaMat.color.copy(mats.antenna_cutout.color);
+          antennaMat.needsUpdate = true;
+        }
+      }
+    }, undefined, (err) => {
+      console.warn('Ipad Pro MTL load notification:', err);
+    });
+  }
 
   // --- 3D Precision Aluminum Stand for iPad Pro ---
   const ipadStandGroup = new THREE.Group();
