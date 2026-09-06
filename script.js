@@ -159,6 +159,16 @@ document.addEventListener('DOMContentLoaded', () => {
   sideFillLight.position.set(-5.0, 2.0, 2.0);
   scene.add(sideFillLight);
 
+  // 6. iPad Studio Key Light: Soft cool studio key light illuminating iPad chassis & chamfer
+  const ipadStudioKeyLight = new THREE.DirectionalLight(0xdbe8ff, 0.70);
+  ipadStudioKeyLight.position.set(-2.2, 4.5, 3.5);
+  scene.add(ipadStudioKeyLight);
+
+  // 7. iPad Contour Rim Light: Crisp edge specular defining iPad silhouette against dark void
+  const ipadEdgeRimLight = new THREE.DirectionalLight(0x8cb4e6, 0.55);
+  ipadEdgeRimLight.position.set(-3.5, 2.5, -2.0);
+  scene.add(ipadEdgeRimLight);
+
   /* ==========================================================================
      3. Project Screen & Hardware Textures (Authentic User Lock Screen & Apps)
      ========================================================================== */
@@ -969,18 +979,18 @@ document.addEventListener('DOMContentLoaded', () => {
     rotX: 1.22,        // ~70 deg: faces top lid & Apple logo directly towards the viewer
     rotY: 2.88,        // ~165 deg: leaf points straight UP (+Y), right-side up
     rotZ: -0.26,       // ~-15 deg: right-tilted dynamic diagonal posture
-    posX: 0.68,        // Shifted right as requested ("右にずらしてMac")
+    posX: 0.65,        // Elegantly framing the right half of the hero ("右にずらしてMac")
     posY: 0.38,        // Generously high in the air above future desk position
     cameraZ: 4.10,     // Hero camera view framing floating laptop
     cameraY: 0.40,     // Elevated to view floating laptop
     lookOffsetY: 0.15  // Centered on floating MacBook
   };
 
-  // 3D iPad Pro M4 State (positioned in left-back, rear facing camera with Apple logo visible)
+  // 3D iPad Pro M4 State (positioned in left-back of Mac, clear of typography, rear Apple logo visible)
   const ipadState = {
-    posX: -0.72,       // Positioned in the left-back ("左奥にiPad")
-    posY: 0.40,        // Floating at comfortable height
-    posZ: -0.65,       // Deep in background depth ("左奥")
+    posX: 0.12,        // Positioned to the left-back of the Mac ("左奥にiPad", safely clear of left text)
+    posY: 0.44,        // Floating at harmonious elevation
+    posZ: -0.65,       // Deep in background depth behind Mac ("左奥")
     rotX: 0.08,        // Tilted back slightly
     rotY: 2.95,        // Back facing camera with Apple logo clearly visible ("裏面でロゴが見える形")
     rotZ: -0.04        // Subtle dynamic angle
@@ -2455,8 +2465,8 @@ document.addEventListener('DOMContentLoaded', () => {
     steps: 1,
     depth: ipadDepth,
     bevelEnabled: true,
-    bevelThickness: 0.002,
-    bevelSize: 0.002,
+    bevelThickness: 0.0028,
+    bevelSize: 0.0028,
     bevelOffset: 0,
     bevelSegments: 4
   };
@@ -2465,12 +2475,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Aerospace-grade Space Black anodized aluminum material
   const ipadAlumMat = new THREE.MeshPhysicalMaterial({
-    color: 0x16181d,
-    roughness: 0.28,
-    metalness: 0.88,
-    clearcoat: 0.30,
-    clearcoatRoughness: 0.25,
-    envMapIntensity: 1.4
+    color: 0x222630,               // Calibrated Space Black tone with distinct form
+    roughness: 0.32,               // Bead-blasted matte sheen
+    metalness: 0.68,               // Balanced metalness so diffuse form and specular bevels both pop
+    clearcoat: 0.35,
+    clearcoatRoughness: 0.20,
+    sheen: 0.35,
+    sheenColor: new THREE.Color(0x7088a8)
   });
   const ipadChassisMesh = new THREE.Mesh(ipadChassisGeo, ipadAlumMat);
   ipadChassisMesh.castShadow = true;
@@ -2758,10 +2769,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const mats = materialsCreator.materials;
       if (mats) {
         if (mats.body_gery) {
-          const bg = mats.body_gery;
-          if (bg.color) ipadAlumMat.color.copy(bg.color);
-          ipadAlumMat.metalness = 0.86;
-          ipadAlumMat.roughness = 0.25;
+          ipadAlumMat.metalness = 0.68;
+          ipadAlumMat.roughness = 0.32;
+          ipadAlumMat.color.setHex(0x222630);
           ipadAlumMat.needsUpdate = true;
         }
         if (mats.apple_logo) {
@@ -2948,8 +2958,8 @@ document.addEventListener('DOMContentLoaded', () => {
   ipadMasterGroup.position.set(ipadState.posX, ipadState.posY, ipadState.posZ);
   ipadMasterGroup.rotation.set(ipadState.rotX, ipadState.rotY, ipadState.rotZ);
 
-  // Apple Pencil magnetically attached to the right edge facing the MacBook
-  pencilGroup.position.set(hw + flatCut + 0.002, 0.04, 0.0);
+  // Apple Pencil magnetically attached flush to the right edge facing the MacBook
+  pencilGroup.position.set(hw + 0.007, 0.04, 0.0);
   pencilGroup.rotation.set(0, 0, 0);
 
   // --- Dynamic High-DPI iPad Studio Screen Rendering Engine ---
@@ -4225,6 +4235,14 @@ document.addEventListener('DOMContentLoaded', () => {
     duration: 0.80
   }, 0);
 
+  // Fade out Hero typography cleanly as soon as scrolling begins so it never overlaps the desk or docked iPad
+  tl.to(panelHero, {
+    opacity: 0,
+    y: -40,
+    ease: 'power1.out',
+    duration: 0.50
+  }, 0.05);
+
   // =========================================================================
   // Step 1b: Generous Flight & Gentle Cushioned Landing ("フワッとおく", 0.80 -> 2.15s)
   // The Mac travels down through a generous vertical distance (~35cm),
@@ -4730,16 +4748,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (focusTarget === 'ipad') {
       targetCamX = smoothIpadX;
-      targetCamY = 0.32;
-      targetCamZ = 2.45;
+      targetCamY = smoothIpadY;
+      targetCamZ = 2.85;
       targetLookX = smoothIpadX;
-      targetLookY = 0.32;
+      targetLookY = smoothIpadY;
     } else if (focusTarget === 'mac') {
       targetCamX = smoothMacX;
-      targetCamY = 0.14;
-      targetCamZ = 2.40;
+      targetCamY = 0.18;
+      targetCamZ = 2.70;
       targetLookX = smoothMacX;
-      targetLookY = 0.14;
+      targetLookY = 0.18;
     }
 
     // Responsive, silky-smooth camera tracking (0.16 normal / 0.10 focus)
