@@ -669,6 +669,44 @@ a {
   color: var(--color-driftwood);
 }
 
+/* Project External Links in Subtext Card */
+.subtext-links-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.subtext-link-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-family: var(--font-micro);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-warm-cream);
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.subtext-link-badge:hover {
+  background: rgba(220, 80, 0, 0.25);
+  border-color: rgba(220, 80, 0, 0.65);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.link-badge-icon {
+  font-size: 9px;
+  color: var(--color-ember-accent);
+}
+
 /* Call-to-Action: Open iPad PDF Story Viewer */
 .btn-open-story {
   position: relative;
@@ -1014,6 +1052,44 @@ body.modal-open {
   letter-spacing: 0.10em;
   color: var(--color-driftwood);
   margin: 0;
+}
+
+/* Dossier Official Links Bar */
+.dossier-links-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 6px;
+}
+
+.dossier-ext-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(220, 80, 0, 0.12);
+  border: 1px solid rgba(220, 80, 0, 0.38);
+  font-family: var(--font-micro);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-warm-cream);
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dossier-ext-link:hover {
+  background: rgba(220, 80, 0, 0.30);
+  border-color: rgba(220, 80, 0, 0.80);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(220, 80, 0, 0.35);
+}
+
+.dossier-ext-link .link-icon {
+  color: var(--color-ember-accent);
+  font-size: 10px;
 }
 
 .dossier-divider {

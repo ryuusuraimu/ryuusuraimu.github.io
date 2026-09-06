@@ -815,7 +815,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const textures = {
     lockScreen: loadCleanTexture('./assets/mac-lockscreen.jpg'),
-    anchor: createAnchorShieldTexture() || loadCleanTexture('./assets/anchor-xcode-simulator.png'),
+    anchor: loadCleanTexture('./assets/anchor-xcode-simulator.png'),
     shopify: loadCleanTexture('./assets/moftail-shopify-admin.png'),
     ads: createMoftailAdsTexture() || loadCleanTexture('./assets/moftail-meta-ads.png'),
     printify: loadCleanTexture('./assets/moftail-printify.png'),
