@@ -521,10 +521,10 @@ a {
 
 .story-main-heading {
   font-family: var(--font-display);
-  font-size: 34px;
+  font-size: 26px;
   font-weight: 600;
-  line-height: 1.22;
-  letter-spacing: -0.02em;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
   color: var(--color-warm-cream);
   margin: 0;
   font-feature-settings: "palt";
@@ -538,6 +538,83 @@ a {
   text-transform: uppercase;
   color: var(--color-driftwood);
   margin-top: -6px;
+}
+
+/* Progressive Disclosure: Story Detail Drawer */
+.story-detail-disclosure {
+  width: 100%;
+  margin-top: 2px;
+}
+
+.btn-story-detail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 18px;
+  background: rgba(220, 80, 0, 0.12);
+  border: 1px solid rgba(220, 80, 0, 0.38);
+  border-radius: 9999px;
+  color: var(--color-warm-cream);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  outline: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn-story-detail::-webkit-details-marker {
+  display: none;
+}
+
+.btn-story-detail:hover {
+  background: rgba(220, 80, 0, 0.24);
+  border-color: rgba(220, 80, 0, 0.7);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(220, 80, 0, 0.3);
+}
+
+.story-detail-disclosure[open] .btn-story-detail {
+  background: rgba(220, 80, 0, 0.20);
+  border-color: rgba(220, 80, 0, 0.65);
+  margin-bottom: 14px;
+}
+
+.btn-detail-icon {
+  font-size: 13px;
+  color: var(--color-ember-accent);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  line-height: 1;
+}
+
+.story-detail-disclosure[open] .btn-detail-icon {
+  transform: rotate(45deg);
+}
+
+.story-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 4px;
+  animation: fadeInStoryDrawer 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInStoryDrawer {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .story-narrative-lead {
@@ -1533,6 +1610,10 @@ a {
     font-size: 10px;
   }
 
+  .desktop-only {
+    display: none;
+  }
+
   /* Project Reveal Panels: Single-Side Mobile Bottom Glass Card (Plan A) */
   .story-panel-layout {
     padding: 0 16px 20px;
@@ -1542,8 +1623,8 @@ a {
 
   .story-narrative-col {
     max-width: 500px;
-    max-height: 48vh;
-    max-height: 48dvh;
+    max-height: 54vh;
+    max-height: 54dvh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     background: rgba(16, 10, 6, 0.88);
@@ -1551,18 +1632,23 @@ a {
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid rgba(245, 237, 224, 0.14);
     border-radius: 20px;
-    padding: 20px 20px;
+    padding: 18px 20px;
     box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     gap: 12px;
   }
 
   .story-main-heading {
-    font-size: 22px;
-    line-height: 1.2;
+    font-size: 19px;
+    line-height: 1.35;
+  }
+
+  .btn-story-detail {
+    padding: 7px 15px;
+    font-size: 11.5px;
   }
 
   .story-narrative-lead {
-    font-size: 14px;
+    font-size: 13.5px;
     line-height: 1.6;
   }
 
@@ -1572,7 +1658,7 @@ a {
   }
 
   .story-quote-punchline {
-    font-size: 15px;
+    font-size: 14.5px;
     padding-left: 12px;
   }
 
