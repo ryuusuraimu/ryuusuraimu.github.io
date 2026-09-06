@@ -3763,7 +3763,7 @@ document.addEventListener('DOMContentLoaded', () => {
       trigger: scrollStage,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 0.35,
+      scrub: 0.65,
       onUpdate: (self) => {
         const p = self.progress;
 
@@ -4142,6 +4142,21 @@ document.addEventListener('DOMContentLoaded', () => {
     prevScrollPos = window.scrollY;
   }, { passive: true });
 
+  // Physics-damped momentum state variables for organic, continuous motion
+  let smoothMacX = macState.posX;
+  let smoothMacY = macState.posY;
+  let smoothMacRotX = macState.rotX;
+  let smoothMacRotY = macState.rotY;
+  let smoothMacRotZ = macState.rotZ;
+  let smoothLidOpen = macState.lidOpen;
+
+  let smoothDeskX = deskState.posX;
+  let smoothDeskY = deskState.posY;
+  let smoothDeskZ = deskState.posZ;
+  let smoothDeskRotX = deskState.rotX;
+  let smoothDeskRotY = deskState.rotY;
+  let smoothDeskRotZ = deskState.rotZ;
+
   function animate() {
     requestAnimationFrame(animate);
 
@@ -4151,32 +4166,59 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseX += (targetMouseX - mouseX) * 0.05;
     mouseY += (targetMouseY - mouseY) * 0.05;
 
-    // Dual-screen layout: MacBook shifts to right (+0.70) when opened, balancing the propped iPad on the left
+    // Dual-screen layout: MacBook smoothly glides to right (+0.70) as the lid opens, balancing the propped iPad on the left
     const isMobile = camera.aspect < 1.15;
-    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.70 : 0.0);
+    const smoothLidProgress = THREE.MathUtils.smoothstep(macState.lidOpen, 0.0, 1.0);
+    const desktopOffset = isMobile ? 0.0 : 0.70 * smoothLidProgress;
 
-    // Rotate and position the MacBook master group
+    // Zero-G ambient breathing when floating in mid-air (cushions softly to zero upon landing on desk)
+    const floatWeight = THREE.MathUtils.clamp((macState.posY - (-0.46)) / 0.84, 0.0, 1.0);
+    const elapsedTime = clock.getElapsedTime();
+    const floatBobY = Math.sin(elapsedTime * 1.4) * 0.016 * floatWeight;
+    const floatTiltZ = Math.cos(elapsedTime * 1.0) * 0.008 * floatWeight;
+    const floatTiltX = Math.sin(elapsedTime * 0.9) * 0.005 * floatWeight;
+
+    // Target positions and rotations with organic momentum
+    const targetMacX = macState.posX + desktopOffset;
+    const targetMacY = macState.posY + floatBobY;
+    const targetMacRotX = macState.rotX + mouseY + floatTiltX;
+    const targetMacRotY = macState.rotY + mouseX;
+    const targetMacRotZ = macState.rotZ + floatTiltZ;
+
+    const modelDamping = 0.12;
+    smoothMacX += (targetMacX - smoothMacX) * modelDamping;
+    smoothMacY += (targetMacY - smoothMacY) * modelDamping;
+    smoothMacRotX += (targetMacRotX - smoothMacRotX) * modelDamping;
+    smoothMacRotY += (targetMacRotY - smoothMacRotY) * modelDamping;
+    smoothMacRotZ += (targetMacRotZ - smoothMacRotZ) * modelDamping;
+
     macRoot.scale.setScalar(1.0);
-    macRoot.position.x = macState.posX + desktopOffset;
-    macRoot.position.y = macState.posY;
-    macRoot.position.z = 0;
-    macRoot.rotation.x = macState.rotX + mouseY;
-    macRoot.rotation.y = macState.rotY + mouseX;
-    macRoot.rotation.z = macState.rotZ;
+    macRoot.position.set(smoothMacX, smoothMacY, 0);
+    macRoot.rotation.set(smoothMacRotX, smoothMacRotY, smoothMacRotZ);
 
-    // Contact shadow follows MacBook
+    // Contact shadow follows MacBook smoothly
     if (contactShadowMesh) {
-      contactShadowMesh.position.x = macState.posX + desktopOffset;
+      contactShadowMesh.position.x = smoothMacX;
     }
 
-    // Desk group follows deskState with matching mouse parallax
+    // Desk follows with synchronized momentum damping
+    const targetDeskX = deskState.posX;
+    const targetDeskY = deskState.posY;
+    const targetDeskZ = deskState.posZ;
+    const targetDeskRotX = deskState.rotX + mouseY;
+    const targetDeskRotY = deskState.rotY + mouseX;
+    const targetDeskRotZ = deskState.rotZ;
+
+    smoothDeskX += (targetDeskX - smoothDeskX) * modelDamping;
+    smoothDeskY += (targetDeskY - smoothDeskY) * modelDamping;
+    smoothDeskZ += (targetDeskZ - smoothDeskZ) * modelDamping;
+    smoothDeskRotX += (targetDeskRotX - smoothDeskRotX) * modelDamping;
+    smoothDeskRotY += (targetDeskRotY - smoothDeskRotY) * modelDamping;
+    smoothDeskRotZ += (targetDeskRotZ - smoothDeskRotZ) * modelDamping;
+
     deskGroup.visible = deskState.opacity > 0.005;
-    deskGroup.position.x = deskState.posX;
-    deskGroup.position.y = deskState.posY;
-    deskGroup.position.z = deskState.posZ;
-    deskGroup.rotation.x = deskState.rotX + mouseY;
-    deskGroup.rotation.y = deskState.rotY + mouseX;
-    deskGroup.rotation.z = deskState.rotZ;
+    deskGroup.position.set(smoothDeskX, smoothDeskY, smoothDeskZ);
+    deskGroup.rotation.set(smoothDeskRotX, smoothDeskRotY, smoothDeskRotZ);
 
     if (deskGroup.visible && deskMaterials && Math.abs(deskState.opacity - prevDeskOpacity) > 0.002) {
       prevDeskOpacity = deskState.opacity;
@@ -4224,20 +4266,21 @@ document.addEventListener('DOMContentLoaded', () => {
       contactShadowMaterial.opacity = deskState.contactShadowOpacity;
     }
 
-    // Control Lid Opening
+    // Control Lid Opening with hydraulic hinge damping
+    smoothLidOpen += (macState.lidOpen - smoothLidOpen) * 0.10;
     if (lidNode) {
       if (isObjModel) {
-        lidNode.rotation.x = THREE.MathUtils.lerp(closedLidRot, openLidRot, macState.lidOpen);
+        lidNode.rotation.x = THREE.MathUtils.lerp(closedLidRot, openLidRot, smoothLidOpen);
       } else {
-        lidNode.rotation.x = -macState.lidOpen * 2.02;
+        lidNode.rotation.x = -smoothLidOpen * 2.02;
       }
     }
 
-    // Base camera framing for dual-screen workstation
-    const baseLookX = isMobile ? 0.0 : (macState.lidOpen > 0 ? -0.18 : 0.0);
-    const baseCamX = isMobile ? 0.0 : (macState.lidOpen > 0 ? -0.18 : 0.0);
+    // Base camera framing for dual-screen workstation (pans smoothly as lid opens)
+    const baseLookX = isMobile ? 0.0 : -0.18 * smoothLidProgress;
+    const baseCamX = isMobile ? 0.0 : -0.18 * smoothLidProgress;
     const mobileLookShift = isMobile ? 0.20 : 0.0;
-    const baseLookY = macRoot.position.y + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
+    const baseLookY = smoothMacY + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
     const baseCamZ = isMobile ? 4.20 : macState.cameraZ;
     const baseCamY = macState.cameraY;
 
@@ -4254,15 +4297,15 @@ document.addEventListener('DOMContentLoaded', () => {
       targetLookX = -0.92;
       targetLookY = 0.32;
     } else if (focusTarget === 'mac') {
-      targetCamX = macState.posX + desktopOffset;
+      targetCamX = smoothMacX;
       targetCamY = 0.14;
       targetCamZ = 2.40;
-      targetLookX = macState.posX + desktopOffset;
+      targetLookX = smoothMacX;
       targetLookY = 0.14;
     }
 
-    // Responsive, silky-smooth camera tracking (0.25 normal / 0.12 focus)
-    const camLerp = focusTarget !== null ? 0.12 : 0.25;
+    // Responsive, silky-smooth camera tracking (0.16 normal / 0.10 focus)
+    const camLerp = focusTarget !== null ? 0.10 : 0.16;
     currentCamPos.x += (targetCamX - currentCamPos.x) * camLerp;
     currentCamPos.y += (targetCamY - currentCamPos.y) * camLerp;
     currentCamPos.z += (targetCamZ - currentCamPos.z) * camLerp;
