@@ -28,16 +28,11 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/fflate.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FBXLoader.js"></script>
 
-  <link rel="stylesheet" href="./styles.css?v=oryzo-darkroom-v41" />
+  <link rel="stylesheet" href="./styles.css?v=oryzo-darkroom-v42" />
 </head>
 
 <body>
 
-  <!-- Floating Close Button for 3D iPad Handwritten Note Mode -->
-  <button id="btn-close-ipad-detail" class="btn-ipad-close" aria-label="詳細ノートを閉じる">
-    <span class="btn-ipad-close-icon">✕</span>
-    <span class="btn-ipad-close-text">CLOSE NOTE</span>
-  </button>
 
   <!-- Fixed Top Navigation: ORYZO Minimal Wordmark & 4 items -->
   <header class="site-header">
@@ -113,118 +108,53 @@
             </div>
           </div>
 
-          <!-- Slide 1: Anchor Reveal (Single-Side Storytelling) -->
+          <!-- Slide 1: Anchor Reveal (Sidecar 3D Dual Stage) -->
           <div class="story-panel" id="panel-anchor">
-            <div class="story-panel-layout">
-              <div class="story-narrative-col">
-                <span class="story-serial-badge">01 / ANCHOR</span>
-                <h2 class="story-main-heading">声が出せない危機の瞬間に、<br class="desktop-only" />必要な支援をワンタップで相手へ届ける。</h2>
-                <p class="story-meta-sublabel">PREPARED BEFORE CRISIS · COGNITIVE ACCESSIBILITY</p>
-                <hr class="story-divider" />
-                <p class="story-narrative-lead">
-                  パニック時の“沈黙”を前提に、何もない平時に未来の自分のために備える認知アクセシビリティ設計。
-                </p>
-
-                <div class="story-trigger-wrap">
-                  <button class="btn-story-detail" type="button" data-slide-index="1" aria-label="Anchorの思考プロセスと手書きノートを3Dで見る">
-                    <span class="btn-detail-icon">✎</span>
-                    <span class="btn-detail-text">思考プロセスと手書きノートを開く</span>
-                    <span class="btn-detail-arrow">→</span>
-                  </button>
-                </div>
-              </div>
+            <div class="sr-only">
+              <span class="story-serial-badge">01 / ANCHOR</span>
+              <h2>声が出せない危機の瞬間に、必要な支援をワンタップで相手へ届ける。</h2>
+              <p>PREPARED BEFORE CRISIS · COGNITIVE ACCESSIBILITY</p>
+              <p>パニック時の“沈黙”を前提に、何もない平時に未来の自分のために備える認知アクセシビリティ設計。</p>
             </div>
           </div>
 
-          <!-- Slide 2A: Moftail Storefront & Market Reality (Single-Side Storytelling) -->
+          <!-- Slide 2A: Moftail Storefront & Market Reality -->
           <div class="story-panel" id="panel-moftail-storefront">
-            <div class="story-panel-layout">
-              <div class="story-narrative-col">
-                <span class="story-serial-badge">02 / MOFTAIL</span>
-                <h2 class="story-main-heading">自分の「良い」ではなく、<br class="desktop-only" />市場が実際に動いた数字で意思決定する。</h2>
-                <p class="story-meta-sublabel">PHASE 01 · US D2C BRAND & MARKET TESTING</p>
-                <hr class="story-divider" />
-                <p class="story-narrative-lead">
-                  米国向けD2Cブランドを実運用し、主観とマーケットの冷徹な事実の差を直視した。
-                </p>
-
-                <div class="story-trigger-wrap">
-                  <button class="btn-story-detail" type="button" data-slide-index="2" aria-label="Moftailの市場検証ノートを3Dで見る">
-                    <span class="btn-detail-icon">✎</span>
-                    <span class="btn-detail-text">市場検証の手書きノートを開く</span>
-                    <span class="btn-detail-arrow">→</span>
-                  </button>
-                </div>
-              </div>
+            <div class="sr-only">
+              <span class="story-serial-badge">02 / MOFTAIL</span>
+              <h2>自分の「良い」ではなく、市場が実際に動いた数字で意思決定する。</h2>
+              <p>PHASE 01 · US D2C BRAND & MARKET TESTING</p>
+              <p>米国向けD2Cブランドを実運用し、主観とマーケットの冷徹な事実の差を直視した。</p>
             </div>
           </div>
 
-          <!-- Slide 2B: Moftail Meta Ads & A/B Testing Data (Single-Side Storytelling) -->
+          <!-- Slide 2B: Moftail Meta Ads & A/B Testing Data -->
           <div class="story-panel" id="panel-moftail-ads">
-            <div class="story-panel-layout">
-              <div class="story-narrative-col">
-                <span class="story-serial-badge">02 / MOFTAIL</span>
-                <h2 class="story-main-heading">変える要素を1つに絞り、<br class="desktop-only" />クリックと行動の差をデータで掴む。</h2>
-                <p class="story-meta-sublabel">PHASE 02 · META ADS A/B TESTING & METRICS</p>
-                <hr class="story-divider" />
-                <p class="story-narrative-lead">
-                  Wood（木目）がCTR 5.26%を記録し主軸へ昇格。主観ではなく実測データが次の手を決める。
-                </p>
-
-                <div class="story-trigger-wrap">
-                  <button class="btn-story-detail" type="button" data-slide-index="3" aria-label="MoftailのA/Bテスト実測ログを3Dで見る">
-                    <span class="btn-detail-icon">✎</span>
-                    <span class="btn-detail-text">A/Bテスト実測ログを開く</span>
-                    <span class="btn-detail-arrow">→</span>
-                  </button>
-                </div>
-              </div>
+            <div class="sr-only">
+              <span class="story-serial-badge">02 / MOFTAIL</span>
+              <h2>変える要素を1つに絞り、クリックと行動の差をデータで掴む。</h2>
+              <p>PHASE 02 · META ADS A/B TESTING & METRICS</p>
+              <p>Wood（木目）がCTR 5.26%を記録し主軸へ昇格。主観ではなく実測データが次の手を決める。</p>
             </div>
           </div>
 
-          <!-- Slide 2C: Moftail Brand Philosophy & Balance of Life (Single-Side Storytelling) -->
+          <!-- Slide 2C: Moftail Brand Philosophy & Balance of Life -->
           <div class="story-panel" id="panel-moftail-pod">
-            <div class="story-panel-layout">
-              <div class="story-narrative-col">
-                <span class="story-serial-badge">02 / MOFTAIL</span>
-                <h2 class="story-main-heading">綺麗さだけでは人は動かない。<br class="desktop-only" />思想を事業として成立させるために検証を重ねる。</h2>
-                <p class="story-meta-sublabel">PHASE 03 · BRAND PHILOSOPHY & PROOF</p>
-                <hr class="story-divider" />
-                <p class="story-narrative-lead">
-                  AI時代に自分を取り戻す感覚『Balance of Life』を掲げ、勝つデザインと商品ページの一貫性を追求。
-                </p>
-
-                <div class="story-trigger-wrap">
-                  <button class="btn-story-detail" type="button" data-slide-index="4" aria-label="Moftailのブランド思想ログを3Dで見る">
-                    <span class="btn-detail-icon">✎</span>
-                    <span class="btn-detail-text">ブランド思想と手書きログを開く</span>
-                    <span class="btn-detail-arrow">→</span>
-                  </button>
-                </div>
-              </div>
+            <div class="sr-only">
+              <span class="story-serial-badge">02 / MOFTAIL</span>
+              <h2>綺麗さだけでは人は動かない。思想を事業として成立させるために検証を重ねる。</h2>
+              <p>PHASE 03 · BRAND PHILOSOPHY & PROOF</p>
+              <p>AI時代に自分を取り戻す感覚『Balance of Life』を掲げ、勝つデザインと商品ページの一貫性を追求。</p>
             </div>
           </div>
 
-          <!-- Slide 3: Shopify Theme & Client Work Reveal (Single-Side Storytelling) -->
+          <!-- Slide 3: Shopify Theme & Client Work Reveal -->
           <div class="story-panel" id="panel-shopify-theme">
-            <div class="story-panel-layout">
-              <div class="story-narrative-col">
-                <span class="story-serial-badge">03 / CLIENT WORK</span>
-                <h2 class="story-main-heading">「仕様です」という回答の違和感を突き詰め、<br class="desktop-only" />修正コードを添えて時給30ドルの有償案件に変えた。</h2>
-                <p class="story-meta-sublabel">PAID FREELANCE TRIAL · $30/H · 14 TASKS</p>
-                <hr class="story-divider" />
-                <p class="story-narrative-lead">
-                  ストア運営で見つけた不具合を自らコード解析・英語レポート化し、海外開発元から14個の開発タスクを受注。
-                </p>
-
-                <div class="story-trigger-wrap">
-                  <button class="btn-story-detail" type="button" data-slide-index="5" aria-label="Shopifyテーマの調査ノートを3Dで見る">
-                    <span class="btn-detail-icon">✎</span>
-                    <span class="btn-detail-text">コード解析と調査ノートを開く</span>
-                    <span class="btn-detail-arrow">→</span>
-                  </button>
-                </div>
-              </div>
+            <div class="sr-only">
+              <span class="story-serial-badge">03 / CLIENT WORK</span>
+              <h2>「仕様です」という回答の違和感を突き詰め、修正コードを添えて時給30ドルの有償案件に変えた。</h2>
+              <p>PAID FREELANCE TRIAL · $30/H · 14 TASKS</p>
+              <p>ストア運営で見つけた不具合を自らコード解析・英語レポート化し、海外開発元から14個の開発タスクを受注。</p>
             </div>
           </div>
 
@@ -428,7 +358,7 @@
 
   </main>
 
-  <script src="./script.js?v=oryzo-darkroom-v41"></script>
+  <script src="./script.js?v=oryzo-darkroom-v42"></script>
 </body>
 
 </html>

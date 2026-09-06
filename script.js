@@ -2536,19 +2536,49 @@ document.addEventListener('DOMContentLoaded', () => {
   magnetStrip.position.set(hw + 0.001, 0, 0);
   ipadBodyGroup.add(magnetStrip);
 
-  // Subtle contact shadow plane beneath the iPad on the felt desk mat
-  const ipadShadowGeo = new THREE.PlaneGeometry(ipadW * 1.15, ipadH * 1.15);
-  ipadShadowGeo.rotateX(-Math.PI / 2);
-  const ipadShadowMat = new THREE.MeshBasicMaterial({
+  // --- 3D Precision Aluminum Stand for iPad Pro ---
+  const ipadStandGroup = new THREE.Group();
+  deskGroup.add(ipadStandGroup);
+
+  // Stand Base: Chamfered rectangular plate on the desk mat
+  const standBaseGeo = new THREE.BoxGeometry(0.26, 0.008, 0.20);
+  const standBaseMesh = new THREE.Mesh(standBaseGeo, ipadAlumMat);
+  standBaseMesh.position.set(-0.68, -0.0355 + 0.004, 0.08);
+  standBaseMesh.rotation.y = 0.18;
+  standBaseMesh.receiveShadow = true;
+  standBaseMesh.castShadow = true;
+  ipadStandGroup.add(standBaseMesh);
+
+  // Stand Upright Spine: Slender angled column rising from base
+  const standArmGeo = new THREE.BoxGeometry(0.06, 0.32, 0.008);
+  const standArmMesh = new THREE.Mesh(standArmGeo, ipadAlumMat);
+  standArmMesh.position.set(-0.68, 0.12, 0.06);
+  standArmMesh.rotation.set(-0.28, 0.18, 0.0);
+  standArmMesh.castShadow = true;
+  standArmMesh.receiveShadow = true;
+  ipadStandGroup.add(standArmMesh);
+
+  // Stand Magnetic Backplate
+  const standHeadGeo = new THREE.BoxGeometry(0.18, 0.14, 0.006);
+  const standHeadMesh = new THREE.Mesh(standHeadGeo, ipadAlumMat);
+  standHeadMesh.position.set(-0.68, 0.29, 0.08 - 0.007);
+  standHeadMesh.rotation.set(-0.28, 0.18, 0.0);
+  standHeadMesh.castShadow = true;
+  ipadStandGroup.add(standHeadMesh);
+
+  // Stand Contact Shadow on the felt desk mat
+  const standShadowGeo = new THREE.PlaneGeometry(0.32, 0.26);
+  standShadowGeo.rotateX(-Math.PI / 2);
+  const standShadowMat = new THREE.MeshBasicMaterial({
     map: createContactShadowTexture(),
     transparent: true,
     opacity: 0.45,
     depthWrite: false
   });
-  const ipadShadowMesh = new THREE.Mesh(ipadShadowGeo, ipadShadowMat);
-  ipadShadowMesh.position.set(-0.66, -0.0345, 0.08);
-  ipadShadowMesh.rotation.set(0, 0.08, 0);
-  deskGroup.add(ipadShadowMesh);
+  const standShadowMesh = new THREE.Mesh(standShadowGeo, standShadowMat);
+  standShadowMesh.position.set(-0.68, -0.0345, 0.08);
+  standShadowMesh.rotation.set(0, 0.18, 0);
+  ipadStandGroup.add(standShadowMesh);
 
   // --- 3D Apple Pencil (2nd Generation / Pro) ---
   const pencilGroup = new THREE.Group();
@@ -2597,464 +2627,619 @@ document.addEventListener('DOMContentLoaded', () => {
   pencilGroup.add(capMesh);
 
   // Pencil Tip Soft Amber Glow Indicator
-  const pencilTipGlow = new THREE.PointLight(0xff7722, 0.0, 0.25, 2.0);
+  const pencilTipGlow = new THREE.PointLight(0xff7722, 0.15, 0.25, 2.0);
   pencilTipGlow.position.set(0, -pencilBodyLength / 2 - tipLength - nibLength, 0);
   pencilGroup.add(pencilTipGlow);
 
   deskGroup.add(ipadMasterGroup);
 
-  // Set initial resting transform for iPad Pro (flat on felt desk mat to the left of the MacBook)
-  const ipadRestPos = new THREE.Vector3(-0.66, -0.0305, 0.08);
-  const ipadRestRot = new THREE.Euler(-Math.PI / 2, 0, 0.08, 'XYZ');
-  ipadMasterGroup.position.copy(ipadRestPos);
-  ipadMasterGroup.rotation.copy(ipadRestRot);
+  // Mount 3D iPad Pro in vertical portrait orientation propped up on stand
+  ipadMasterGroup.position.set(-0.68, 0.29, 0.08);
+  ipadMasterGroup.rotation.set(-0.28, 0.18, 0.0);
 
-  // Set initial resting transform for Apple Pencil (magnetically attached to iPad's right edge)
-  const pencilRestPos = new THREE.Vector3(hw + 0.008, 0.02, 0.0);
-  pencilGroup.position.copy(pencilRestPos);
+  // Apple Pencil magnetically attached to the right edge facing the MacBook
+  pencilGroup.position.set(hw + 0.008, 0.02, 0.0);
   pencilGroup.rotation.set(0, 0, 0);
 
-  // --- Dynamic Handwritten Note Engine ---
-  let currentPenNormX = 0.0;
-  let currentPenNormY = 0.0;
+  // --- Dynamic High-DPI iPad Studio Screen Rendering Engine ---
+  let currentIpadSlide = 1;
 
-  function renderIpadNote(slideIndex, progress) {
+  function renderIpadScreen(slideIndex) {
     const w = 1536;
     const h = 2048;
     const ctx = ipadCtx;
 
-    // 1. Dark matte paper background (Dark Mode Notes aesthetic)
-    ctx.fillStyle = '#14161d';
+    // 1. Deep Obsidian / Dark Slate Background
+    ctx.fillStyle = '#0f1117';
     ctx.fillRect(0, 0, w, h);
 
-    // Subtle horizontal rule guidelines
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
+    // Subtle technical grid
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
     ctx.lineWidth = 1.5;
-    for (let y = 160; y < h - 80; y += 52) {
+    for (let y = 140; y < h - 80; y += 48) {
       ctx.beginPath();
-      ctx.moveTo(90, y);
-      ctx.lineTo(w - 90, y);
+      ctx.moveTo(80, y);
+      ctx.lineTo(w - 80, y);
+      ctx.stroke();
+    }
+    for (let x = 80; x < w - 80; x += 48) {
+      ctx.beginPath();
+      ctx.moveTo(x, 140);
+      ctx.lineTo(x, h - 80);
       ctx.stroke();
     }
 
-    // Margin vertical guide (subtle warm line)
-    ctx.strokeStyle = 'rgba(194, 91, 44, 0.22)';
-    ctx.lineWidth = 2;
+    // Warm margin accent guide
+    ctx.strokeStyle = 'rgba(194, 91, 44, 0.28)';
+    ctx.lineWidth = 2.5;
     ctx.beginPath();
-    ctx.moveTo(140, 120);
-    ctx.lineTo(140, h - 100);
+    ctx.moveTo(120, 100);
+    ctx.lineTo(120, h - 80);
     ctx.stroke();
 
-    // 2. Apple Notes App Navigation & Status Bar (Always crisp at top)
-    ctx.font = '600 28px "Inter", sans-serif';
+    // Fonts definition
+    const titleFont = '700 52px "Inter", "Noto Sans JP", sans-serif';
+    const subFont = '400 32px "Inter", "Noto Sans JP", sans-serif';
+    const handFont = '"Zen Kurenaido", "Caveat", "Noto Sans JP", cursive, sans-serif';
+    const codeFont = '"JetBrains Mono", "Courier New", monospace';
+    const microFont = '600 22px "Inter", sans-serif';
+
+    // 2. Status & Navigation Header Bar
+    let badgeText = '01 / ANCHOR';
+    let categoryText = 'COGNITIVE ACCESSIBILITY ARCHITECTURE';
+    if (slideIndex === 2) {
+      badgeText = '02 / MOFTAIL · 01';
+      categoryText = 'US D2C COMMERCE · MARKET VALIDATION';
+    } else if (slideIndex === 3) {
+      badgeText = '02 / MOFTAIL · 02';
+      categoryText = 'PAID TRAFFIC · A/B TEST DATA METRICS';
+    } else if (slideIndex === 4) {
+      badgeText = '02 / MOFTAIL · 03';
+      categoryText = 'BRAND PHILOSOPHY & BALANCE OF LIFE';
+    } else if (slideIndex === 5) {
+      badgeText = '03 / CLIENT WORK';
+      categoryText = 'SHOPIFY THEME DEV · $30/H PAID TRIAL';
+    }
+
+    // Draw Left Pill Badge
     ctx.fillStyle = '#c25b2c';
-    ctx.fillText('📁 RYUNOSUKE NAKAMURA / RAW THOUGHT LOGS', 160, 80);
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(140, 60, 240, 48, 24);
+    else ctx.rect(140, 60, 240, 48);
+    ctx.fill();
 
-    ctx.font = '500 24px "Inter", sans-serif';
-    ctx.fillStyle = '#8e857b';
-    ctx.fillText('9:41 AM · Apple Pencil 100%', w - 460, 80);
+    ctx.font = '700 24px "Inter", sans-serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(badgeText, 164, 93);
 
+    // Category
+    ctx.font = microFont;
+    ctx.fillStyle = '#8e867b';
+    ctx.fillText(categoryText, 410, 93);
+
+    // Right Status
+    ctx.font = '500 22px "Inter", sans-serif';
+    ctx.fillStyle = '#c25b2c';
+    ctx.fillText('● 9:41 AM · STUDIO DUAL', w - 420, 93);
+
+    // Header Divider
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.moveTo(80, 115);
-    ctx.lineTo(w - 80, 115);
+    ctx.moveTo(100, 130);
+    ctx.lineTo(w - 100, 130);
     ctx.stroke();
 
-    // 3. Progressive Clipping Mask for Handwritten Notes
-    const revealMaxY = h - 120;
-    const revealMinY = 160;
-    const clampedProgress = Math.min(1.0, Math.max(0.0, progress));
-    const currentY = revealMinY + clampedProgress * (revealMaxY - revealMinY);
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(0, 0, w, currentY);
-    ctx.clip();
-
-    // Fonts definition
-    const handFont = '"Zen Kurenaido", "Caveat", "Noto Sans JP", sans-serif';
-    const codeFont = '"JetBrains Mono", "Courier New", monospace';
-    const titleFont = '600 48px "Inter", "Noto Sans JP", sans-serif';
-
+    // 3. Main Headline & Content by Slide
     if (slideIndex === 1) {
-      // --- 01 / ANCHOR ---
+      // --- SLIDE 1: ANCHOR ---
       ctx.font = titleFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('01 / ANCHOR · 認知アクセシビリティ設計', 170, 190);
+      ctx.fillStyle = '#f8efe0';
+      ctx.fillText('声が出せない危機の瞬間に、', 140, 220);
+      ctx.fillText('必要な支援をワンタップで相手へ届ける。', 140, 290);
 
-      ctx.font = '500 26px "Inter", sans-serif';
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('2026.02.14 / Crisis Shield Architecture Note', 170, 235);
+      ctx.font = subFont;
+      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
+      ctx.fillText('パニック時の“沈黙”を前提に、何もない平時に未来の自分の盾を備える。', 140, 360);
 
-      ctx.font = '400 36px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.92)';
-      ctx.fillText('「パニックの最中、人は言葉を失う。音が刺さり、判断が止まる。」', 170, 310);
-      ctx.fillText('身近な人の発作を聞く中で、僕が最も強く感じた問題は、', 170, 370);
-      ctx.fillText('発作そのもの以上に、必要なことを必要な瞬間に伝えられない“沈黙”だった。', 170, 430);
+      // Thinking Log Card
+      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
+      else ctx.rect(140, 420, w - 280, 260);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
 
-      ctx.font = '600 34px ' + handFont;
-      ctx.fillStyle = 'rgba(255, 100, 100, 0.85)';
-      ctx.fillText('✕ 発作が起きてから本人に操作を頑張らせる（不可能な前提）', 170, 520);
-
-      ctx.fillStyle = 'rgba(100, 255, 160, 0.85)';
-      ctx.fillText('◯ 何も起きていない平時に、未来の自分の盾（Shield）を作る。', 170, 580);
-
-      // Wireframe UI Sketch Box: Shield Emergency Card
-      ctx.strokeStyle = 'rgba(220, 90, 0, 0.55)';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(170, 660, w - 340, 540);
-
-      // Hand-drawn badge
-      ctx.fillStyle = 'rgba(220, 70, 0, 0.25)';
-      ctx.fillRect(200, 690, 260, 48);
-      ctx.font = '700 26px "Inter", sans-serif';
+      ctx.font = '700 22px "Inter", sans-serif';
       ctx.fillStyle = '#ff7733';
-      ctx.fillText('SHIELD ACTIVE', 220, 724);
+      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
 
-      ctx.font = '600 46px ' + handFont;
+      ctx.font = '400 34px ' + handFont;
+      ctx.fillStyle = '#f5edd6';
+      ctx.fillText('「パニックの最中、人は言葉を失う。音が刺さり、判断が止まる。」', 170, 520);
+      ctx.fillText('「本人に操作を頑張らせない。何もない平時のうちに未来の自分の盾を作る。」', 170, 580);
+      ctx.fillText('「助けを求める行為そのものが最も高い認知負荷になる矛盾をなくす。」', 170, 640);
+
+      // Technical Showcase: Emergency Shield Active Card
+      ctx.fillStyle = 'rgba(26, 14, 12, 0.92)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
+      else ctx.rect(140, 720, w - 280, 940);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(235, 60, 40, 0.65)';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Shield Active Red Badge
+      ctx.fillStyle = 'rgba(220, 40, 20, 0.25)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 760, 360, 54, 12);
+      else ctx.rect(180, 760, 360, 54);
+      ctx.fill();
+      ctx.font = '800 26px "Inter", sans-serif';
+      ctx.fillStyle = '#ff4433';
+      ctx.fillText('SHIELD PROTOCOL ACTIVE', 204, 796);
+
+      // Big Emergency Message
+      ctx.font = '700 46px ' + handFont;
       ctx.fillStyle = '#ffffff';
-      ctx.fillText('「声が出せません。静かな場所へ移動させてください」', 200, 810);
+      ctx.fillText('「声が出せません。静かな場所へ移動させてください」', 180, 890);
+
+      // 4 Key Architectural Points
+      const specs1 = [
+        '発作時の操作負荷ゼロ：ワンタップで全画面SOSカードに切替',
+        '視野狭窄に対応する高コントラスト黒赤デュアルカラー設計',
+        '触覚（Haptics）フィードバックにより視覚遮断時も起動を確認可能',
+        'オフライン完結：機内モードでもローカルストレージから即座に起動'
+      ];
+      ctx.font = '400 32px "Inter", "Noto Sans JP", sans-serif';
+      specs1.forEach((text, i) => {
+        ctx.fillStyle = '#4ade80';
+        ctx.fillText('✓', 180, 990 + i * 75);
+        ctx.fillStyle = 'rgba(248, 239, 224, 0.90)';
+        ctx.fillText(text, 225, 990 + i * 75);
+      });
+
+      // Wireframe QR Box
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(180, 1330, 220, 220);
+      ctx.font = '500 24px ' + codeFont;
+      ctx.fillStyle = '#8e867b';
+      ctx.fillText('EMERGENCY QR', 205, 1435);
+      ctx.fillText('(OFFLINE V-CARD)', 195, 1475);
 
       ctx.font = '400 32px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.8)';
-      ctx.fillText('・発作時の会話は不要。ワンタップで全画面ハイコントラスト表示に切替。', 200, 880);
-      ctx.fillText('・触覚フィードバック（Haptics）で視覚が狭窄していても起動確認可能。', 200, 940);
-
-      // Offline QR sketch box
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-      ctx.strokeRect(200, 990, 160, 160);
-      ctx.font = '500 22px ' + codeFont;
-      ctx.fillStyle = '#a0a5b5';
-      ctx.fillText('OFFLINE QR', 220, 1075);
-      ctx.fillText('(緊急連絡先)', 220, 1105);
-
-      ctx.font = '400 30px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.75)';
-      ctx.fillText('通信環境が遮断されていても、QR内に直接データを内包して即時共有。', 390, 1060);
-      ctx.fillText('ネットワーク依存ゼロのオフラインファースト設計。', 390, 1110);
-
-      // Takeaway Underline
-      ctx.font = '600 40px ' + handFont;
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('「便利さではなく、その瞬間に確実に使えることを設計する。」', 170, 1300);
-
-      ctx.strokeStyle = '#c25b2c';
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(170, 1320);
-      ctx.lineTo(170 + 980, 1320);
-      ctx.stroke();
+      ctx.fillStyle = 'rgba(248, 239, 224, 0.85)';
+      ctx.fillText('救急隊員・周囲の人へ渡すだけで完結するエマージェンシースクリーン。', 440, 1400);
+      ctx.fillText('日常の安心を、コードで具体化する。', 440, 1470);
 
     } else if (slideIndex === 2) {
-      // --- 02A / MOFTAIL STOREFRONT ---
+      // --- SLIDE 2: MOFTAIL STOREFRONT ---
       ctx.font = titleFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('02 / MOFTAIL · 市場の冷徹な事実を直視する', 170, 190);
+      ctx.fillStyle = '#f8efe0';
+      ctx.fillText('自分の「良い」ではなく、', 140, 220);
+      ctx.fillText('市場が実際に動いた数字で意思決定する。', 140, 290);
 
-      ctx.font = '500 26px "Inter", sans-serif';
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('2025.10.02 / Phase 01: US D2C Storefront Validation', 170, 235);
+      ctx.font = subFont;
+      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
+      ctx.fillText('米国向けD2Cブランドを実運用し、主観とマーケットの冷徹な事実の差を直視した。', 140, 360);
 
-      ctx.font = '400 36px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.92)';
-      ctx.fillText('「自分の感覚と、市場の反応は同じではない。」', 170, 310);
-      ctx.fillText('Shopifyでストアを構築し、PODで商品を製造し、Meta広告で米国へ届ける。', 170, 370);
-      ctx.fillText('答えは、常に数字（データ）で返ってくる。', 170, 430);
-
-      // Flow Diagram
-      ctx.strokeStyle = 'rgba(220, 90, 0, 0.55)';
-      ctx.lineWidth = 2.5;
-      ctx.strokeRect(170, 520, 320, 110);
-      ctx.font = '600 30px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('デザイン仮説', 230, 570);
-      ctx.font = '400 22px ' + codeFont;
-      ctx.fillStyle = '#8e857b';
-      ctx.fillText('Mockup & Concept', 230, 605);
-
+      // Thinking Log Card
+      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
       ctx.beginPath();
-      ctx.moveTo(490, 575);
-      ctx.lineTo(580, 575);
-      ctx.lineTo(570, 565);
-      ctx.moveTo(580, 575);
-      ctx.lineTo(570, 585);
+      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
+      else ctx.rect(140, 420, w - 280, 260);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
+      ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      ctx.strokeRect(590, 520, 350, 110);
-      ctx.font = '600 30px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('在庫ゼロPOD製造', 630, 570);
-      ctx.font = '400 22px ' + codeFont;
-      ctx.fillStyle = '#8e857b';
-      ctx.fillText('Printify US Network', 630, 605);
-
-      ctx.beginPath();
-      ctx.moveTo(940, 575);
-      ctx.lineTo(1030, 575);
-      ctx.lineTo(1020, 565);
-      ctx.moveTo(1030, 575);
-      ctx.lineTo(1020, 585);
-      ctx.stroke();
-
-      ctx.strokeRect(1040, 520, 320, 110);
-      ctx.font = '600 30px ' + handFont;
+      ctx.font = '700 22px "Inter", sans-serif';
       ctx.fillStyle = '#ff7733';
-      ctx.fillText('冷徹な実測データ', 1080, 570);
-      ctx.font = '400 22px ' + codeFont;
-      ctx.fillStyle = '#8e857b';
-      ctx.fillText('CTR & Add-To-Cart', 1080, 605);
+      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
 
       ctx.font = '400 34px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.88)';
-      ctx.fillText('最初に学んだのは、「どれが綺麗か」で選ぶ主観の危険さだった。', 170, 720);
-      ctx.fillText('自分が最高だと思ったクリエイティブが、市場ではクリックすらされない。', 170, 780);
-      ctx.fillText('逆に、微細な素材の差が購買行動を劇的に動かす。', 170, 840);
+      ctx.fillStyle = '#f5edd6';
+      ctx.fillText('「『自分の良い』≠『市場の数字』」', 170, 520);
+      ctx.fillText('「一番綺麗なものを作るな。人を動かすものを作れ。」', 170, 580);
+      ctx.fillText('「在庫リスクを持たずに最速で仮説をぶつけ、リアルな行動データを得る。」', 170, 640);
 
-      ctx.font = '600 40px ' + handFont;
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('「どれが一番綺麗か」ではなく、「どれが人を動かしたか」。', 170, 960);
-
-      ctx.strokeStyle = '#c25b2c';
-      ctx.lineWidth = 4;
+      // Technical Showcase: Supply Chain & Market Validation
+      ctx.fillStyle = 'rgba(18, 23, 30, 0.92)';
       ctx.beginPath();
-      ctx.moveTo(170, 985);
-      ctx.lineTo(170 + 960, 985);
+      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
+      else ctx.rect(140, 720, w - 280, 940);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(110, 231, 183, 0.50)';
+      ctx.lineWidth = 2.5;
       ctx.stroke();
+
+      ctx.fillStyle = 'rgba(110, 231, 183, 0.20)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 760, 380, 54, 12);
+      else ctx.rect(180, 760, 380, 54);
+      ctx.fill();
+      ctx.font = '800 26px "Inter", sans-serif';
+      ctx.fillStyle = '#6ee7b7';
+      ctx.fillText('ZERO-INVENTORY PIPELINE', 204, 796);
+
+      // Diagram Box
+      ctx.fillStyle = 'rgba(10, 13, 18, 0.85)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 850, w - 360, 200, 16);
+      else ctx.rect(180, 850, w - 360, 200);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.font = '600 28px ' + codeFont;
+      ctx.fillStyle = '#9cdcfe';
+      ctx.fillText('[ Shopify Storefront ]', 220, 920);
+      ctx.fillStyle = '#ce9178';
+      ctx.fillText('── (REST Webhook) ──>', 570, 920);
+      ctx.fillStyle = '#4ade80';
+      ctx.fillText('[ Printify POD ]', 980, 920);
+
+      ctx.font = '400 24px "Inter", sans-serif';
+      ctx.fillStyle = '#8e867b';
+      ctx.fillText('US Direct-to-Consumer / Zero Upfront Capital / Global Automated Fulfillment', 220, 980);
+
+      // 4 Key Learnings
+      const specs2 = [
+        '在庫リスク完全ゼロ：注文が入ってから自動オンデマンド製造＆即発送',
+        'カート離脱（Abandonment）要因の特定：配送コスト摩擦（$8.99+）を検出',
+        '主観的なこだわりを捨て、顧客が実際に支払う価格感度を計測',
+        'デザインが優れているだけでは売れないというビジネスの冷徹な現実を体得'
+      ];
+      ctx.font = '400 32px "Inter", "Noto Sans JP", sans-serif';
+      specs2.forEach((text, i) => {
+        ctx.fillStyle = '#6ee7b7';
+        ctx.fillText('✓', 180, 1150 + i * 75);
+        ctx.fillStyle = 'rgba(248, 239, 224, 0.90)';
+        ctx.fillText(text, 225, 1150 + i * 75);
+      });
+
+      ctx.font = '600 36px ' + handFont;
+      ctx.fillStyle = '#ff9944';
+      ctx.fillText('「失敗を恐れず市場に晒す。真実の答えはユーザーのクリックにしかない。」', 180, 1530);
 
     } else if (slideIndex === 3) {
-      // --- 02B / MOFTAIL META ADS ---
+      // --- SLIDE 3: MOFTAIL META ADS ---
       ctx.font = titleFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('02 / MOFTAIL · A/Bテスト実測ログ', 170, 190);
+      ctx.fillStyle = '#f8efe0';
+      ctx.fillText('変える要素を1つに絞り、', 140, 220);
+      ctx.fillText('クリックと行動の差をデータで掴む。', 140, 290);
 
-      ctx.font = '500 26px "Inter", sans-serif';
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('2025.11.18 / Phase 02: Meta Ads Creative Cycle 2', 170, 235);
+      ctx.font = subFont;
+      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
+      ctx.fillText('Wood（木目）がCTR 5.26%を記録し主軸へ昇格。主観ではなく実測データが次を決める。', 140, 360);
 
-      ctx.font = '400 36px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.92)';
-      ctx.fillText('変数を1つに限定する。コピー・リンク条件を揃え、素材のみを検証。', 170, 310);
-
-      // Hand-drawn Bar Chart
-      const chartY = 390;
-      ctx.font = '600 30px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('Wood (Natural Ash Finish)  ★ PRIMARY', 170, chartY + 40);
-      ctx.fillStyle = 'rgba(220, 90, 0, 0.80)';
-      ctx.fillRect(170, chartY + 60, 860, 44);
-      ctx.font = '700 26px "Inter", sans-serif';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText('CTR 5.26% (勝者)', 190, chartY + 92);
-
-      ctx.font = '600 30px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('Matcha (Organic Green Texture)  [次点]', 170, chartY + 160);
-      ctx.fillStyle = 'rgba(120, 180, 100, 0.65)';
-      ctx.fillRect(170, chartY + 180, 680, 44);
-      ctx.font = '700 26px "Inter", sans-serif';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText('CTR 4.21%', 190, chartY + 212);
-
-      ctx.font = '600 30px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.6)';
-      ctx.fillText('Cork (Raw Surface Material)  [優先度下]', 170, chartY + 280);
-      ctx.fillStyle = 'rgba(160, 140, 120, 0.35)';
-      ctx.fillRect(170, chartY + 300, 450, 44);
-      ctx.font = '700 26px "Inter", sans-serif';
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-      ctx.fillText('CTR 2.75%', 190, chartY + 332);
-
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(170, chartY + 390, w - 340, 130);
-      ctx.font = '500 28px "Inter", sans-serif';
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('CYCLE 2 VERIFIED TOTALS:', 210, chartY + 440);
-      ctx.font = '400 24px ' + codeFont;
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('$597.87 AD SPEND   |   27,396 IMPRESSIONS   |   78 ADD TO CARTS', 210, chartY + 485);
-
-      ctx.font = '600 40px ' + handFont;
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('「感覚ではなく、行動に差が出た。データで次の手を決める。」', 170, 990);
-
-      ctx.strokeStyle = '#c25b2c';
-      ctx.lineWidth = 4;
+      // Thinking Log Card
+      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
       ctx.beginPath();
-      ctx.moveTo(170, 1015);
-      ctx.lineTo(170 + 960, 1015);
+      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
+      else ctx.rect(140, 420, w - 280, 260);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
+      ctx.lineWidth = 1.5;
       ctx.stroke();
 
-    } else if (slideIndex === 4) {
-      // --- 02C / MOFTAIL BRAND PHILOSOPHY ---
-      ctx.font = titleFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('02 / MOFTAIL · Balance of Life 思想と証明', 170, 190);
-
-      ctx.font = '500 26px "Inter", sans-serif';
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('2025.12.05 / Phase 03: Brand Philosophy & Proof', 170, 235);
-
-      // Quote Box
-      ctx.strokeStyle = 'rgba(220, 90, 0, 0.45)';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(170, 290, w - 340, 200);
-
-      ctx.font = 'italic 700 42px "Caveat", ' + handFont;
+      ctx.font = '700 22px "Inter", sans-serif';
       ctx.fillStyle = '#ff7733';
-      ctx.fillText('"The best mockup is not the prettiest one.', 220, 370);
-      ctx.fillText(' It is the one that moves people to act."', 220, 430);
-
-      ctx.font = '400 36px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.92)';
-      ctx.fillText('服そのものだけではない。中心にあるのは Balance of Life。', 170, 560);
-      ctx.fillText('AIや情報が増え続ける世界で、一度立ち止まり自分に戻る感覚。', 170, 620);
-      ctx.fillText('生活の文脈、静かな空気感、商品が自然にそこにあるリアリティ。', 170, 680);
-
-      // Hand-drawn Zen Balance Stones Sketch
-      ctx.strokeStyle = 'rgba(245, 237, 214, 0.45)';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.ellipse(340, 890, 140, 38, 0, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.ellipse(340, 830, 100, 30, 0, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.ellipse(340, 780, 65, 24, 0, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.font = '500 28px ' + handFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('・静けさ（Quietness）', 530, 800);
-      ctx.fillText('・意図（Intentionality）', 530, 850);
-      ctx.fillText('・調和（Balance）', 530, 900);
-
-      ctx.font = '600 40px ' + handFont;
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('「思想だけでは事業にならない。だから数字で一つずつ証明する。」', 170, 1020);
-
-      ctx.strokeStyle = '#c25b2c';
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(170, 1045);
-      ctx.lineTo(170 + 990, 1045);
-      ctx.stroke();
-
-    } else if (slideIndex === 5) {
-      // --- 03 / CLIENT WORK (SHOPIFY THEME) ---
-      ctx.font = titleFont;
-      ctx.fillStyle = '#f5edd6';
-      ctx.fillText('03 / CLIENT WORK · 「仕様です」への違和感', 170, 190);
-
-      ctx.font = '500 26px "Inter", sans-serif';
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('2025.08.20 / Shopify Theme Bug Trace & $30/h Freelance Win', 170, 235);
-
-      ctx.font = '400 36px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.92)';
-      ctx.fillText('Moftailのストアで、サイズを変えても価格が変わらない問題を発見。', 170, 310);
-      ctx.fillText('開発元へ報告すると「それはShopify側の仕様です」と返答。', 170, 370);
-      ctx.fillText('でも、DOMとLiquidの挙動を見ていると、絶対におかしかった。', 170, 430);
-
-      // Code Inspection Box
-      ctx.fillStyle = '#0a0d13';
-      ctx.fillRect(170, 500, w - 340, 320);
-      ctx.strokeStyle = 'rgba(220, 90, 0, 0.45)';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(170, 500, w - 340, 320);
-
-      ctx.font = '400 26px ' + codeFont;
-      ctx.fillStyle = '#8e857b';
-      ctx.fillText('01  {% comment %} price.liquid Variant & Price Sync Fix {% endcomment %}', 200, 545);
-      ctx.fillStyle = '#569cd6';
-      ctx.fillText('02  assign', 200, 585);
-      ctx.fillStyle = '#9cdcfe';
-      ctx.fillText('target_variant = product.selected_or_first_available_variant', 300, 585);
-      ctx.fillStyle = '#ce9178';
-      ctx.fillText('03  <div class="price price--large" id="price-{{ section.id }}">', 200, 625);
-      ctx.fillStyle = '#dcdcaa';
-      ctx.fillText('04    data-instant-variant-sync="true"', 230, 665);
-      ctx.fillStyle = '#ce9178';
-      ctx.fillText('05    <span class="price-item price-item--regular">', 230, 705);
-      ctx.fillStyle = '#ff7733';
-      ctx.fillText('06      {{ target_variant.price | money }}  <-- DOMセレクター修正！', 260, 745);
+      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
 
       ctx.font = '400 34px ' + handFont;
-      ctx.fillStyle = 'rgba(245, 237, 214, 0.88)';
-      ctx.fillText('原因を特定し、英語レポート ＋ 再現手順 ＋ 修正コードを添えて送付。', 170, 880);
-      ctx.fillText('開発元の態度が一変：「うちのコードを触ってみないか？」', 170, 940);
-      ctx.fillText('時給30ドルの有償トライアルが決まり、14個のタスクを任されることに。', 170, 1000);
+      ctx.fillStyle = '#f5edd6';
+      ctx.fillText('「変数を『素材の質感』1点に限定してMeta広告を出稿。明確な差が出た。」', 170, 520);
+      ctx.fillText('「自分が推していたCork（コルク）が最下位。直感は平気で裏切る。」', 170, 580);
+      ctx.fillText('「感覚で議論するな。データで次の手を決める。」', 170, 640);
 
-      ctx.font = '600 40px ' + handFont;
-      ctx.fillStyle = '#c25b2c';
-      ctx.fillText('「技術は自分のためだけでなく、誰かの事業を前へ進めるために使える。」', 170, 1100);
-
-      ctx.strokeStyle = '#c25b2c';
-      ctx.lineWidth = 4;
+      // Technical Showcase: Real A/B Test CTR Bar Chart & Stats
+      ctx.fillStyle = 'rgba(16, 22, 32, 0.92)';
       ctx.beginPath();
-      ctx.moveTo(170, 1125);
-      ctx.lineTo(170 + 1060, 1125);
+      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
+      else ctx.rect(140, 720, w - 280, 940);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(96, 165, 250, 0.55)';
+      ctx.lineWidth = 2.5;
       ctx.stroke();
+
+      ctx.fillStyle = 'rgba(96, 165, 250, 0.22)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 760, 360, 54, 12);
+      else ctx.rect(180, 760, 360, 54);
+      ctx.fill();
+      ctx.font = '800 26px "Inter", sans-serif';
+      ctx.fillStyle = '#60a5fa';
+      ctx.fillText('REAL CAMPAIGN METRICS', 204, 796);
+
+      // Stat row
+      ctx.font = '700 32px ' + codeFont;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('TOTAL SPEND: $597.87', 180, 870);
+      ctx.fillStyle = '#9cdcfe';
+      ctx.fillText('·  ATC: 78件  ·  PURCHASE: 0件', 640, 870);
+
+      // CTR Bar Chart
+      const barY = 940;
+      // 1. Wood
+      ctx.font = '600 30px "Inter", sans-serif';
+      ctx.fillStyle = '#4ade80';
+      ctx.fillText('WOOD (木目調)', 180, barY);
+      ctx.fillStyle = 'rgba(74, 222, 128, 0.25)';
+      ctx.fillRect(440, barY - 26, 680, 36);
+      ctx.fillStyle = '#4ade80';
+      ctx.fillRect(440, barY - 26, 680 * (5.26 / 6.0), 36);
+      ctx.fillText('5.26% CTR  [★ WINNER]', 1080, barY);
+
+      // 2. Matcha
+      ctx.font = '600 30px "Inter", sans-serif';
+      ctx.fillStyle = '#60a5fa';
+      ctx.fillText('MATCHA (抹茶調)', 180, barY + 80);
+      ctx.fillStyle = 'rgba(96, 165, 250, 0.25)';
+      ctx.fillRect(440, barY + 80 - 26, 680, 36);
+      ctx.fillStyle = '#60a5fa';
+      ctx.fillRect(440, barY + 80 - 26, 680 * (4.21 / 6.0), 36);
+      ctx.fillText('4.21% CTR', 1080, barY + 80);
+
+      // 3. Cork
+      ctx.font = '600 30px "Inter", sans-serif';
+      ctx.fillStyle = '#8e867b';
+      ctx.fillText('CORK (コルク調)', 180, barY + 160);
+      ctx.fillStyle = 'rgba(142, 134, 123, 0.25)';
+      ctx.fillRect(440, barY + 160 - 26, 680, 36);
+      ctx.fillStyle = '#8e867b';
+      ctx.fillRect(440, barY + 160 - 26, 680 * (2.75 / 6.0), 36);
+      ctx.fillText('2.75% CTR', 1080, barY + 160);
+
+      // Findings Box
+      ctx.fillStyle = 'rgba(10, 14, 22, 0.85)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 1240, w - 360, 220, 16);
+      else ctx.rect(180, 1240, w - 360, 220);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.font = '500 28px "Inter", "Noto Sans JP", sans-serif';
+      ctx.fillStyle = 'rgba(248, 239, 224, 0.92)';
+      ctx.fillText('・変数を「素材の質感」のみに限定したため、勝因がクリアに特定できた。', 210, 1295);
+      ctx.fillText('・木目がコルクの1.91倍の反応を獲得。クリエイティブの主軸へ即時昇格。', 210, 1355);
+      ctx.fillText('・78件のカート追加（ATC）に対し購入ゼロ：決済UIの配送摩擦を特定。', 210, 1415);
+
+      ctx.font = '600 36px ' + handFont;
+      ctx.fillStyle = '#ffaa33';
+      ctx.fillText('「データは嘘をつかない。冷徹な数字こそが、次に進む勇気をくれる。」', 180, 1540);
+
+    } else if (slideIndex === 4) {
+      // --- SLIDE 4: MOFTAIL POD ---
+      ctx.font = titleFont;
+      ctx.fillStyle = '#f8efe0';
+      ctx.fillText('綺麗さだけでは人は動かない。', 140, 220);
+      ctx.fillText('思想を事業として成立させるために検証を重ねる。', 140, 290);
+
+      ctx.font = subFont;
+      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
+      ctx.fillText('AI時代に自分を取り戻す『Balance of Life』を掲げ、勝つビジュアルと事業性を両立。', 140, 360);
+
+      // Thinking Log Card
+      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
+      else ctx.rect(140, 420, w - 280, 260);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.font = '700 22px "Inter", sans-serif';
+      ctx.fillStyle = '#ff7733';
+      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
+
+      ctx.font = '400 34px ' + handFont;
+      ctx.fillStyle = '#f5edd6';
+      ctx.fillText('"The best mockup is not the prettiest one. It is the one that moves people to act."', 170, 520);
+      ctx.fillText('「AI時代だからこそ、静けさと調和を服とビジュアルに宿す。」', 170, 580);
+      ctx.fillText('「思想だけでは事業にならない。だから数字で証明する。」', 170, 640);
+
+      // Technical Showcase: Brand Philosophy & Viability
+      ctx.fillStyle = 'rgba(22, 20, 28, 0.92)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
+      else ctx.rect(140, 720, w - 280, 940);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(165, 180, 252, 0.55)';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(165, 180, 252, 0.22)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 760, 360, 54, 12);
+      else ctx.rect(180, 760, 360, 54);
+      ctx.fill();
+      ctx.font = '800 26px "Inter", sans-serif';
+      ctx.fillStyle = '#a5b4fc';
+      ctx.fillText('PHILOSOPHY & PROOF', 204, 796);
+
+      // Quote Banner
+      ctx.fillStyle = 'rgba(12, 10, 16, 0.85)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 850, w - 360, 160, 16);
+      else ctx.rect(180, 850, w - 360, 160);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(165, 180, 252, 0.3)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.font = '700 36px "Inter", sans-serif';
+      ctx.fillStyle = '#ffeed8';
+      ctx.fillText('“ PRETTY ISN’T ENOUGH. MAKE IT MOVE PEOPLE. ”', 220, 940);
+
+      // 3 Pillars
+      const pillars = [
+        { label: '01. 静けさと調和', desc: 'AI時代に押し寄せる情報ノイズに対し、生活空間に溶け込む上質な世界観を追求。' },
+        { label: '02. 勝つビジュアル', desc: '単なる服の画像ではなく、身に纏ったときの安心感や手触りまで想起させる演出。' },
+        { label: '03. 思想の事業化', desc: 'どれほど美しい思想も、売上が立たなければ続かない。持続可能な供給網で支える。' }
+      ];
+
+      pillars.forEach((p, i) => {
+        const py = 1070 + i * 130;
+        ctx.fillStyle = '#a5b4fc';
+        ctx.font = '700 30px "Inter", "Noto Sans JP", sans-serif';
+        ctx.fillText(p.label, 180, py);
+        ctx.fillStyle = 'rgba(248, 239, 224, 0.88)';
+        ctx.font = '400 28px "Inter", "Noto Sans JP", sans-serif';
+        ctx.fillText(p.desc, 180, py + 46);
+      });
+
+      ctx.font = '600 36px ' + handFont;
+      ctx.fillStyle = '#ffaa33';
+      ctx.fillText('「美学と収益性は対立しない。両者が揃ったとき、ブランドは永続する。」', 180, 1530);
+
+    } else if (slideIndex === 5) {
+      // --- SLIDE 5: SHOPIFY THEME CLIENT WORK ---
+      ctx.font = titleFont;
+      ctx.fillStyle = '#f8efe0';
+      ctx.fillText('「仕様です」という回答の違和感を突き詰め、', 140, 220);
+      ctx.fillText('修正コードを添えて時給30ドルの有償案件に変えた。', 140, 290);
+
+      ctx.font = subFont;
+      ctx.fillStyle = 'rgba(248, 239, 224, 0.82)';
+      ctx.fillText('ストア運営で見つけた不具合を自らコード解析し、海外開発元から14タスクを受注。', 140, 360);
+
+      // Thinking Log Card
+      ctx.fillStyle = 'rgba(22, 25, 34, 0.88)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(140, 420, w - 280, 260, 18);
+      else ctx.rect(140, 420, w - 280, 260);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(194, 91, 44, 0.40)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.font = '700 22px "Inter", sans-serif';
+      ctx.fillStyle = '#ff7733';
+      ctx.fillText('✎ RAW THOUGHT / 思考ログ', 170, 460);
+
+      ctx.font = '400 34px ' + handFont;
+      ctx.fillStyle = '#f5edd6';
+      ctx.fillText('「バリアント変更で価格が変わらない。『仕様です』の回答への強い違和感。」', 170, 520);
+      ctx.fillText('「原因を特定し、英語レポート ＋ 再現手順 ＋ 修正コードを添えて送付。」', 170, 580);
+      ctx.fillText('「開発元から時給30ドルの有償トライアル打診 -> 14個のタスクを任されることに。」', 170, 640);
+
+      // Technical Showcase: Liquid Bug Code & Freelance Result
+      ctx.fillStyle = 'rgba(16, 22, 30, 0.92)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(140, 720, w - 280, 940, 22);
+      else ctx.rect(140, 720, w - 280, 940);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(96, 165, 250, 0.60)';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(96, 165, 250, 0.22)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 760, 440, 54, 12);
+      else ctx.rect(180, 760, 440, 54);
+      ctx.fill();
+      ctx.font = '800 26px "Inter", sans-serif';
+      ctx.fillStyle = '#60a5fa';
+      ctx.fillText('SHOPIFY THEME ENGINEERING', 204, 796);
+
+      // Code Editor Box
+      ctx.fillStyle = '#0c1017';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 850, w - 360, 360, 16);
+      else ctx.rect(180, 850, w - 360, 360);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.font = '500 28px ' + codeFont;
+      ctx.fillStyle = '#8e857b';
+      ctx.fillText('01  {% comment %} price.liquid DOM Selector Fix {% endcomment %}', 210, 905);
+      ctx.fillStyle = '#569cd6';
+      ctx.fillText('02  assign', 210, 955);
+      ctx.fillStyle = '#9cdcfe';
+      ctx.fillText('target_variant = product.selected_or_first_available_variant', 320, 955);
+      ctx.fillStyle = '#ce9178';
+      ctx.fillText('03  <div class="price price--large" id="price-{{ section.id }}" data-instant-sync="true">', 210, 1005);
+      ctx.fillStyle = '#dcdcaa';
+      ctx.fillText('04    data-instant-variant-sync="true"', 250, 1055);
+      ctx.fillStyle = '#ce9178';
+      ctx.fillText('05    <span class="price-item price-item--regular">', 250, 1105);
+      ctx.fillStyle = '#4ade80';
+      ctx.fillText('06      {{ target_variant.price | money }}  <-- DOMセレクター修正！', 290, 1155);
+
+      // Client Work Outcome Box
+      ctx.fillStyle = 'rgba(10, 14, 22, 0.85)';
+      ctx.beginPath();
+      if (ctx.roundRect) ctx.roundRect(180, 1250, w - 360, 180, 16);
+      else ctx.rect(180, 1250, w - 360, 180);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(74, 222, 128, 0.35)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.font = '700 32px "Inter", sans-serif';
+      ctx.fillStyle = '#4ade80';
+      ctx.fillText('★ $30/H PAID FREELANCE TRIAL · 14 TASKS COMPLETED', 210, 1310);
+
+      ctx.font = '400 28px "Inter", "Noto Sans JP", sans-serif';
+      ctx.fillStyle = 'rgba(248, 239, 224, 0.90)';
+      ctx.fillText('海外開発元のCTOから「うちのコードを触ってみないか？」と直接オファーを獲得。', 210, 1370);
+
+      ctx.font = '600 36px ' + handFont;
+      ctx.fillStyle = '#ffaa33';
+      ctx.fillText('「技術は自分のためだけでなく、誰かの事業を前へ進めるために使える。」', 180, 1530);
     }
 
-    ctx.restore();
+    // 5. Global Footer on iPad Screen
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(100, 1860);
+    ctx.lineTo(w - 100, 1860);
+    ctx.stroke();
 
-    // Track normalized pen tip position (-0.5 to 0.5)
-    if (clampedProgress >= 1.0) {
-      currentPenNormX = 0.35;
-      currentPenNormY = -0.38;
-    } else {
-      const normY = -((currentY / h) - 0.5);
-      const sweepX = (Math.sin(clampedProgress * 42) * 0.30);
-      currentPenNormX = sweepX;
-      currentPenNormY = normY;
+    ctx.font = '600 24px "Inter", sans-serif';
+    ctx.fillStyle = '#8e867b';
+    ctx.fillText('RYUNOSUKE NAKAMURA · FACT BASE 2026', 140, 1920);
+
+    // Slide indicator dots
+    for (let d = 1; d <= 5; d++) {
+      ctx.beginPath();
+      ctx.arc(w - 240 + (d - 1) * 32, 1912, d === slideIndex ? 8 : 4, 0, Math.PI * 2);
+      ctx.fillStyle = d === slideIndex ? '#ff7733' : 'rgba(255, 255, 255, 0.25)';
+      ctx.fill();
     }
+
+    ipadScreenTex.needsUpdate = true;
   }
 
-  // Initial render of default slide note (Anchor)
-  renderIpadNote(1, 1.0);
-  ipadScreenTex.needsUpdate = true;
+  function updateIpadSlide(idx) {
+    if (currentIpadSlide === idx) return;
+    currentIpadSlide = idx;
+    renderIpadScreen(idx);
+  }
+
+  // Initial render of default slide (Anchor)
+  renderIpadScreen(1);
 
   if (document.fonts) {
     document.fonts.load('32px "Zen Kurenaido"').then(() => {
-      renderIpadNote(currentDetailSlide, 1.0);
-      ipadScreenTex.needsUpdate = true;
+      renderIpadScreen(currentIpadSlide);
     });
     document.fonts.load('32px "Caveat"').then(() => {
-      renderIpadNote(currentDetailSlide, 1.0);
-      ipadScreenTex.needsUpdate = true;
+      renderIpadScreen(currentIpadSlide);
     });
   }
-
-  // --- 3D iPad & Apple Pencil Interactive Detail Mode State ---
-  let isIpadDetailActive = false;
-  let currentDetailSlide = 1;
-  let detailProgress = 0.0;
-  let targetDetailProgress = 0.0;
-  let writeProgress = 0.0;
-
-  function openIpadDetail(slideIndex) {
-    currentDetailSlide = parseInt(slideIndex, 10) || 1;
-    isIpadDetailActive = true;
-    targetDetailProgress = 1.0;
-    writeProgress = 0.0;
-    renderIpadNote(currentDetailSlide, 0.0);
-    ipadScreenTex.needsUpdate = true;
-    document.body.classList.add('ipad-detail-active');
-  }
-
-  function closeIpadDetail() {
-    if (!isIpadDetailActive && targetDetailProgress === 0.0) return;
-    isIpadDetailActive = false;
-    targetDetailProgress = 0.0;
-    document.body.classList.remove('ipad-detail-active');
-  }
-
-
-  /* --- 6. Architectural Nordic Study Room (Reference: media_1788589474255.png) --- */
-  // 6a. Nordic Smoked Oak Plank Hardwood Floor (Deep rich warm wood with dark grooves)
   const floorTex = createHardwoodFloorTexture();
   const floorMat = new THREE.MeshStandardMaterial({
     map: floorTex,
@@ -3212,7 +3397,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (m !== contactShadowMaterial) {
       m.transparent = true;
       m.opacity = 0.0;
-      if (m !== clockGlassMat && m !== frameGlassMat && m !== ipadFrontGlassMat && m !== ipadShadowMat) {
+      if (m !== clockGlassMat && m !== frameGlassMat && m !== ipadFrontGlassMat && m !== standShadowMat) {
         m.depthWrite = true;
       }
     }
@@ -3488,20 +3673,14 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   function setPanelActive(panel) {
-    let changed = false;
     allPanels.forEach(p => {
       if (!p) return;
       if (p === panel) {
-        if (!p.classList.contains('active')) changed = true;
         p.classList.add('active');
       } else {
         p.classList.remove('active');
       }
     });
-    // Auto-close iPad detail view smoothly if user scrolls to another panel
-    if (changed && isIpadDetailActive) {
-      closeIpadDetail();
-    }
   }
 
   if (btnOpen) {
@@ -3511,34 +3690,6 @@ document.addEventListener('DOMContentLoaded', () => {
       window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     });
   }
-
-  // Story Detail Buttons (3D iPad Engineering Notes inspection trigger)
-  const detailButtons = document.querySelectorAll('.btn-story-detail');
-  detailButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const slideIdx = parseInt(btn.getAttribute('data-slide-index'), 10) || 1;
-      if (isIpadDetailActive && currentDetailSlide === slideIdx) {
-        closeIpadDetail();
-      } else {
-        openIpadDetail(slideIdx);
-      }
-    });
-  });
-
-  const btnCloseIpad = document.getElementById('btn-close-ipad-detail');
-  if (btnCloseIpad) {
-    btnCloseIpad.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeIpadDetail();
-    });
-  }
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isIpadDetailActive) {
-      closeIpadDetail();
-    }
-  });
 
   // Master GSAP Timeline synchronized to scroll (ORYZO Darkroom Void-Mode Reveal)
   const tl = gsap.timeline({
@@ -3554,26 +3705,32 @@ document.addEventListener('DOMContentLoaded', () => {
           setPanelActive(panelHero);
           updateScreenTexture(textures.lockScreen, 0xffeed8);
           updateActiveNav('#panel-hero');
+          updateIpadSlide(1);
         } else if (p >= 0.27 && p < 0.42) {
           setPanelActive(panelAnchor);
           updateScreenTexture(textures.anchor, 0x82b4ff);
           updateActiveNav('#scroll-stage');
+          updateIpadSlide(1);
         } else if (p >= 0.42 && p < 0.55) {
           setPanelActive(panelMoftailStorefront);
           updateScreenTexture(textures.shopify, 0x6ee7b7);
           updateActiveNav('#scroll-stage');
+          updateIpadSlide(2);
         } else if (p >= 0.55 && p < 0.68) {
           setPanelActive(panelMoftailAds);
           updateScreenTexture(textures.ads, 0x60a5fa);
           updateActiveNav('#scroll-stage');
+          updateIpadSlide(3);
         } else if (p >= 0.68 && p < 0.81) {
           setPanelActive(panelMoftailPod);
           updateScreenTexture(textures.printify, 0xa5b4fc);
           updateActiveNav('#scroll-stage');
+          updateIpadSlide(4);
         } else {
           setPanelActive(panelShopifyTheme);
           updateScreenTexture(textures.shopifyTheme, 0x60a5fa);
           updateActiveNav('#scroll-stage');
+          updateIpadSlide(5);
         }
       }
     }
@@ -3684,15 +3841,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 2.75);
 
   // =========================================================================
-  // Step 2: Dynamic Zoom-in Dive into Anchor (3.65 -> 5.75s)
-  // Camera dives into the screen, making the code & architecture prominent
+  // Step 2: Dynamic Dual-Screen Presentation of Anchor (3.65 -> 5.75s)
+  // iPad on left shows engineering notes, Mac on right shows live web app
   // =========================================================================
   tl.to(macState, {
     rotX: 0.05,
     rotY: -0.03,
-    cameraZ: 3.16,      // Close-up hero screen view between Left & Right cards
-    cameraY: 0.22,
-    lookOffsetY: 0.44,  // Screen-centered vertical framing
+    cameraZ: 3.52,      // Dual-screen workstation view showing both iPad & MacBook
+    cameraY: 0.28,
+    lookOffsetY: 0.22,  // Screen-centered vertical framing
     posY: -0.46,
     posX: 0.00,
     ease: 'power2.inOut',
@@ -3716,10 +3873,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   tl.to(macState, {
     rotX: 0.06,
-    rotY: 0.03,         // Elegant slight tilt showcasing midnight aluminum anodized finish
-    cameraZ: 3.16,
-    cameraY: 0.22,
-    lookOffsetY: 0.44,
+    rotY: 0.02,         // Elegant slight tilt showcasing midnight aluminum anodized finish
+    cameraZ: 3.52,
+    cameraY: 0.28,
+    lookOffsetY: 0.22,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3728,7 +3885,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   tl.to(deskState, {
     rotX: 0.06,
-    rotY: 0.03,
+    rotY: 0.02,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -3739,14 +3896,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // =========================================================================
   // Step 3b: Moftail Phase 2 - Meta Ads & Demand Verification (7.45 -> 9.15s)
-  // Subtle left tilt as user examines real ad analytics ($597.87 / 78 ATC / 0 purchase)
+  // Subtle angle change highlighting the analytics dashboard & iPad A/B CTR chart
   // =========================================================================
   tl.to(macState, {
     rotX: 0.05,
-    rotY: -0.02,        // Nuanced angle change highlighting the analytics dashboard
-    cameraZ: 3.14,
-    cameraY: 0.22,
-    lookOffsetY: 0.44,
+    rotY: -0.02,        // Nuanced angle change
+    cameraZ: 3.50,
+    cameraY: 0.28,
+    lookOffsetY: 0.22,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3766,14 +3923,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // =========================================================================
   // Step 3c: Moftail Phase 3 - Supply POD & Birding Pivot (9.15 -> 10.85s)
-  // Balanced centered framing showcasing Printify supply network & market pivot
+  // Balanced centered framing showcasing Printify supply network & brand philosophy
   // =========================================================================
   tl.to(macState, {
     rotX: 0.06,
     rotY: 0.01,         // Centered balanced view
-    cameraZ: 3.16,
-    cameraY: 0.22,
-    lookOffsetY: 0.44,
+    cameraZ: 3.52,
+    cameraY: 0.28,
+    lookOffsetY: 0.22,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3797,9 +3954,9 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(macState, {
     rotX: 0.04,
     rotY: -0.01,        // Direct frontal alignment to maximize readability
-    cameraZ: 3.14,
-    cameraY: 0.22,
-    lookOffsetY: 0.44,
+    cameraZ: 3.50,
+    cameraY: 0.28,
+    lookOffsetY: 0.22,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3871,6 +4028,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const clock = new THREE.Clock();
 
+  // Click-to-Focus Raycaster (Interact with iPad or MacBook)
+  const raycaster = new THREE.Raycaster();
+  const mouseVec = new THREE.Vector2();
+  let focusTarget = null; // 'ipad' | 'mac' | null
+
+  const currentCamPos = new THREE.Vector3(0, macState.cameraY, macState.cameraZ);
+  const currentLookTarget = new THREE.Vector3(0, 0.14, 0);
+
+  window.addEventListener('click', (e) => {
+    if (e.target.closest('a, button, input, textarea, select, nav, .header-minimal')) return;
+    if (macState.lidOpen < 0.3) return;
+
+    mouseVec.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseVec.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouseVec, camera);
+
+    const ipadHits = raycaster.intersectObjects(ipadMasterGroup.children, true);
+    if (ipadHits.length > 0) {
+      focusTarget = (focusTarget === 'ipad') ? null : 'ipad';
+      return;
+    }
+
+    const macHits = raycaster.intersectObjects(macRoot.children, true);
+    if (macHits.length > 0) {
+      focusTarget = (focusTarget === 'mac') ? null : 'mac';
+      return;
+    }
+
+    if (focusTarget !== null) {
+      focusTarget = null;
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && focusTarget !== null) {
+      focusTarget = null;
+    }
+  });
+
+  let prevScrollPos = window.scrollY;
+  window.addEventListener('scroll', () => {
+    if (focusTarget !== null && Math.abs(window.scrollY - prevScrollPos) > 40) {
+      focusTarget = null;
+    }
+    prevScrollPos = window.scrollY;
+  }, { passive: true });
+
   function animate() {
     requestAnimationFrame(animate);
 
@@ -3880,103 +4084,34 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseX += (targetMouseX - mouseX) * 0.05;
     mouseY += (targetMouseY - mouseY) * 0.05;
 
-    // Dynamic staging offset: On widescreen desktop, shift MacBook & desk smoothly to the right (+0.35)
-    // so the left half has generous breathing room for the floating visionOS story card.
+    // Dual-screen layout: MacBook shifts to right (+0.32) when opened, balancing the propped iPad on the left
     const isMobile = camera.aspect < 1.15;
-    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.35 : 0.0);
-
-    // Smooth interpolation of iPad detail inspection mode
-    const detailSpeed = 0.08;
-    detailProgress += (targetDetailProgress - detailProgress) * detailSpeed;
-    if (Math.abs(detailProgress - targetDetailProgress) < 0.0005) {
-      detailProgress = targetDetailProgress;
-    }
-
-    // Advance handwriting animation when iPad is lifted and active
-    if (isIpadDetailActive && detailProgress > 0.55) {
-      if (writeProgress < 1.0) {
-        writeProgress += delta * 0.46; // Writes across screen over ~2.1 seconds
-        if (writeProgress >= 1.0) {
-          writeProgress = 1.0;
-        }
-        renderIpadNote(currentDetailSlide, writeProgress);
-        ipadScreenTex.needsUpdate = true;
-      }
-    }
-
-    // MacBook secondary scaling & staging when iPad detail mode is active:
-    // Scales down to 72%, shifts further right, and recedes into depth
-    const macDetailScale = 1.0 - (detailProgress * 0.28);
-    const macDetailShiftX = detailProgress * (isMobile ? 0.20 : 0.48);
-    const macDetailShiftZ = -detailProgress * (isMobile ? 0.18 : 0.28);
-    const macDetailShiftY = detailProgress * 0.02;
-
-    macRoot.scale.setScalar(macDetailScale);
-    macRoot.position.x = macState.posX + desktopOffset + macDetailShiftX;
-    macRoot.position.y = macState.posY + macDetailShiftY;
-    macRoot.position.z = macDetailShiftZ;
+    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.32 : 0.0);
 
     // Rotate and position the MacBook master group
+    macRoot.scale.setScalar(1.0);
+    macRoot.position.x = macState.posX + desktopOffset;
+    macRoot.position.y = macState.posY;
+    macRoot.position.z = 0;
     macRoot.rotation.x = macState.rotX + mouseY;
     macRoot.rotation.y = macState.rotY + mouseX;
     macRoot.rotation.z = macState.rotZ;
 
     // Desk group follows deskState with matching mouse parallax
     deskGroup.visible = deskState.opacity > 0.005;
-    deskGroup.position.x = deskState.posX + desktopOffset;
+    deskGroup.position.x = deskState.posX;
     deskGroup.position.y = deskState.posY;
     deskGroup.position.z = deskState.posZ;
     deskGroup.rotation.x = deskState.rotX + mouseY;
     deskGroup.rotation.y = deskState.rotY + mouseX;
     deskGroup.rotation.z = deskState.rotZ;
 
-    // 3D iPad Pro transforms: Resting flat on desk mat vs Active inspection in foreground
-    const ipadActiveX = isMobile ? 0.0 : -0.22;
-    const ipadActiveY = isMobile ? 0.08 : 0.06;
-    const ipadActiveZ = isMobile ? 0.72 : 0.58;
-    const ipadActiveRotX = -0.32;
-    const ipadActiveRotY = isMobile ? 0.0 : 0.04;
-    const ipadActiveRotZ = 0.0;
-
-    ipadMasterGroup.position.x = THREE.MathUtils.lerp(ipadRestPos.x, ipadActiveX, detailProgress);
-    ipadMasterGroup.position.y = THREE.MathUtils.lerp(ipadRestPos.y, ipadActiveY, detailProgress);
-    ipadMasterGroup.position.z = THREE.MathUtils.lerp(ipadRestPos.z, ipadActiveZ, detailProgress);
-
-    ipadMasterGroup.rotation.x = THREE.MathUtils.lerp(ipadRestRot.x, ipadActiveRotX, detailProgress);
-    ipadMasterGroup.rotation.y = THREE.MathUtils.lerp(ipadRestRot.y, ipadActiveRotY, detailProgress);
-    ipadMasterGroup.rotation.z = THREE.MathUtils.lerp(ipadRestRot.z, ipadActiveRotZ, detailProgress);
-
-    // 3D Apple Pencil transforms: Attached to right magnetic edge vs Active writing grip
-    pencilGroup.rotation.x = THREE.MathUtils.lerp(0.0, 0.70, detailProgress);
-    pencilGroup.rotation.y = THREE.MathUtils.lerp(0.0, -0.25, detailProgress);
-    pencilGroup.rotation.z = THREE.MathUtils.lerp(0.0, -0.30, detailProgress);
-
-    const screenPenX = currentPenNormX * screenW;
-    const screenPenY = currentPenNormY * screenH;
-    const isWritingActive = isIpadDetailActive && detailProgress > 0.75 && writeProgress < 1.0;
-    const hoverOffsetZ = (writeProgress >= 1.0) ? 0.024 : 0.002;
-    const jitterZ = isWritingActive ? Math.abs(Math.sin(clock.elapsedTime * 45)) * 0.0012 : 0.0;
-    const screenPenZ = (ipadDepth / 2) + hoverOffsetZ + jitterZ;
-
-    const tipOffset = new THREE.Vector3(0, -0.150, 0).applyEuler(pencilGroup.rotation);
-    const activePencilPos = new THREE.Vector3(
-      screenPenX - tipOffset.x,
-      screenPenY - tipOffset.y,
-      screenPenZ - tipOffset.z
-    );
-
-    pencilGroup.position.lerpVectors(pencilRestPos, activePencilPos, detailProgress);
-
-    if (pencilTipGlow) {
-      pencilTipGlow.intensity = isWritingActive ? 0.55 : (detailProgress * 0.15);
-    }
-
     if (deskGroup.visible && deskMaterials) {
       deskMaterials.forEach(m => {
         if (m === ipadFrontGlassMat) {
           m.opacity = 0.15 * Math.min(1.0, deskState.opacity);
-        } else if (m === ipadShadowMat) {
-          m.opacity = 0.45 * Math.min(1.0, deskState.opacity) * Math.max(0.0, 1.0 - detailProgress * 1.5);
+        } else if (m === standShadowMat) {
+          m.opacity = 0.45 * Math.min(1.0, deskState.opacity);
         } else if (m === clockGlassMat) {
           m.opacity = 0.45 * Math.min(1.0, deskState.opacity);
         } else if (m === frameGlassMat) {
@@ -4018,27 +4153,53 @@ document.addEventListener('DOMContentLoaded', () => {
       contactShadowMaterial.opacity = deskState.contactShadowOpacity;
     }
 
-    // Control Lid Opening:
+    // Control Lid Opening
     if (lidNode) {
       if (isObjModel) {
-        // Apple CAD model: closedLidRot (+1.5805 rad / 90.55 deg forward) is closed 100% flush on base,
-        // openLidRot (-0.384 rad / -22 deg backwards) is open at 112 deg facing user
         lidNode.rotation.x = THREE.MathUtils.lerp(closedLidRot, openLidRot, macState.lidOpen);
       } else {
         lidNode.rotation.x = -macState.lidOpen * 2.02;
       }
     }
 
-    camera.position.z = macState.cameraZ;
-    camera.position.y = macState.cameraY;
+    // Base camera framing for dual-screen workstation
+    const baseLookX = isMobile ? 0.0 : (macState.lidOpen > 0 ? -0.16 : 0.0);
+    const mobileLookShift = isMobile ? 0.20 : 0.0;
+    const baseLookY = macRoot.position.y + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
+    const baseCamZ = isMobile ? 4.25 : macState.cameraZ;
+    const baseCamY = macState.cameraY;
+    const baseCamX = 0;
 
-    // On mobile portrait, shift look target slightly downward so the 3D MacBook
-    // centers gracefully in the upper 52% of the screen above the bottom card
-    const mobileLookShift = isMobile ? 0.30 : 0.0;
-    const targetLookY = macRoot.position.y + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
-    const detailLookShiftX = detailProgress * (isMobile ? 0.0 : -0.04);
-    const targetLookX = isMobile ? 0.0 : ((desktopOffset * 0.32) + detailLookShiftX);
-    camera.lookAt(targetLookX, targetLookY, 0);
+    let targetCamX = baseCamX;
+    let targetCamY = baseCamY;
+    let targetCamZ = baseCamZ;
+    let targetLookX = baseLookX;
+    let targetLookY = baseLookY;
+
+    if (focusTarget === 'ipad') {
+      targetCamX = -0.68;
+      targetCamY = 0.29;
+      targetCamZ = 2.40;
+      targetLookX = -0.68;
+      targetLookY = 0.29;
+    } else if (focusTarget === 'mac') {
+      targetCamX = macState.posX + desktopOffset;
+      targetCamY = 0.22;
+      targetCamZ = 2.30;
+      targetLookX = macState.posX + desktopOffset;
+      targetLookY = 0.38;
+    }
+
+    currentCamPos.x += (targetCamX - currentCamPos.x) * 0.08;
+    currentCamPos.y += (targetCamY - currentCamPos.y) * 0.08;
+    currentCamPos.z += (targetCamZ - currentCamPos.z) * 0.08;
+
+    currentLookTarget.x += (targetLookX - currentLookTarget.x) * 0.08;
+    currentLookTarget.y += (targetLookY - currentLookTarget.y) * 0.08;
+    currentLookTarget.z += (0.0 - currentLookTarget.z) * 0.08;
+
+    camera.position.copy(currentCamPos);
+    camera.lookAt(currentLookTarget);
 
     renderer.render(scene, camera);
   }

@@ -97,6 +97,19 @@ a {
   text-decoration: none;
 }
 
+/* Screen-reader and search accessibility (invisible visually, 100% indexed) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* ==========================================================================
    Fixed Top Navigation (Minimal, 4 items, uppercase micro-type)
    ========================================================================== */
