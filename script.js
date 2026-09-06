@@ -2417,21 +2417,21 @@ document.addEventListener('DOMContentLoaded', () => {
   deskGroup.add(mugGroup);
 
   /* ==========================================================================
-     3D iPad Pro M4 & Apple Pencil 2 (Interactive Engineering Note Mode)
+     3D iPad Pro M4 & Apple Pencil Pro (Dual-Screen Studio Workstation)
      ========================================================================== */
   const ipadMasterGroup = new THREE.Group();
   const ipadBodyGroup = new THREE.Group();
   ipadMasterGroup.add(ipadBodyGroup);
 
-  // iPad Dimensions (scale ~1:1 with real 13" iPad Pro beside 2.25-width MacBook Air)
-  const ipadW = 1.16;
-  const ipadH = 1.58;
-  const ipadDepth = 0.022;
-  const ipadRadius = 0.065;
+  // iPad Dimensions: 13-inch Pro format (~1:1 scale with 2.25-width MacBook Air)
+  const ipadW = 1.14;
+  const ipadH = 1.56;
+  const ipadDepth = 0.020;
+  const ipadRadius = 0.060;
+  const hw = ipadW / 2, hh = ipadH / 2, ir = ipadRadius;
 
   // Unibody chassis shape with rounded corners
   const ipadShape = new THREE.Shape();
-  const hw = ipadW / 2, hh = ipadH / 2, ir = ipadRadius;
   ipadShape.moveTo(-hw + ir, -hh);
   ipadShape.lineTo(hw - ir, -hh);
   ipadShape.quadraticCurveTo(hw, -hh, hw, -hh + ir);
@@ -2446,21 +2446,21 @@ document.addEventListener('DOMContentLoaded', () => {
     steps: 1,
     depth: ipadDepth,
     bevelEnabled: true,
-    bevelThickness: 0.004,
-    bevelSize: 0.004,
+    bevelThickness: 0.003,
+    bevelSize: 0.003,
     bevelOffset: 0,
     bevelSegments: 3
   };
   const ipadChassisGeo = new THREE.ExtrudeGeometry(ipadShape, ipadExtrudeSettings);
-  ipadChassisGeo.center();
+  ipadChassisGeo.center(); // Front face is at Z = +0.013
 
   // Space Gray / Midnight anodized aluminum material
   const ipadAlumMat = new THREE.MeshPhysicalMaterial({
-    color: 0x1d2127,
-    roughness: 0.28,
-    metalness: 0.88,
-    clearcoat: 0.25,
-    clearcoatRoughness: 0.35
+    color: 0x181a1f,
+    roughness: 0.32,
+    metalness: 0.85,
+    clearcoat: 0.20,
+    clearcoatRoughness: 0.40
   });
   const ipadChassisMesh = new THREE.Mesh(ipadChassisGeo, ipadAlumMat);
   ipadChassisMesh.castShadow = true;
@@ -2470,7 +2470,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Rear Camera bump
   const camBumpGeo = new THREE.BoxGeometry(0.18, 0.18, 0.008);
   const camBumpMesh = new THREE.Mesh(camBumpGeo, ipadAlumMat);
-  camBumpMesh.position.set(-hw + 0.14, hh - 0.14, -ipadDepth / 2 - 0.004);
+  camBumpMesh.position.set(-hw + 0.14, hh - 0.14, -0.013 - 0.004);
   ipadBodyGroup.add(camBumpMesh);
 
   // Dynamic High-Res CanvasTexture for iPad Screen
@@ -2488,25 +2488,28 @@ document.addEventListener('DOMContentLoaded', () => {
     ipadScreenTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   }
 
-  // Active Screen display plane (perfect 3:4 aspect ratio matching 1536x2048 canvas)
-  const screenW = 1.08;
-  const screenH = 1.44;
+  // Active Screen display plane (perfect 3:4 aspect ratio: 1.05 / 1.40 = 0.75)
+  // Strictly in front of chassis (Z = 0.0160 > 0.0130) with renderOrder 10 and opaque MeshBasicMaterial!
+  const screenW = 1.05;
+  const screenH = 1.40;
   const ipadScreenGeo = new THREE.PlaneGeometry(screenW, screenH);
-  // Using MeshBasicMaterial with toneMapped: false guarantees self-illumination, zero shadow occlusion, and crystal clarity!
   const ipadScreenMat = new THREE.MeshBasicMaterial({
     map: ipadScreenTex,
     toneMapped: false,
-    transparent: true
+    transparent: false,
+    side: THREE.DoubleSide
   });
   const ipadScreenMesh = new THREE.Mesh(ipadScreenGeo, ipadScreenMat);
-  ipadScreenMesh.position.set(0, 0, ipadDepth / 2 + 0.0020);
+  ipadScreenMesh.position.set(0, 0, 0.0160);
+  ipadScreenMesh.renderOrder = 10;
   ipadBodyGroup.add(ipadScreenMesh);
 
   // Sleek Black Screen Bezel border plane behind the screen
-  const bezelGeo = new THREE.PlaneGeometry(ipadW - 0.010, ipadH - 0.010);
-  const bezelMat = new THREE.MeshBasicMaterial({ color: 0x08090c, transparent: true });
+  const bezelGeo = new THREE.PlaneGeometry(ipadW - 0.008, ipadH - 0.008);
+  const bezelMat = new THREE.MeshBasicMaterial({ color: 0x050608 });
   const bezelMesh = new THREE.Mesh(bezelGeo, bezelMat);
-  bezelMesh.position.set(0, 0, ipadDepth / 2 + 0.0010);
+  bezelMesh.position.set(0, 0, 0.0145);
+  bezelMesh.renderOrder = 5;
   ipadBodyGroup.add(bezelMesh);
 
   // Front camera dot on top bezel
@@ -2514,16 +2517,17 @@ document.addEventListener('DOMContentLoaded', () => {
     new THREE.CircleGeometry(0.006, 16),
     new THREE.MeshBasicMaterial({ color: 0x020305 })
   );
-  frontCamDot.position.set(0, hh - 0.024, ipadDepth / 2 + 0.0022);
+  frontCamDot.position.set(0, hh - 0.022, 0.0165);
+  frontCamDot.renderOrder = 15;
   ipadBodyGroup.add(frontCamDot);
 
-  // Magnetic Pencil charging strip on right edge
+  // Magnetic charging strip on right edge
   const magnetStrip = new THREE.Mesh(
     new THREE.PlaneGeometry(0.006, 0.50),
-    new THREE.MeshStandardMaterial({ color: 0x121418, roughness: 0.5, metalness: 0.8 })
+    new THREE.MeshStandardMaterial({ color: 0x0f1115, roughness: 0.5, metalness: 0.8 })
   );
   magnetStrip.rotateY(Math.PI / 2);
-  magnetStrip.position.set(hw + 0.002, 0, 0);
+  magnetStrip.position.set(hw + 0.001, 0, 0);
   ipadBodyGroup.add(magnetStrip);
 
   // --- 3D Precision Aluminum Stand for iPad Pro ---
@@ -2531,10 +2535,10 @@ document.addEventListener('DOMContentLoaded', () => {
   deskGroup.add(ipadStandGroup);
 
   // Stand Base: Chamfered rectangular plate on the desk mat
-  const standBaseGeo = new THREE.BoxGeometry(0.55, 0.016, 0.42);
+  const standBaseGeo = new THREE.BoxGeometry(0.52, 0.016, 0.38);
   const standBaseMesh = new THREE.Mesh(standBaseGeo, ipadAlumMat);
-  standBaseMesh.position.set(-1.26, -0.0355 + 0.008, 0.05);
-  standBaseMesh.rotation.y = 0.14;
+  standBaseMesh.position.set(-1.12, -0.0355 + 0.008, 0.08);
+  standBaseMesh.rotation.y = 0.12;
   standBaseMesh.receiveShadow = true;
   standBaseMesh.castShadow = true;
   ipadStandGroup.add(standBaseMesh);
@@ -2542,22 +2546,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // Stand Upright Spine: Slender angled column rising from base
   const standArmGeo = new THREE.BoxGeometry(0.12, 0.82, 0.018);
   const standArmMesh = new THREE.Mesh(standArmGeo, ipadAlumMat);
-  standArmMesh.position.set(-1.26, 0.38, 0.02);
-  standArmMesh.rotation.set(-0.28, 0.14, 0.0);
+  standArmMesh.position.set(-1.12, 0.38, 0.05);
+  standArmMesh.rotation.set(-0.26, 0.12, 0.0);
   standArmMesh.castShadow = true;
   standArmMesh.receiveShadow = true;
   ipadStandGroup.add(standArmMesh);
 
   // Stand Magnetic Backplate
-  const standHeadGeo = new THREE.BoxGeometry(0.42, 0.32, 0.014);
+  const standHeadGeo = new THREE.BoxGeometry(0.40, 0.30, 0.014);
   const standHeadMesh = new THREE.Mesh(standHeadGeo, ipadAlumMat);
-  standHeadMesh.position.set(-1.26, 0.78, 0.05 - 0.020);
-  standHeadMesh.rotation.set(-0.28, 0.14, 0.0);
+  standHeadMesh.position.set(-1.12, 0.76, 0.08 - 0.020);
+  standHeadMesh.rotation.set(-0.26, 0.12, 0.0);
   standHeadMesh.castShadow = true;
   ipadStandGroup.add(standHeadMesh);
 
   // Stand Contact Shadow on the felt desk mat
-  const standShadowGeo = new THREE.PlaneGeometry(0.68, 0.54);
+  const standShadowGeo = new THREE.PlaneGeometry(0.66, 0.50);
   standShadowGeo.rotateX(-Math.PI / 2);
   const standShadowMat = new THREE.MeshBasicMaterial({
     map: createContactShadowTexture(),
@@ -2566,69 +2570,125 @@ document.addEventListener('DOMContentLoaded', () => {
     depthWrite: false
   });
   const standShadowMesh = new THREE.Mesh(standShadowGeo, standShadowMat);
-  standShadowMesh.position.set(-1.26, -0.0345, 0.05);
-  standShadowMesh.rotation.set(0, 0.14, 0);
+  standShadowMesh.position.set(-1.12, -0.0345, 0.08);
+  standShadowMesh.rotation.set(0, 0.12, 0);
   ipadStandGroup.add(standShadowMesh);
 
-  // --- 3D Apple Pencil (2nd Generation / Pro) ---
+  // --- Photorealistic 3D Apple Pencil Pro (2nd Generation) ---
   const pencilGroup = new THREE.Group();
   ipadMasterGroup.add(pencilGroup);
 
-  const pencilBodyLength = 0.58;
-  const pencilRadius = 0.014;
+  const pencilBodyLength = 0.60;
+  const pr = 0.014;       // pencil radius
+  const flatCut = 0.0105; // flat magnetic facet
 
-  const pencilBodyGeo = new THREE.CylinderGeometry(pencilRadius, pencilRadius, pencilBodyLength, 32);
+  // Exact 2D cross-section: Circle with one flat facet facing -X (iPad magnetic strip)
+  const pencilShape = new THREE.Shape();
+  const cutAngle = Math.acos(flatCut / pr);
+  pencilShape.moveTo(-flatCut, pr * Math.sin(cutAngle));
+  pencilShape.absarc(0, 0, pr, cutAngle, Math.PI * 2 - cutAngle, false);
+  pencilShape.lineTo(-flatCut, -pr * Math.sin(cutAngle));
+  pencilShape.closePath();
+
+  const pencilExtrudeSettings = {
+    steps: 1,
+    depth: pencilBodyLength,
+    bevelEnabled: true,
+    bevelThickness: 0.002,
+    bevelSize: 0.002,
+    bevelOffset: 0,
+    bevelSegments: 3
+  };
+  const pencilBodyGeo = new THREE.ExtrudeGeometry(pencilShape, pencilExtrudeSettings);
+  pencilBodyGeo.center();
+
+  // Signature Apple matte satin white polycarbonate material
   const pencilMat = new THREE.MeshPhysicalMaterial({
-    color: 0xf6f6f8,
-    roughness: 0.26,
-    metalness: 0.04,
-    clearcoat: 0.25,
-    clearcoatRoughness: 0.35
+    color: 0xf2f3f6,
+    roughness: 0.36,
+    metalness: 0.02,
+    clearcoat: 0.12,
+    clearcoatRoughness: 0.40
   });
   const pencilBodyMesh = new THREE.Mesh(pencilBodyGeo, pencilMat);
+  pencilBodyMesh.rotation.x = Math.PI / 2;
   pencilBodyMesh.castShadow = true;
   pencilGroup.add(pencilBodyMesh);
 
-  // Pencil Tip Cone
-  const tipLength = 0.055;
-  const pencilTipGeo = new THREE.CylinderGeometry(pencilRadius * 0.2, pencilRadius, tipLength, 32);
-  const pencilTipMesh = new THREE.Mesh(pencilTipGeo, pencilMat);
-  pencilTipMesh.position.y = -pencilBodyLength / 2 - tipLength / 2;
+  // 1. Polished Chrome / Nickel Accent Ring between Body and Tip
+  const ringGeo = new THREE.CylinderGeometry(pr * 0.96, pr * 0.96, 0.003, 32);
+  const ringMat = new THREE.MeshStandardMaterial({
+    color: 0xd6d9e0,
+    roughness: 0.18,
+    metalness: 0.92
+  });
+  const ringMesh = new THREE.Mesh(ringGeo, ringMat);
+  ringMesh.position.y = -pencilBodyLength / 2 - 0.0015;
+  pencilGroup.add(ringMesh);
+
+  // 2. High-Grade Elastomer Drawing Tip Cone (Screw-on Nib Cone)
+  const tipLength = 0.052;
+  const pencilTipGeo = new THREE.CylinderGeometry(pr * 0.22, pr * 0.94, tipLength, 32);
+  const tipMat = new THREE.MeshPhysicalMaterial({
+    color: 0xeeeff2,
+    roughness: 0.48,
+    metalness: 0.02
+  });
+  const pencilTipMesh = new THREE.Mesh(pencilTipGeo, tipMat);
+  pencilTipMesh.position.y = -pencilBodyLength / 2 - tipLength / 2 - 0.003;
   pencilTipMesh.castShadow = true;
   pencilGroup.add(pencilTipMesh);
 
-  // Graphite fine drawing nib
-  const nibLength = 0.014;
-  const nibGeo = new THREE.ConeGeometry(pencilRadius * 0.22, nibLength, 16);
+  // 3. Graphite Silicone Drawing Nib Point
+  const nibLength = 0.012;
+  const nibGeo = new THREE.ConeGeometry(pr * 0.22, nibLength, 24);
   const nibMat = new THREE.MeshStandardMaterial({
-    color: 0x28292c,
-    roughness: 0.65,
+    color: 0x24262a,
+    roughness: 0.68,
     metalness: 0.05
   });
   const nibMesh = new THREE.Mesh(nibGeo, nibMat);
-  nibMesh.position.y = -pencilBodyLength / 2 - tipLength - nibLength / 2;
+  nibMesh.position.y = -pencilBodyLength / 2 - tipLength - nibLength / 2 - 0.003;
   nibMesh.rotation.x = Math.PI;
   pencilGroup.add(nibMesh);
 
-  // Pencil Top Cap
-  const capGeo = new THREE.SphereGeometry(pencilRadius, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2);
+  // 4. Flat Top End Cap with Micro-Beveled Edge
+  const capGeo = new THREE.CylinderGeometry(pr * 0.96, pr * 0.96, 0.004, 32);
   const capMesh = new THREE.Mesh(capGeo, pencilMat);
-  capMesh.position.y = pencilBodyLength / 2;
+  capMesh.position.y = pencilBodyLength / 2 + 0.002;
   pencilGroup.add(capMesh);
 
-  // Pencil Tip Soft Amber Glow Indicator
-  const pencilTipGlow = new THREE.PointLight(0xff7722, 0.20, 0.45, 2.0);
-  pencilTipGlow.position.set(0, -pencilBodyLength / 2 - tipLength - nibLength, 0);
-  pencilGroup.add(pencilTipGlow);
+  // 5. Laser-etched " Pencil" Decal on the Flat Facet
+  const decalCanvas = document.createElement('canvas');
+  decalCanvas.width = 512;
+  decalCanvas.height = 128;
+  const decalCtx = decalCanvas.getContext('2d');
+  decalCtx.clearRect(0, 0, 512, 128);
+  decalCtx.font = '600 48px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif';
+  decalCtx.fillStyle = '#a8acb6';
+  decalCtx.textAlign = 'center';
+  decalCtx.textBaseline = 'middle';
+  decalCtx.fillText(' Pencil', 256, 64);
+  const decalTex = new THREE.CanvasTexture(decalCanvas);
+  const decalMat = new THREE.MeshBasicMaterial({
+    map: decalTex,
+    transparent: true,
+    opacity: 0.85
+  });
+  const decalGeo = new THREE.PlaneGeometry(0.016, 0.10);
+  const decalMesh = new THREE.Mesh(decalGeo, decalMat);
+  decalMesh.position.set(-flatCut - 0.0005, pencilBodyLength / 2 - 0.10, 0);
+  decalMesh.rotation.y = -Math.PI / 2;
+  pencilGroup.add(decalMesh);
 
   deskGroup.add(ipadMasterGroup);
 
   // Mount 3D iPad Pro in vertical portrait orientation propped up on stand
-  ipadMasterGroup.position.set(-1.26, 0.78, 0.05);
-  ipadMasterGroup.rotation.set(-0.28, 0.14, 0.0);
+  ipadMasterGroup.position.set(-1.12, 0.76, 0.08);
+  ipadMasterGroup.rotation.set(-0.26, 0.12, 0.0);
 
   // Apple Pencil magnetically attached to the right edge facing the MacBook
-  pencilGroup.position.set(hw + 0.020, 0.04, 0.0);
+  pencilGroup.position.set(hw + flatCut + 0.002, 0.04, 0.0);
   pencilGroup.rotation.set(0, 0, 0);
 
   // --- Dynamic High-DPI iPad Studio Screen Rendering Engine ---
@@ -3229,6 +3289,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.fonts.load('32px "Caveat"').then(() => {
       renderIpadScreen(currentIpadSlide);
     });
+    document.fonts.ready.then(() => {
+      renderIpadScreen(currentIpadSlide);
+    });
   }
   const floorTex = createHardwoodFloorTexture();
   const floorMat = new THREE.MeshStandardMaterial({
@@ -3374,6 +3437,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Collect all unique materials across the entire deskGroup to support smooth gradual manifestation
   const deskMaterials = new Set();
   deskGroup.traverse((child) => {
+    // Exclude iPad and Apple Pencil so their screen texture, laser decals, and shaders are never zeroed
+    if (child === ipadMasterGroup) return;
+    let p = child.parent;
+    let isInsideIpad = false;
+    while (p) {
+      if (p === ipadMasterGroup) { isInsideIpad = true; break; }
+      p = p.parent;
+    }
+    if (isInsideIpad) return;
+
     if (child.isMesh && child.material) {
       if (Array.isArray(child.material)) {
         child.material.forEach(m => deskMaterials.add(m));
@@ -3837,9 +3910,9 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(macState, {
     rotX: 0.05,
     rotY: -0.03,
-    cameraZ: 4.15,      // Dual-screen workstation view showing both iPad & MacBook
-    cameraY: 0.65,
-    lookOffsetY: 1.05,  // Screen-centered vertical framing for both displays
+    cameraZ: 3.35,      // Dual-screen workstation close-up view showing both iPad & MacBook in crisp detail
+    cameraY: 0.45,
+    lookOffsetY: 0.88,  // Screen-centered vertical framing for both displays
     posY: -0.46,
     posX: 0.00,
     ease: 'power2.inOut',
@@ -3864,9 +3937,9 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(macState, {
     rotX: 0.06,
     rotY: 0.02,         // Elegant slight tilt showcasing midnight aluminum anodized finish
-    cameraZ: 4.15,
-    cameraY: 0.65,
-    lookOffsetY: 1.05,
+    cameraZ: 3.35,
+    cameraY: 0.45,
+    lookOffsetY: 0.88,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3891,9 +3964,9 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(macState, {
     rotX: 0.05,
     rotY: -0.02,        // Nuanced angle change
-    cameraZ: 4.12,
-    cameraY: 0.65,
-    lookOffsetY: 1.05,
+    cameraZ: 3.32,
+    cameraY: 0.45,
+    lookOffsetY: 0.88,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3918,9 +3991,9 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(macState, {
     rotX: 0.06,
     rotY: 0.01,         // Centered balanced view
-    cameraZ: 4.15,
-    cameraY: 0.65,
-    lookOffsetY: 1.05,
+    cameraZ: 3.35,
+    cameraY: 0.45,
+    lookOffsetY: 0.88,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3944,9 +4017,9 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(macState, {
     rotX: 0.04,
     rotY: -0.01,        // Direct frontal alignment to maximize readability
-    cameraZ: 4.12,
-    cameraY: 0.65,
-    lookOffsetY: 1.05,
+    cameraZ: 3.32,
+    cameraY: 0.45,
+    lookOffsetY: 0.88,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3970,9 +4043,9 @@ document.addEventListener('DOMContentLoaded', () => {
   tl.to(macState, {
     rotX: 0.08,
     rotY: 0.03,
-    cameraZ: 5.20,      // Pull back to showcase whole creator workspace
-    cameraY: 0.85,
-    lookOffsetY: 0.75,
+    cameraZ: 4.80,      // Pull back to showcase whole creator workspace
+    cameraY: 0.70,
+    lookOffsetY: 0.55,
     posY: -0.46,
     posX: 0.00,
     ease: 'power2.out',
@@ -4074,9 +4147,9 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseX += (targetMouseX - mouseX) * 0.05;
     mouseY += (targetMouseY - mouseY) * 0.05;
 
-    // Dual-screen layout: MacBook shifts to right (+0.70) when opened, balancing the propped iPad on the left
+    // Dual-screen layout: MacBook shifts to right (+0.76) when opened, balancing the propped iPad on the left
     const isMobile = camera.aspect < 1.15;
-    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.70 : 0.0);
+    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.76 : 0.0);
 
     // Rotate and position the MacBook master group
     macRoot.scale.setScalar(1.0);
@@ -4156,12 +4229,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Base camera framing for dual-screen workstation
-    const baseLookX = isMobile ? 0.0 : (macState.lidOpen > 0 ? -0.28 : 0.0);
+    const baseLookX = isMobile ? 0.0 : (macState.lidOpen > 0 ? -0.18 : 0.0);
+    const baseCamX = isMobile ? 0.0 : (macState.lidOpen > 0 ? -0.18 : 0.0);
     const mobileLookShift = isMobile ? 0.20 : 0.0;
     const baseLookY = macRoot.position.y + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
-    const baseCamZ = isMobile ? 4.60 : macState.cameraZ;
+    const baseCamZ = isMobile ? 4.10 : macState.cameraZ;
     const baseCamY = macState.cameraY;
-    const baseCamX = 0;
 
     let targetCamX = baseCamX;
     let targetCamY = baseCamY;
@@ -4170,17 +4243,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let targetLookY = baseLookY;
 
     if (focusTarget === 'ipad') {
-      targetCamX = -1.26;
-      targetCamY = 0.78;
-      targetCamZ = 2.45;
-      targetLookX = -1.26;
-      targetLookY = 0.78;
+      targetCamX = -1.12;
+      targetCamY = 0.76;
+      targetCamZ = 2.15;
+      targetLookX = -1.12;
+      targetLookY = 0.76;
     } else if (focusTarget === 'mac') {
       targetCamX = macState.posX + desktopOffset;
-      targetCamY = 0.58;
-      targetCamZ = 2.70;
+      targetCamY = 0.48;
+      targetCamZ = 2.45;
       targetLookX = macState.posX + desktopOffset;
-      targetLookY = 0.65;
+      targetLookY = 0.55;
     }
 
     currentCamPos.x += (targetCamX - currentCamPos.x) * 0.08;
