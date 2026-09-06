@@ -45,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
     camera.aspect = aspect;
 
     if (aspect < 1.0) {
-      // Base desktop reference aspect ~1.45 with fov 40 deg gives half-angle tan = 0.528
-      const targetTan = 0.528 / Math.max(aspect, 0.38);
+      // Base desktop reference aspect ~1.45 with fov 40 deg gives half-angle tan = 0.535
+      const targetTan = 0.535 / Math.max(aspect, 0.35);
       const adaptiveFov = Math.atan(targetTan) * 2 * (180 / Math.PI);
-      camera.fov = Math.min(Math.max(adaptiveFov, 40), 66);
+      camera.fov = Math.min(Math.max(adaptiveFov, 40), 68);
     } else {
       camera.fov = 40;
     }
@@ -818,8 +818,8 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.fillText('TERMINAL : TEST RUNNER & PRODUCT MANAGER VERIFICATION LOG', 250, c.height - 126);
 
       const testLogs = [
-        { text: '✓ PASS  spec/variant_price_sync.spec.js (Mobile & Desktop Price Sync Verified)', color: '#98c379' },
-        { text: '✓ PASS  spec/theme_editor_controls.spec.js (Instance-scoped hover & swatch rules applied)', color: '#98c379' },
+        { text: '✓ PASS  tests/variant_price_sync.test.js (Mobile & Desktop Price Sync Verified)', color: '#98c379' },
+        { text: '✓ PASS  tests/theme_editor_controls.test.js (Instance-scoped hover & swatch rules applied)', color: '#98c379' },
         { text: '✓ SUMMARY: 14 of 14 tasks completed | 19h 20m logged | Verified by Product Manager', color: '#61afef' }
       ];
 
@@ -1568,7 +1568,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fillStyle = '#3a3c42';
     ctx.font = '600 18px -apple-system, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('DESIGN SPEC', cx, cy - 72);
+    ctx.fillText('CHRONOMETER', cx, cy - 72);
 
     ctx.fillStyle = '#7a7c82';
     ctx.font = '400 13px -apple-system, sans-serif';
@@ -3575,9 +3575,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // In the 3-column split layout (Left: Primary Headline / Center: 3D MacBook Air / Right: Subtext),
     // the MacBook and desk remain centered at posX: 0.00.
-    // On mobile portrait, scale down hero posX to keep laptop centered.
+    // On mobile portrait, keep laptop centered (posX = 0.0).
     const isMobile = camera.aspect < 1.15;
-    const currentPosX = isMobile ? macState.posX * 0.15 : macState.posX;
+    const currentPosX = isMobile ? 0.0 : macState.posX;
     const desktopOffset = 0.0;
 
     // Rotate and position the MacBook master group
@@ -3663,8 +3663,8 @@ document.addEventListener('DOMContentLoaded', () => {
     camera.position.y = macState.cameraY;
 
     // On mobile portrait, shift look target slightly downward so the 3D MacBook
-    // centers gracefully in the upper 52% of the screen above the bottom card
-    const mobileLookShift = isMobile ? 0.30 : 0.0;
+    // centers gracefully in the upper 55% of the screen above the bottom card
+    const mobileLookShift = isMobile ? 0.34 : 0.0;
     const targetLookY = macRoot.position.y + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
     const targetLookX = isMobile ? 0.0 : (desktopOffset * 0.32);
     camera.lookAt(targetLookX, targetLookY, 0);
