@@ -86,7 +86,7 @@ ShopifyとPrintifyで運営しているPODアパレルブランドです。
 
 ### ⚓ Anchor — iOS App for Panic Situations
 
-<a href="https://github.com/ryuusuraimu/Anchor.swiftpm">
+<a href="https://github.com/ryuusuraimu/Anchor-BuildWeek">
   <img src="./assets/anchor-logo.png" alt="Anchor iOS app preview" width="720">
 </a>
 
@@ -103,7 +103,7 @@ Apple Swift Student Challenge に提出しました。
 | **Shortcut integration** | 画面操作の負荷を減らすため |
 
 <p>
-  <a href="https://github.com/ryuusuraimu/Anchor.swiftpm"><strong>View repository →</strong></a>
+  <a href="https://github.com/ryuusuraimu/Anchor-BuildWeek"><strong>View repository →</strong></a>
 </p>
 
 ---

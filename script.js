@@ -91,6 +91,24 @@ document.addEventListener('DOMContentLoaded', () => {
   ectx.fillStyle = topSoftbox;
   ectx.fillRect(50, 30, envCanvas.width - 100, 100);
 
+  // 2b. Front-Facing Studio Softbox (Reflecting across the MacBook lid & Apple Logo)
+  // Centered around X=0 / X=1024 (+Z forward hemisphere facing the camera)
+  const frontSoftbox1 = ectx.createRadialGradient(0, 180, 20, 0, 180, 240);
+  frontSoftbox1.addColorStop(0.0, 'rgba(240, 246, 255, 0.70)');
+  frontSoftbox1.addColorStop(0.35, 'rgba(215, 230, 255, 0.40)');
+  frontSoftbox1.addColorStop(0.75, 'rgba(160, 185, 220, 0.14)');
+  frontSoftbox1.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
+  ectx.fillStyle = frontSoftbox1;
+  ectx.fillRect(0, 40, 240, 300);
+
+  const frontSoftbox2 = ectx.createRadialGradient(1024, 180, 20, 1024, 180, 240);
+  frontSoftbox2.addColorStop(0.0, 'rgba(240, 246, 255, 0.70)');
+  frontSoftbox2.addColorStop(0.35, 'rgba(215, 230, 255, 0.40)');
+  frontSoftbox2.addColorStop(0.75, 'rgba(160, 185, 220, 0.14)');
+  frontSoftbox2.addColorStop(1.0, 'rgba(0, 0, 0, 0)');
+  ectx.fillStyle = frontSoftbox2;
+  ectx.fillRect(784, 40, 240, 300);
+
   // 3. Front Key Softbox (Sculpting the keyboard deck, palm rests, and top lid)
   const keySoftbox = ectx.createRadialGradient(290, 210, 15, 290, 210, 160);
   keySoftbox.addColorStop(0.0, 'rgba(255, 238, 215, 0.45)');
@@ -158,6 +176,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const sideFillLight = new THREE.DirectionalLight(0x3c2414, 0.08);
   sideFillLight.position.set(-5.0, 2.0, 2.0);
   scene.add(sideFillLight);
+
+  // 6. Hero Front Studio Key Light: Sculpting MacBook lid gloss, bead-blasted roughness, and Apple logo
+  const heroLidKeyLight = new THREE.DirectionalLight(0xffeedd, 0.58);
+  heroLidKeyLight.position.set(-1.6, 3.4, 4.2);
+  scene.add(heroLidKeyLight);
+
+  // 7. Hero Front Fill & Logo Specular Rim: Crisp cool rim accentuating edge bevels
+  const heroLidRimLight = new THREE.DirectionalLight(0xd5e6ff, 0.38);
+  heroLidRimLight.position.set(2.6, 2.2, 3.8);
+  scene.add(heroLidRimLight);
 
   /* ==========================================================================
      3. Project Screen & Hardware Textures (Authentic User Lock Screen & Apps)
@@ -840,28 +868,77 @@ document.addEventListener('DOMContentLoaded', () => {
   let mixer = null;
   let openAction = null;
 
+  // Authentic Bead-Blasted Anodized Aluminum Micro-Texture (梨地仕上げ):
+  // Recreates the microscopic physical surface roughness and light dispersion of Apple's
+  // CNC-machined ceramic bead-blasted unibody chassis.
+  function createBeadBlastedAluminumTexture() {
+    const size = 512;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    const imgData = ctx.createImageData(size, size);
+    const d = imgData.data;
+
+    // Ceramic bead blasting produces isotropic, rounded microscopic impact indentations.
+    // 3-sample Gaussian central limit approximation generates natural bell-curve pit distribution
+    for (let i = 0; i < d.length; i += 4) {
+      const r1 = Math.random();
+      const r2 = Math.random();
+      const r3 = Math.random();
+      const grain = (r1 + r2 + r3) / 3.0;
+      const byteVal = Math.floor(grain * 255);
+      d[i] = byteVal;
+      d[i + 1] = byteVal;
+      d[i + 2] = byteVal;
+      d[i + 3] = 255;
+    }
+    ctx.putImageData(imgData, 0, 0);
+
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.wrapS = THREE.RepeatWrapping;
+    tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(22.0, 22.0); // Tiles finely (~1.4mm per cycle) to match microscopic bead pits
+    tex.generateMipmaps = true;
+    tex.minFilter = THREE.LinearMipmapLinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    tex.needsUpdate = true;
+    return tex;
+  }
+
+  const aluminumGrainTex = createBeadBlastedAluminumTexture();
+
   // Genuine M2 MacBook Air Midnight Material:
-  // Authentic bead-blasted anodized aluminum with subtle oxide clearcoat
+  // Authentic dark inky blue-graphite bead-blasted anodized aluminum.
+  // In standard lighting it presents as a stealthy deep dark unibody,
+  // while direct glancing light reveals that signature oceanic midnight blue undertone.
   const midnightAluminumMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x18202c,
-    metalness: 0.82,
-    roughness: 0.40,
-    clearcoat: 0.15,
-    clearcoatRoughness: 0.35,
-    envMapIntensity: 1.25
+    color: 0x18202a,             // Authentic Apple Midnight inky blue-graphite (#18202a)
+    metalness: 0.85,             // Genuine unibody metallic conduction
+    roughness: 0.35,             // Velvety satin dark finish
+    bumpMap: aluminumGrainTex,   // Microscopic bead-blasted surface roughness (梨地)
+    bumpScale: 0.0024,           // Subtle, tactile anodized micro-grain
+    roughnessMap: aluminumGrainTex,
+    clearcoat: 0.45,             // Refined anodic oxide clearcoat giving metallic luster
+    clearcoatRoughness: 0.25,    // Smooth outer specular sheen
+    emissive: 0x000000,          // Deep unpolluted dark shadows (zero artificial blue glow)
+    emissiveIntensity: 0.0,
+    reflectivity: 0.88,
+    envMapIntensity: 2.0         // Elegant studio softbox reflections
   });
 
-  // Apple Logo: Flush Inset Mirror-Polished Dark Stainless Steel
-  // Liquid metal dark titanium mirror finish catching crisp environment reflections
+  // Apple Logo: Mirror-Polished Liquid Dark Titanium / Stainless Steel Inset
+  // High-contrast gloss, crisp environment reflections, and distinct metallic luster
   const appleLogoMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x485872,
-    metalness: 1.0,
-    roughness: 0.02,
-    clearcoat: 0.95,
-    clearcoatRoughness: 0.04,
-    emissive: 0x142032,
-    emissiveIntensity: 0.28,
-    envMapIntensity: 1.6
+    color: 0x5c6e86,            // Refined silvery dark midnight titanium
+    metalness: 1.0,             // 100% specular mirror metal
+    roughness: 0.02,            // Ultra-smooth mirror polish
+    clearcoat: 1.0,             // Pure liquid crystal clearcoat
+    clearcoatRoughness: 0.02,
+    emissive: 0x141d2a,         // Faint inner metallic luminescence
+    emissiveIntensity: 0.25,
+    envMapIntensity: 3.0,       // Crisp, brilliant studio reflection
+    reflectivity: 1.0
   });
 
   // Magic Keyboard Keycaps: Pure deep matte jet black PBT plastic
@@ -912,7 +989,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Trackpad: Etched matte glass in deep Midnight tone matching the unibody
   const trackpadMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x141822,
+    color: 0x11161f,
     roughness: 0.42,
     metalness: 0.15,
     clearcoat: 0.25,
@@ -1004,13 +1081,16 @@ document.addEventListener('DOMContentLoaded', () => {
     rotZ: 0.0,
     bounceIntensity: 0.0,
     underShelfLightIntensity: 0.0, // Off at first
-    contactShadowOpacity: 0.0
+    contactShadowOpacity: 0.0,
+    rippleProgress: 0.0,
+    rippleOpacity: 0.0
   };
 
   // Glass materials & room lighting declarations so animate() can reference them
   let clockGlassMat, frameGlassMat;
   let slatCoveLight, slatCoveLightL, slatCoveLightR, slatCoveStripMat;
   let deskRadiosityBounce;
+  let deskRippleMaterial, matRippleMesh, woodRippleMesh;
 
   // Helper 1: Ultra-High-Res Smoked Dark Walnut Wood Grain procedural canvas texture (2048 x 1024)
   function createDarkWalnutTexture() {
@@ -2348,6 +2428,160 @@ document.addEventListener('DOMContentLoaded', () => {
   contactShadowMesh.position.set(0, -0.0350, 0.0);
   deskGroup.add(contactShadowMesh);
 
+  // --- Rainbow Chromatic Dispersion Ripple on Laptop Touchdown ---
+  // Radiates from the laptop's contact base across the desk mat and walnut tabletop,
+  // strictly confined within the physical boundaries of the desk with zero background bleed.
+  const rippleVertexShader = `
+    varying vec2 vDeskXZ;
+    varying vec2 vUv;
+
+    void main() {
+      vUv = uv;
+      vDeskXZ = position.xz;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `;
+
+  const rippleFragmentShader = `
+    precision highp float;
+
+    varying vec2 vDeskXZ;
+    varying vec2 vUv;
+
+    uniform float uProgress;
+    uniform float uOpacity;
+    uniform float uTime;
+
+    // Signed distance to rounded rectangle matching laptop contact base
+    float sdRoundedBox(vec2 p, vec2 b, float r) {
+      vec2 q = abs(p) - b + vec2(r);
+      return min(max(q.x, q.y), 0.0) + length(max(q, vec2(0.0))) - r;
+    }
+
+    // Exact 8-zone ambient LED gradient from ORYZO reference (media_1788669893652.png)
+    vec3 sampleOryzoLedPalette(float t) {
+      t = fract(t);
+      if (t < 0.125) {
+        float f = smoothstep(0.0, 0.125, t);
+        return mix(vec3(0.38, 0.96, 0.52), vec3(1.00, 0.82, 0.08), f); // Mint/Lime -> Champagne Gold
+      } else if (t < 0.250) {
+        float f = smoothstep(0.125, 0.250, t);
+        return mix(vec3(1.00, 0.82, 0.08), vec3(0.96, 0.36, 0.02), f); // Champagne Gold -> ORYZO Amber (#dc5000)
+      } else if (t < 0.375) {
+        float f = smoothstep(0.250, 0.375, t);
+        return mix(vec3(0.96, 0.36, 0.02), vec3(0.98, 0.20, 0.10), f); // Amber -> Fiery Red-Orange
+      } else if (t < 0.500) {
+        float f = smoothstep(0.375, 0.500, t);
+        return mix(vec3(0.98, 0.20, 0.10), vec3(0.95, 0.16, 0.62), f); // Red-Orange -> Neon Hot Magenta / Pink
+      } else if (t < 0.625) {
+        float f = smoothstep(0.500, 0.625, t);
+        return mix(vec3(0.95, 0.16, 0.62), vec3(0.55, 0.22, 0.98), f); // Hot Magenta -> Electric Violet / Indigo
+      } else if (t < 0.750) {
+        float f = smoothstep(0.625, 0.750, t);
+        return mix(vec3(0.55, 0.22, 0.98), vec3(0.05, 0.58, 0.98), f); // Violet -> Vivid Cyan-Blue
+      } else if (t < 0.875) {
+        float f = smoothstep(0.750, 0.875, t);
+        return mix(vec3(0.05, 0.58, 0.98), vec3(0.02, 0.96, 0.96), f); // Cyan-Blue -> Electric Turquoise Cyan
+      } else {
+        float f = smoothstep(0.875, 1.000, t);
+        return mix(vec3(0.02, 0.96, 0.96), vec3(0.38, 0.96, 0.52), f); // Electric Cyan -> Mint/Lime
+      }
+    }
+
+    void main() {
+      if (uOpacity <= 0.001) {
+        discard;
+      }
+
+      // Laptop base footprint (MacBook Air M2 chassis)
+      vec2 baseHalfSize = vec2(1.05, 0.72);
+      float cornerRadius = 0.18;
+
+      float rawSdf = sdRoundedBox(vDeskXZ, baseHalfSize, cornerRadius);
+      float dist = max(0.0, rawSdf);
+
+      // Continuous 360-degree LED perimeter angle (matching orientation of media_1788669893652.png)
+      // vDeskXZ.x is Left/Right (- to +), vDeskXZ.y is Back/Front (- to +)
+      float angleT = atan(vDeskXZ.x, -vDeskXZ.y) / 6.2831853 + 0.5;
+      float flowT = angleT + uTime * 0.035;
+      vec3 ledColor = sampleOryzoLedPalette(flowT);
+
+      // 1. Core LED Strip: intense, sharp light bar right along the base edge
+      float ledStrip = exp(-dist * 16.0) * 1.8;
+
+      // 2. Diffuse LED Underglow: soft ambient light spill on felt mat and walnut wood
+      float ledSpill = exp(-dist * 1.8) * 0.95;
+
+      // 3. Dynamic Shockwave Expansion ("ブワッと広がる" burst on touchdown)
+      float waveDist = mix(0.0, 3.5, pow(clamp(uProgress, 0.0, 1.0), 0.80));
+      float delta = dist - waveDist;
+      float waveWidth = mix(0.28, 0.75, uProgress);
+      float waveCrest = exp(- (delta * delta) / (waveWidth * waveWidth * 0.40));
+      float echoCrest = 0.35 * exp(- pow(dist - max(0.0, waveDist - 0.45), 2.0) / (waveWidth * waveWidth * 0.30));
+      float expansionWave = (waveCrest + echoCrest) * 1.45;
+
+      // Combined LED Illumination:
+      float illumIntensity = (ledStrip + ledSpill * 0.75) * (1.0 - uProgress * 0.35) + expansionWave;
+
+      // Luminous White-Hot Phosphor Core (Specular highlight of high-power LED)
+      float coreGlow = pow(waveCrest, 2.2) * 0.55 + pow(clamp(ledStrip / 1.8, 0.0, 1.0), 2.0) * 0.75;
+      vec3 finalColor = mix(ledColor, vec3(1.0, 0.98, 0.95), clamp(coreGlow, 0.0, 0.85));
+
+      // Strictly bound to desk physical surface (zero bleed into surrounding darkroom void)
+      float maskX = smoothstep(3.60, 2.65, abs(vDeskXZ.x));
+      float maskZ_Back = smoothstep(-1.50, -1.05, vDeskXZ.y);
+      float maskZ_Front = smoothstep(3.80, 2.85, vDeskXZ.y);
+      float deskBoundaryMask = maskX * maskZ_Back * maskZ_Front;
+
+      // Energy distance decay
+      float distanceDecay = smoothstep(3.6, 0.25, dist);
+
+      // Progress animation envelope (gentle onset, graceful fadeout)
+      float progressEnvelope = smoothstep(0.0, 0.15, uProgress) * smoothstep(1.0, 0.55, uProgress);
+
+      float alpha = illumIntensity * uOpacity * deskBoundaryMask * distanceDecay * progressEnvelope;
+
+      if (alpha <= 0.001) {
+        discard;
+      }
+
+      // Additive LED light emission
+      gl_FragColor = vec4(finalColor * alpha * 1.9, alpha);
+    }
+  `;
+
+  deskRippleMaterial = new THREE.ShaderMaterial({
+    vertexShader: rippleVertexShader,
+    fragmentShader: rippleFragmentShader,
+    uniforms: {
+      uProgress: { value: 0.0 },
+      uOpacity: { value: 0.0 },
+      uTime: { value: 0.0 }
+    },
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.FrontSide
+  });
+
+  // Layer 1: Felt desk mat ripple mesh (+0.8mm above mat surface)
+  const matRippleGeo = new THREE.PlaneGeometry(3.55, 2.22, 64, 64);
+  matRippleGeo.rotateX(-Math.PI / 2);
+  matRippleGeo.translate(0, 0, 0.02);
+  matRippleMesh = new THREE.Mesh(matRippleGeo, deskRippleMaterial);
+  matRippleMesh.position.set(0, -0.0342, 0);
+  matRippleMesh.visible = false;
+  deskGroup.add(matRippleMesh);
+
+  // Layer 2: Walnut tabletop ripple mesh (+0.8mm above wood surface)
+  const woodRippleGeo = new THREE.PlaneGeometry(7.4, 5.4, 64, 64);
+  woodRippleGeo.rotateX(-Math.PI / 2);
+  woodRippleGeo.translate(0, 0, 1.20);
+  woodRippleMesh = new THREE.Mesh(woodRippleGeo, deskRippleMaterial);
+  woodRippleMesh.position.set(0, -0.0592, 0);
+  woodRippleMesh.visible = false;
+  deskGroup.add(woodRippleMesh);
+
   // Screen Emissive Bounce Light
   const screenBounceLight = new THREE.PointLight(0xaad0ff, 0.0, 3.2, 2.0);
   screenBounceLight.position.set(0, 0.12, 0.35);
@@ -2572,7 +2806,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   deskMaterials.forEach(m => {
-    if (m !== contactShadowMaterial) {
+    if (m !== contactShadowMaterial && m !== deskRippleMaterial) {
       m.transparent = true;
       m.opacity = 0.0;
       if (m !== clockGlassMat && m !== frameGlassMat) {
@@ -2586,11 +2820,11 @@ document.addEventListener('DOMContentLoaded', () => {
   badgeText.textContent = 'Loading M2 MacBook Air (Apple CAD)...';
 
   let isObjModel = false;
-  // Solved exact hinge pivot axis for Apple CAD model:
+  // Solved exact hinge pivot axis for Apple CAD model (outer perimeter JuhbtSVUApBmAxZ contact):
   // Eliminates floating gap between lid and base unibody, ensuring 100% snug, flush contact (0.0mm gap)
   // and perfectly aligns the lid front edge and corners with the base unibody front lip (0.0mm offset)
-  const hingeY = -0.0954;
-  const hingeZ = -10.4420;
+  const hingeY = -0.0843;
+  const hingeZ = -10.5170;
 
   // Exactly 90.0 deg (Math.PI / 2): perfectly horizontal closed position parallel to base top surface
   const closedLidRot = Math.PI / 2;
@@ -2685,12 +2919,11 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (name === 'gBnfybYsnvNKMNz' || name === 'HTHOzmkTYEwZyEh' || name === 'JyWPvxtVWeAIlFr' || name === 'PtCJmGcZOLCVfpE') {
           child.material = trackpadMaterial;
         }
-        // 9. Display Bezel, Notch, Outer Frame & Camera Chin (All pitch black glass/rubber)
+        // 9. Display Bezel, Notch, Inner Frame & Camera Chin (Pitch black glass/rubber)
         else if (
           name === 'IIYuScaaJfZFQCI' || name === 'ZoEUQEmIqLZBLak' || name === 'mcOCnZgAJjewDrN' ||
           name === 'CkbnHAtuXixvlPr' || name === 'ZDgSqzMhYRkIwOB' || name === 'cdEKpSInDAxKfRd' ||
-          name === 'JuhbtSVUApBmAxZ' || name === 'YxEoGdVfCoJSQNq' || name === 'upjAUqYVLfcxvyM' ||
-          name === 'dFmPMyaKVBOVSYU'
+          name === 'upjAUqYVLfcxvyM' || name === 'dFmPMyaKVBOVSYU'
         ) {
           child.material = bezelMaterial;
         }
@@ -2879,23 +3112,23 @@ document.addEventListener('DOMContentLoaded', () => {
       onUpdate: (self) => {
         const p = self.progress;
 
-        if (p < 0.27) {
+        if (p < 0.25) {
           setPanelActive(panelHero);
           updateScreenTexture(textures.lockScreen, 0xffeed8);
           updateActiveNav('#panel-hero');
-        } else if (p >= 0.27 && p < 0.42) {
+        } else if (p >= 0.25 && p < 0.41) {
           setPanelActive(panelAnchor);
           updateScreenTexture(textures.anchor, 0x82b4ff);
           updateActiveNav('#scroll-stage');
-        } else if (p >= 0.42 && p < 0.55) {
+        } else if (p >= 0.41 && p < 0.54) {
           setPanelActive(panelMoftailStorefront);
           updateScreenTexture(textures.shopify, 0x6ee7b7);
           updateActiveNav('#scroll-stage');
-        } else if (p >= 0.55 && p < 0.68) {
+        } else if (p >= 0.54 && p < 0.67) {
           setPanelActive(panelMoftailAds);
           updateScreenTexture(textures.ads, 0x60a5fa);
           updateActiveNav('#scroll-stage');
-        } else if (p >= 0.68 && p < 0.81) {
+        } else if (p >= 0.67 && p < 0.80) {
           setPanelActive(panelMoftailPod);
           updateScreenTexture(textures.printify, 0xa5b4fc);
           updateActiveNav('#scroll-stage');
@@ -2965,11 +3198,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 0.80);
 
   // =========================================================================
-  // Step 1c: TOUCHDOWN! Warm Lighting Blossoms & Desk Radiance (2.15 -> 2.75s)
+  // Step 1c: TOUCHDOWN! Warm Lighting Blossoms & Rainbow Ripple (2.15 -> 2.75s)
   // At the EXACT MOMENT the laptop lands on the mat:
-  // Beautiful warm amber indirect lighting blooms across the desk, illuminating
-  // the walnut wood grain, pegboard, plant, books, and the sleek closed Mac!
-  // Desk fully materializes into rich, solid focus.
+  // 1. Warm amber indirect lighting blooms across the desk.
+  // 2. An optical rainbow dispersion wave ripples out across the desk mat & wood surface!
   // =========================================================================
   tl.to(deskState, {
     underShelfLightIntensity: 2.6, // Warm ambient & indirect LED strip bloom with gorgeous amber radiance!
@@ -2978,6 +3210,30 @@ document.addEventListener('DOMContentLoaded', () => {
     ease: 'power2.out',
     duration: 0.60
   }, 2.15);
+
+  // Rainbow chromatic dispersion ripple expands from laptop footprint across desk surface:
+  // Timing adjusted to unfold more gradually and elegantly as the laptop lands and opens
+  tl.fromTo(deskState, {
+    rippleProgress: 0.0
+  }, {
+    rippleProgress: 1.0,
+    ease: 'power2.out',
+    duration: 1.50
+  }, 2.15);
+
+  tl.fromTo(deskState, {
+    rippleOpacity: 0.0
+  }, {
+    rippleOpacity: 1.0,
+    ease: 'sine.out',
+    duration: 0.40
+  }, 2.15);
+
+  tl.to(deskState, {
+    rippleOpacity: 0.0,
+    ease: 'power2.inOut',
+    duration: 1.10
+  }, 2.55);
 
   tl.to(macState, {
     cameraZ: 4.95,                 // Expands slightly as the scene is beautifully illuminated
@@ -3172,6 +3428,114 @@ document.addEventListener('DOMContentLoaded', () => {
     duration: 1.15
   }, 12.65);
 
+  // =========================================================================
+  // Step 6: Silky Smooth Story Panels Scroll Scrub Transitions ("スルッと変わる")
+  // Ties story panels directly to the GSAP scrubbed timeline for liquid crossfading
+  // =========================================================================
+  gsap.set(panelHero, { autoAlpha: 1, y: 0 });
+  gsap.set([panelAnchor, panelMoftailStorefront, panelMoftailAds, panelMoftailPod, panelShopifyTheme], {
+    autoAlpha: 0,
+    y: 20
+  });
+
+  // Panel 0 (Hero): Fades out smoothly as MacBook descends to the desk
+  tl.to(panelHero, {
+    autoAlpha: 0,
+    y: -24,
+    ease: 'power1.inOut',
+    duration: 0.80
+  }, 1.95);
+
+  // Panel 1 (Anchor): Silky smooth fade & glide in as lid opens and camera dives into the screen
+  tl.fromTo(panelAnchor, {
+    autoAlpha: 0,
+    y: 24
+  }, {
+    autoAlpha: 1,
+    y: 0,
+    ease: 'power2.out',
+    duration: 0.90
+  }, 2.75);
+
+  tl.to(panelAnchor, {
+    autoAlpha: 0,
+    y: -20,
+    ease: 'power1.in',
+    duration: 0.55
+  }, 5.20);
+
+  // Panel 2 (Moftail Storefront): Silky crossfade in
+  tl.fromTo(panelMoftailStorefront, {
+    autoAlpha: 0,
+    y: 20
+  }, {
+    autoAlpha: 1,
+    y: 0,
+    ease: 'power2.out',
+    duration: 0.65
+  }, 5.50);
+
+  tl.to(panelMoftailStorefront, {
+    autoAlpha: 0,
+    y: -20,
+    ease: 'power1.in',
+    duration: 0.55
+  }, 6.90);
+
+  // Panel 3 (Moftail Ads): Silky crossfade in
+  tl.fromTo(panelMoftailAds, {
+    autoAlpha: 0,
+    y: 20
+  }, {
+    autoAlpha: 1,
+    y: 0,
+    ease: 'power2.out',
+    duration: 0.65
+  }, 7.20);
+
+  tl.to(panelMoftailAds, {
+    autoAlpha: 0,
+    y: -20,
+    ease: 'power1.in',
+    duration: 0.55
+  }, 8.60);
+
+  // Panel 4 (Moftail Pod): Silky crossfade in
+  tl.fromTo(panelMoftailPod, {
+    autoAlpha: 0,
+    y: 20
+  }, {
+    autoAlpha: 1,
+    y: 0,
+    ease: 'power2.out',
+    duration: 0.65
+  }, 8.90);
+
+  tl.to(panelMoftailPod, {
+    autoAlpha: 0,
+    y: -20,
+    ease: 'power1.in',
+    duration: 0.55
+  }, 10.30);
+
+  // Panel 5 (Shopify Theme): Silky crossfade in
+  tl.fromTo(panelShopifyTheme, {
+    autoAlpha: 0,
+    y: 20
+  }, {
+    autoAlpha: 1,
+    y: 0,
+    ease: 'power2.out',
+    duration: 0.65
+  }, 10.60);
+
+  tl.to(panelShopifyTheme, {
+    autoAlpha: 0,
+    y: -24,
+    ease: 'power1.inOut',
+    duration: 0.85
+  }, 12.65);
+
   /* Window scroll listener for post-pinned sections */
   window.addEventListener('scroll', () => {
     const scrollPos = window.scrollY + window.innerHeight * 0.4;
@@ -3234,7 +3598,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (deskGroup.visible && deskMaterials) {
       deskMaterials.forEach(m => {
-        if (m !== contactShadowMaterial && m !== clockGlassMat && m !== frameGlassMat) {
+        if (m !== contactShadowMaterial && m !== deskRippleMaterial && m !== clockGlassMat && m !== frameGlassMat) {
           m.opacity = Math.min(1.0, deskState.opacity);
         } else if (m === clockGlassMat) {
           m.opacity = 0.45 * Math.min(1.0, deskState.opacity);
@@ -3273,6 +3637,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (contactShadowMaterial) {
       contactShadowMaterial.opacity = deskState.contactShadowOpacity;
+    }
+
+    if (deskRippleMaterial) {
+      deskRippleMaterial.uniforms.uProgress.value = deskState.rippleProgress;
+      deskRippleMaterial.uniforms.uOpacity.value = deskState.rippleOpacity;
+      deskRippleMaterial.uniforms.uTime.value = performance.now() * 0.0015;
+      const isRippleActive = deskState.rippleOpacity > 0.001;
+      if (matRippleMesh) matRippleMesh.visible = isRippleActive;
+      if (woodRippleMesh) woodRippleMesh.visible = isRippleActive;
     }
 
     // Control Lid Opening:
