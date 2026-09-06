@@ -966,14 +966,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Start screen: closed laptop, Apple logo facing viewer with leaf pointing UP, tilted diagonally to the right
   const macState = {
     lidOpen: 0.0,      // 0.0 = closed flush, 1.0 = open to ~112 deg
-    rotX: 1.22,        // ~70 deg: faces top lid & Apple logo directly towards the viewer
-    rotY: 2.88,        // ~165 deg: leaf points straight UP (+Y), right-side up
-    rotZ: -0.26,       // ~-15 deg: right-tilted dynamic diagonal posture
-    posX: 0.35,        // Floating in right half of hero section
-    posY: 0.38,        // Generously high in the air above future desk position
-    cameraZ: 4.10,     // Hero camera view framing floating laptop
-    cameraY: 0.40,     // Elevated to view floating laptop
-    lookOffsetY: 0.15  // Centered on floating MacBook
+    rotX: 1.45,        // Option A: stands upright facing viewer (~83 deg)
+    rotY: 2.98,        // Option A: ~171 deg (Apple leaf points straight UP, face forward)
+    rotZ: -0.05,       // Option A: nearly level majestic stance
+    posX: 0.52,        // Option A: floating prominently in the right half of hero section
+    posY: 0.10,        // Option A: centered vertically beside headline
+    cameraZ: 4.12,     // Hero camera view framing MacBook
+    cameraY: 0.28,     // Elevated camera angle
+    lookOffsetY: 0.02  // Aligned with MacBook center
   };
 
   function updateScreenTexture(tex, bounceColor = null) {
@@ -3207,15 +3207,17 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseY += (targetMouseY - mouseY) * 0.05;
 
     // In the 3-column split layout (Left: Primary Headline / Center: 3D MacBook Air / Right: Subtext),
-    // the MacBook and desk remain perfectly centered at posX: 0.00.
+    // the MacBook and desk remain centered at posX: 0.00.
+    // On mobile portrait, scale down hero posX to keep laptop centered.
     const isMobile = camera.aspect < 1.15;
+    const currentPosX = isMobile ? macState.posX * 0.15 : macState.posX;
     const desktopOffset = 0.0;
 
     // Rotate and position the MacBook master group
     macRoot.rotation.x = macState.rotX + mouseY;
     macRoot.rotation.y = macState.rotY + mouseX;
     macRoot.rotation.z = macState.rotZ;
-    macRoot.position.x = macState.posX + desktopOffset;
+    macRoot.position.x = currentPosX + desktopOffset;
     macRoot.position.y = macState.posY;
 
     // Desk group follows deskState with matching mouse parallax
