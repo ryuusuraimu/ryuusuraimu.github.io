@@ -2588,8 +2588,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let isObjModel = false;
   // Solved exact hinge pivot axis for Apple CAD model:
   // Eliminates floating gap between lid and base unibody, ensuring 100% snug, flush contact (0.0mm gap)
-  const hingeY = 0.0446;
-  const hingeZ = -10.5819;
+  // and perfectly aligns the lid front edge and corners with the base unibody front lip (0.0mm offset)
+  const hingeY = -0.0954;
+  const hingeZ = -10.4420;
 
   // Exactly 90.0 deg (Math.PI / 2): perfectly horizontal closed position parallel to base top surface
   const closedLidRot = Math.PI / 2;

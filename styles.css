@@ -13,21 +13,22 @@
   --color-ember-accent: #dc5000;    /* Single vivid orange text accent for credit lines, tags, key phrases (never buttons) */
   --color-pure-black: #000000;      /* SVG icon fills and decorative vector elements only */
 
-  /* Typography — Font Families */
-  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans JP', sans-serif;
-  --font-handwriting: 'Caveat', cursive, var(--font-display);
-  --font-jp-handwriting: 'Zen Kurenaido', 'Noto Sans JP', sans-serif;
-  --font-micro: 'Arial', -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
+  /* Typography — Font Families (All Handwritten Site-Wide) */
+  --font-display: 'Caveat', 'Zen Kurenaido', cursive, sans-serif;
+  --font-handwriting: 'Caveat', 'Zen Kurenaido', cursive, sans-serif;
+  --font-jp-handwriting: 'Zen Kurenaido', 'Caveat', cursive, sans-serif;
+  --font-micro: 'Caveat', 'Zen Kurenaido', cursive, sans-serif;
+  --font-body: 'Zen Kurenaido', 'Caveat', cursive, sans-serif;
 
-  /* Typography — Scale */
-  --text-micro: 8px;
-  --text-label: 10px;
-  --text-nav: 12px;
-  --text-subheading: 18px;
-  --text-heading-sm: 24px;
-  --text-body: 24px;                /* Mixed-case conversational voice (24-29px) */
-  --text-heading: 41px;             /* Display heading with line-height 0.9 */
-  --text-display: 51px;             /* Display hero with line-height 0.9 */
+  /* Typography — Scale (Calibrated for Handwritten Glyphs) */
+  --text-micro: 11px;
+  --text-label: 12.5px;
+  --text-nav: 14px;
+  --text-subheading: 19px;
+  --text-heading-sm: 25px;
+  --text-body: 24px;                /* Mixed-case conversational voice */
+  --text-heading: 42px;             /* Display heading */
+  --text-display: 52px;             /* Display hero */
 
   /* Typography — Weights */
   --font-weight-regular: 400;
@@ -82,11 +83,14 @@ body {
   font-weight: var(--font-weight-medium);
   background-color: var(--color-walnut-shadow);
   color: var(--color-warm-cream);
-  line-height: 1.2;
+  line-height: 1.4;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "ss01" on;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
 }
 
 ::selection {
@@ -191,7 +195,7 @@ a {
   font-size: var(--text-label);
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   color: var(--color-driftwood);
   pointer-events: none;
   z-index: 90;
@@ -552,39 +556,39 @@ a {
 
 .story-serial-badge {
   font-family: var(--font-micro);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-ember-accent);
   margin-bottom: -4px;
 }
 
 .story-primary-heading {
-  font-family: var(--font-display);
-  font-size: 23px;
-  font-weight: 600;
-  line-height: 1.38;
-  letter-spacing: -0.015em;
+  font-family: var(--font-jp-handwriting);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
   color: var(--color-warm-cream);
   margin: 0;
-  font-feature-settings: "palt";
 }
 
 .story-meta-sublabel {
   font-family: var(--font-micro);
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-driftwood);
   margin-top: -4px;
 }
 
 .story-primary-statement {
-  font-size: 13.5px;
-  font-weight: 500;
-  line-height: 1.65;
+  font-family: var(--font-jp-handwriting);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.68;
   color: var(--color-warm-cream);
   opacity: 0.92;
   margin: 0;
@@ -641,18 +645,18 @@ a {
 
 .subtext-topic-tag {
   font-family: var(--font-micro);
-  font-size: 10px;
+  font-size: 12.5px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-ember-accent);
 }
 
 .subtext-status-badge {
   font-family: var(--font-micro);
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   padding: 3px 8px;
   border-radius: 9999px;
   background: rgba(220, 80, 0, 0.15);
@@ -661,10 +665,11 @@ a {
 }
 
 .subtext-lead {
-  font-size: 13.5px;
+  font-family: var(--font-jp-handwriting);
+  font-size: 15px;
   line-height: 1.68;
   color: var(--color-warm-cream);
-  opacity: 0.88;
+  opacity: 0.90;
   margin: 0;
 }
 
@@ -676,9 +681,9 @@ a {
 
 .spec-pill {
   font-family: var(--font-micro);
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   padding: 3px 9px;
   border-radius: 9999px;
   background: rgba(255, 255, 255, 0.06);
@@ -704,7 +709,7 @@ a {
 
 .metric-mini-val {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--color-warm-cream);
 }
@@ -714,7 +719,7 @@ a {
 }
 
 .metric-mini-name {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--color-driftwood);
 }
 
@@ -736,9 +741,9 @@ a {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
   font-family: var(--font-micro);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: var(--color-warm-cream);
   text-decoration: none;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -752,7 +757,7 @@ a {
 }
 
 .link-badge-icon {
-  font-size: 9px;
+  font-size: 10px;
   color: var(--color-ember-accent);
 }
 
@@ -770,7 +775,7 @@ a {
   border-radius: 9999px;
   color: var(--color-warm-cream);
   font-family: var(--font-display);
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.03em;
   cursor: pointer;
@@ -1066,17 +1071,17 @@ body.modal-open {
 
 .dossier-doc-id {
   font-family: var(--font-micro);
-  font-size: 10.5px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: var(--color-ember-accent);
 }
 
 .dossier-status-badge {
   font-family: var(--font-micro);
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   padding: 3px 9px;
   border-radius: 9999px;
   background: rgba(220, 80, 0, 0.18);
@@ -1085,20 +1090,19 @@ body.modal-open {
 }
 
 .dossier-title {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 700;
+  font-family: var(--font-jp-handwriting);
+  font-size: 28px;
+  font-weight: 400;
   line-height: 1.35;
   color: var(--color-warm-cream);
   margin: 0;
-  font-feature-settings: "palt";
 }
 
 .dossier-subtitle {
   font-family: var(--font-micro);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.10em;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   color: var(--color-driftwood);
   margin: 0;
 }
@@ -1120,7 +1124,7 @@ body.modal-open {
   background: rgba(220, 80, 0, 0.12);
   border: 1px solid rgba(220, 80, 0, 0.38);
   font-family: var(--font-micro);
-  font-size: 11px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--color-warm-cream);
@@ -1155,31 +1159,33 @@ body.modal-open {
 
 .dossier-section-num {
   font-family: var(--font-micro);
-  font-size: 10.5px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   color: var(--color-ember-accent);
 }
 
 .dossier-section-title {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 600;
+  font-family: var(--font-jp-handwriting);
+  font-size: 21px;
+  font-weight: 400;
   color: var(--color-warm-cream);
   margin: 0;
 }
 
 .dossier-p {
-  font-size: 14.5px;
+  font-family: var(--font-jp-handwriting);
+  font-size: 16px;
   line-height: 1.85;
   color: var(--color-warm-cream);
-  opacity: 0.90;
+  opacity: 0.92;
   margin: 0;
 }
 
 .dossier-callout-quote {
-  font-size: 16.5px;
-  font-weight: 600;
+  font-family: var(--font-jp-handwriting);
+  font-size: 17px;
+  font-weight: 400;
   line-height: 1.6;
   color: var(--color-warm-cream);
   border-left: 3px solid var(--color-ember-accent);
@@ -1871,31 +1877,33 @@ body.modal-open {
 
 .section-label-micro {
   font-family: var(--font-micro);
-  font-size: var(--text-micro);
-  font-weight: var(--font-weight-medium);
+  font-size: 13px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   color: var(--color-ember-accent);
   margin-bottom: 8px;
   display: block;
 }
 
 .section-editorial-title {
+  font-family: var(--font-jp-handwriting);
   font-size: var(--text-heading);
-  font-weight: var(--font-weight-medium);
+  font-weight: 400;
   text-transform: uppercase;
-  line-height: 0.9;
+  line-height: 1.15;
   letter-spacing: normal;
   color: var(--color-warm-cream);
   margin-bottom: 20px;
 }
 
 .section-editorial-desc {
+  font-family: var(--font-jp-handwriting);
   font-size: var(--text-subheading);
-  font-weight: var(--font-weight-regular);
-  line-height: 1.35;
+  font-weight: 400;
+  line-height: 1.5;
   color: var(--color-warm-cream);
-  opacity: 0.85;
+  opacity: 0.88;
   max-width: 640px;
   margin-bottom: 60px;
 }
@@ -1923,37 +1931,40 @@ body.modal-open {
 
 .card-step-num {
   font-family: var(--font-micro);
-  font-size: var(--text-micro);
-  font-weight: var(--font-weight-medium);
+  font-size: 13px;
+  font-weight: 700;
   color: var(--color-ember-accent);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   margin-bottom: 6px;
 }
 
 .card-step-badge {
-  font-size: 11px;
-  font-weight: var(--font-weight-medium);
+  font-family: var(--font-micro);
+  font-size: 12px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: var(--color-driftwood);
   margin-bottom: 12px;
 }
 
 .card-title-upper {
+  font-family: var(--font-jp-handwriting);
   font-size: var(--text-subheading);
-  font-weight: var(--font-weight-medium);
+  font-weight: 400;
   text-transform: uppercase;
-  line-height: 1.1;
+  line-height: 1.2;
   color: var(--color-warm-cream);
   margin-bottom: 14px;
 }
 
 .card-desc-mixed {
-  font-size: 14px;
-  font-weight: var(--font-weight-regular);
-  line-height: 1.5;
+  font-family: var(--font-jp-handwriting);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.68;
   color: var(--color-warm-cream);
-  opacity: 0.85;
+  opacity: 0.88;
   flex-grow: 1;
   margin-bottom: 18px;
 }
@@ -1962,7 +1973,7 @@ body.modal-open {
   border-top: 1px dashed var(--color-cork-border);
   padding-top: 12px;
   font-family: var(--font-micro);
-  font-size: var(--text-micro);
+  font-size: 12px;
   color: var(--color-driftwood);
   line-height: 1.4;
   text-transform: uppercase;
@@ -2021,10 +2032,10 @@ body.modal-open {
 .photo-serial-caption {
   margin-top: 8px;
   font-family: var(--font-micro);
-  font-size: var(--text-micro);
-  font-weight: var(--font-weight-medium);
+  font-size: 12px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   color: var(--color-driftwood);
 }
 
@@ -2033,18 +2044,20 @@ body.modal-open {
 }
 
 .about-name-display {
+  font-family: var(--font-display);
   font-size: var(--text-heading);
-  font-weight: var(--font-weight-medium);
+  font-weight: 700;
   text-transform: uppercase;
-  line-height: 0.9;
+  line-height: 1.1;
   letter-spacing: normal;
   color: var(--color-warm-cream);
   margin-bottom: 8px;
 }
 
 .about-role-statement {
-  font-size: var(--text-nav);
-  font-weight: var(--font-weight-medium);
+  font-family: var(--font-micro);
+  font-size: 13.5px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-ember-accent);
@@ -2052,11 +2065,12 @@ body.modal-open {
 }
 
 .about-bio-mixed {
-  font-size: 16px;
-  font-weight: var(--font-weight-regular);
-  line-height: 1.65;
+  font-family: var(--font-jp-handwriting);
+  font-size: 16.5px;
+  font-weight: 400;
+  line-height: 1.75;
   color: var(--color-warm-cream);
-  opacity: 0.9;
+  opacity: 0.92;
   margin-bottom: 28px;
 }
 
@@ -2076,19 +2090,20 @@ body.modal-open {
 
 .fact-label-upper {
   font-family: var(--font-micro);
-  font-size: var(--text-micro);
-  font-weight: var(--font-weight-medium);
+  font-size: 11.5px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--color-driftwood);
   margin-bottom: 4px;
 }
 
 .fact-val-mixed {
-  font-size: 14px;
-  font-weight: var(--font-weight-medium);
+  font-family: var(--font-jp-handwriting);
+  font-size: 15px;
+  font-weight: 400;
   color: var(--color-warm-cream);
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .about-actions {
@@ -2144,10 +2159,11 @@ body.modal-open {
 }
 
 .footer-callout-heading {
+  font-family: var(--font-jp-handwriting);
   font-size: var(--text-heading);
-  font-weight: var(--font-weight-medium);
+  font-weight: 400;
   text-transform: uppercase;
-  line-height: 0.9;
+  line-height: 1.15;
   letter-spacing: normal;
   color: var(--color-warm-cream);
 }
@@ -2159,9 +2175,9 @@ body.modal-open {
   padding-top: 24px;
   border-top: 1px dashed var(--color-cork-border);
   font-family: var(--font-micro);
-  font-size: var(--text-micro);
+  font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   color: var(--color-driftwood);
 }
 
