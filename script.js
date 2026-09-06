@@ -3206,10 +3206,10 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseX += (targetMouseX - mouseX) * 0.05;
     mouseY += (targetMouseY - mouseY) * 0.05;
 
-    // Dynamic staging offset: On widescreen desktop, shift MacBook & desk smoothly to the right (+0.32)
-    // so the left half has generous breathing room for the unified story narrative.
+    // Dynamic staging offset: On widescreen desktop, shift MacBook & desk smoothly to the right (+0.35)
+    // so the left half has generous breathing room for the floating visionOS story card.
     const isMobile = camera.aspect < 1.15;
-    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.32 : 0.0);
+    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.35 : 0.0);
 
     // Rotate and position the MacBook master group
     macRoot.rotation.x = macState.rotX + mouseY;
@@ -3288,7 +3288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // centers gracefully in the upper 52% of the screen above the bottom card
     const mobileLookShift = isMobile ? 0.30 : 0.0;
     const targetLookY = macRoot.position.y + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
-    const targetLookX = isMobile ? 0.0 : (desktopOffset * 0.45);
+    const targetLookX = isMobile ? 0.0 : (desktopOffset * 0.32);
     camera.lookAt(targetLookX, targetLookY, 0);
 
     renderer.render(scene, camera);

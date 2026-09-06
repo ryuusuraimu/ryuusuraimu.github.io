@@ -455,13 +455,58 @@ a {
 
 .story-narrative-col {
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 16px;
   z-index: 25;
   pointer-events: auto;
+
+  /* VisionOS / Spatial UI Frosted Glass Card */
+  background: rgba(16, 10, 6, 0.78);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(245, 237, 224, 0.12);
+  border-radius: 24px;
+  padding: 34px 38px;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.65),
+    0 2px 10px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+  max-height: min(84vh, 720px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(220, 80, 0, 0.3) transparent;
+  transform: translateY(0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.story-narrative-col::-webkit-scrollbar {
+  width: 4px;
+}
+
+.story-narrative-col::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.story-narrative-col::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 4px;
+}
+
+.story-panel:not(.active) .story-narrative-col {
+  transform: translateY(16px);
+  opacity: 0;
+}
+
+.story-divider {
+  width: 100%;
+  height: 1px;
+  border: none;
+  background: linear-gradient(90deg, rgba(245, 237, 224, 0.15) 0%, rgba(245, 237, 224, 0.03) 100%);
+  margin: 4px 0 2px;
 }
 
 .story-serial-badge {
@@ -476,9 +521,9 @@ a {
 
 .story-main-heading {
   font-family: var(--font-display);
-  font-size: 38px;
+  font-size: 34px;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.22;
   letter-spacing: -0.02em;
   color: var(--color-warm-cream);
   margin: 0;
@@ -487,16 +532,16 @@ a {
 
 .story-meta-sublabel {
   font-family: var(--font-micro);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-driftwood);
   margin-top: -6px;
 }
 
 .story-narrative-lead {
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 500;
   line-height: 1.75;
   color: var(--color-warm-cream);
@@ -504,7 +549,7 @@ a {
 }
 
 .story-narrative-body {
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.8;
   color: var(--color-warm-cream);
@@ -513,18 +558,20 @@ a {
 }
 
 .story-quote-punchline {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--color-warm-cream);
   border-left: 2.5px solid var(--color-ember-accent);
-  padding: 4px 0 4px 16px;
+  padding: 6px 0 6px 16px;
   margin: 4px 0;
+  background: rgba(220, 80, 0, 0.05);
+  border-radius: 0 8px 8px 0;
 }
 
 .story-quote-punchline.manifesto-quote {
   font-style: italic;
-  font-size: 16.5px;
+  font-size: 16px;
 }
 
 /* Apple-style Interactive HINT Pills (Breathable & Expandable) */
@@ -1499,13 +1546,13 @@ a {
     max-height: 48dvh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    background: rgba(16, 9, 4, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px dashed var(--color-cork-border);
-    border-radius: 18px;
-    padding: 18px 18px;
-    box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.7);
+    background: rgba(16, 10, 6, 0.88);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(245, 237, 224, 0.14);
+    border-radius: 20px;
+    padding: 20px 20px;
+    box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.12);
     gap: 12px;
   }
 
