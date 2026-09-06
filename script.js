@@ -2424,10 +2424,10 @@ document.addEventListener('DOMContentLoaded', () => {
   ipadMasterGroup.add(ipadBodyGroup);
 
   // iPad Dimensions: 13-inch Pro format (~1:1 scale with 2.25-width MacBook Air)
-  const ipadW = 1.14;
-  const ipadH = 1.56;
+  const ipadW = 1.08;
+  const ipadH = 1.46;
   const ipadDepth = 0.020;
-  const ipadRadius = 0.060;
+  const ipadRadius = 0.055;
   const hw = ipadW / 2, hh = ipadH / 2, ir = ipadRadius;
 
   // Unibody chassis shape with rounded corners
@@ -2488,10 +2488,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ipadScreenTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   }
 
-  // Active Screen display plane (perfect 3:4 aspect ratio: 1.05 / 1.40 = 0.75)
+  // Active Screen display plane (perfect 3:4 aspect ratio: 1.00 / 1.333 = 0.75)
   // Strictly in front of chassis (Z = 0.0160 > 0.0130) with renderOrder 10 and opaque MeshBasicMaterial!
-  const screenW = 1.05;
-  const screenH = 1.40;
+  const screenW = 1.00;
+  const screenH = 1.333;
   const ipadScreenGeo = new THREE.PlaneGeometry(screenW, screenH);
   const ipadScreenMat = new THREE.MeshBasicMaterial({
     map: ipadScreenTex,
@@ -2537,17 +2537,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // Stand Base: Chamfered rectangular plate on the desk mat
   const standBaseGeo = new THREE.BoxGeometry(0.52, 0.016, 0.38);
   const standBaseMesh = new THREE.Mesh(standBaseGeo, ipadAlumMat);
-  standBaseMesh.position.set(-1.12, -0.0355 + 0.008, 0.08);
-  standBaseMesh.rotation.y = 0.12;
+  standBaseMesh.position.set(-0.92, -0.0355 + 0.008, 0.08);
+  standBaseMesh.rotation.y = 0.0;
   standBaseMesh.receiveShadow = true;
   standBaseMesh.castShadow = true;
   ipadStandGroup.add(standBaseMesh);
 
-  // Stand Upright Spine: Slender angled column rising from base
+  // Stand Upright Spine: Slender column rising from base
   const standArmGeo = new THREE.BoxGeometry(0.12, 0.82, 0.018);
   const standArmMesh = new THREE.Mesh(standArmGeo, ipadAlumMat);
-  standArmMesh.position.set(-1.12, 0.38, 0.05);
-  standArmMesh.rotation.set(-0.26, 0.12, 0.0);
+  standArmMesh.position.set(-0.92, 0.38, 0.06);
+  standArmMesh.rotation.set(-0.04, 0.0, 0.0);
   standArmMesh.castShadow = true;
   standArmMesh.receiveShadow = true;
   ipadStandGroup.add(standArmMesh);
@@ -2555,8 +2555,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Stand Magnetic Backplate
   const standHeadGeo = new THREE.BoxGeometry(0.40, 0.30, 0.014);
   const standHeadMesh = new THREE.Mesh(standHeadGeo, ipadAlumMat);
-  standHeadMesh.position.set(-1.12, 0.76, 0.08 - 0.020);
-  standHeadMesh.rotation.set(-0.26, 0.12, 0.0);
+  standHeadMesh.position.set(-0.92, 0.78, 0.08 - 0.016);
+  standHeadMesh.rotation.set(-0.04, 0.0, 0.0);
   standHeadMesh.castShadow = true;
   ipadStandGroup.add(standHeadMesh);
 
@@ -2570,8 +2570,8 @@ document.addEventListener('DOMContentLoaded', () => {
     depthWrite: false
   });
   const standShadowMesh = new THREE.Mesh(standShadowGeo, standShadowMat);
-  standShadowMesh.position.set(-1.12, -0.0345, 0.08);
-  standShadowMesh.rotation.set(0, 0.12, 0);
+  standShadowMesh.position.set(-0.92, -0.0345, 0.08);
+  standShadowMesh.rotation.set(0, 0.0, 0);
   ipadStandGroup.add(standShadowMesh);
 
   // --- Photorealistic 3D Apple Pencil Pro (2nd Generation) ---
@@ -2684,8 +2684,8 @@ document.addEventListener('DOMContentLoaded', () => {
   deskGroup.add(ipadMasterGroup);
 
   // Mount 3D iPad Pro in vertical portrait orientation propped up on stand
-  ipadMasterGroup.position.set(-1.12, 0.76, 0.08);
-  ipadMasterGroup.rotation.set(-0.26, 0.12, 0.0);
+  ipadMasterGroup.position.set(-0.92, 0.78, 0.08);
+  ipadMasterGroup.rotation.set(-0.04, 0.0, 0.0);
 
   // Apple Pencil magnetically attached to the right edge facing the MacBook
   pencilGroup.position.set(hw + flatCut + 0.002, 0.04, 0.0);
@@ -3908,11 +3908,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // iPad on left shows engineering notes, Mac on right shows live web app
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.05,
-    rotY: -0.03,
-    cameraZ: 3.35,      // Dual-screen workstation close-up view showing both iPad & MacBook in crisp detail
-    cameraY: 0.45,
-    lookOffsetY: 0.88,  // Screen-centered vertical framing for both displays
+    rotX: 0.04,
+    rotY: -0.06,
+    cameraZ: 3.65,      // Dual-screen workstation view showing both iPad & MacBook in crisp, complete detail
+    cameraY: 0.32,
+    lookOffsetY: 0.78,  // Screen-centered vertical framing for both displays
     posY: -0.46,
     posX: 0.00,
     ease: 'power2.inOut',
@@ -3920,8 +3920,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3.65);
 
   tl.to(deskState, {
-    rotX: 0.05,
-    rotY: -0.03,
+    rotX: 0.04,
+    rotY: -0.06,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -3935,11 +3935,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Subtle right perspective shift showcasing midnight unibody & storefront
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.06,
-    rotY: 0.02,         // Elegant slight tilt showcasing midnight aluminum anodized finish
-    cameraZ: 3.35,
-    cameraY: 0.45,
-    lookOffsetY: 0.88,
+    rotX: 0.04,
+    rotY: -0.04,         // Elegant slight tilt showcasing midnight aluminum anodized finish
+    cameraZ: 3.65,
+    cameraY: 0.32,
+    lookOffsetY: 0.78,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3947,8 +3947,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 5.75);
 
   tl.to(deskState, {
-    rotX: 0.06,
-    rotY: 0.02,
+    rotX: 0.04,
+    rotY: -0.04,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -3962,11 +3962,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Subtle angle change highlighting the analytics dashboard & iPad A/B CTR chart
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.05,
-    rotY: -0.02,        // Nuanced angle change
-    cameraZ: 3.32,
-    cameraY: 0.45,
-    lookOffsetY: 0.88,
+    rotX: 0.04,
+    rotY: -0.06,        // Nuanced angle change
+    cameraZ: 3.62,
+    cameraY: 0.32,
+    lookOffsetY: 0.78,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -3974,8 +3974,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 7.45);
 
   tl.to(deskState, {
-    rotX: 0.05,
-    rotY: -0.02,
+    rotX: 0.04,
+    rotY: -0.06,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -3989,11 +3989,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Balanced centered framing showcasing Printify supply network & brand philosophy
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.06,
-    rotY: 0.01,         // Centered balanced view
-    cameraZ: 3.35,
-    cameraY: 0.45,
-    lookOffsetY: 0.88,
+    rotX: 0.04,
+    rotY: -0.05,         // Centered balanced view
+    cameraZ: 3.65,
+    cameraY: 0.32,
+    lookOffsetY: 0.78,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -4001,8 +4001,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 9.15);
 
   tl.to(deskState, {
-    rotX: 0.06,
-    rotY: 0.01,
+    rotX: 0.04,
+    rotY: -0.05,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -4015,11 +4015,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Step 4: Direct frontal close-up on Shopify Theme Engineering (10.85 -> 12.65s)
   // =========================================================================
   tl.to(macState, {
-    rotX: 0.04,
-    rotY: -0.01,        // Direct frontal alignment to maximize readability
-    cameraZ: 3.32,
-    cameraY: 0.45,
-    lookOffsetY: 0.88,
+    rotX: 0.03,
+    rotY: -0.05,        // Direct frontal alignment to maximize readability
+    cameraZ: 3.62,
+    cameraY: 0.32,
+    lookOffsetY: 0.78,
     posX: 0.00,
     posY: -0.46,
     ease: 'power1.inOut',
@@ -4027,8 +4027,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 10.85);
 
   tl.to(deskState, {
-    rotX: 0.04,
-    rotY: -0.01,
+    rotX: 0.03,
+    rotY: -0.05,
     posY: -0.46,
     posX: 0.00,
     bounceIntensity: 0.65,
@@ -4147,9 +4147,9 @@ document.addEventListener('DOMContentLoaded', () => {
     mouseX += (targetMouseX - mouseX) * 0.05;
     mouseY += (targetMouseY - mouseY) * 0.05;
 
-    // Dual-screen layout: MacBook shifts to right (+0.76) when opened, balancing the propped iPad on the left
+    // Dual-screen layout: MacBook shifts to right (+0.70) when opened, balancing the propped iPad on the left
     const isMobile = camera.aspect < 1.15;
-    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.76 : 0.0);
+    const desktopOffset = isMobile ? 0.0 : (macState.lidOpen > 0 ? 0.70 : 0.0);
 
     // Rotate and position the MacBook master group
     macRoot.scale.setScalar(1.0);
@@ -4233,7 +4233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseCamX = isMobile ? 0.0 : (macState.lidOpen > 0 ? -0.18 : 0.0);
     const mobileLookShift = isMobile ? 0.20 : 0.0;
     const baseLookY = macRoot.position.y + (macState.lookOffsetY !== undefined ? macState.lookOffsetY : 0.14) - mobileLookShift;
-    const baseCamZ = isMobile ? 4.10 : macState.cameraZ;
+    const baseCamZ = isMobile ? 4.20 : macState.cameraZ;
     const baseCamY = macState.cameraY;
 
     let targetCamX = baseCamX;
@@ -4243,17 +4243,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let targetLookY = baseLookY;
 
     if (focusTarget === 'ipad') {
-      targetCamX = -1.12;
-      targetCamY = 0.76;
-      targetCamZ = 2.15;
-      targetLookX = -1.12;
-      targetLookY = 0.76;
+      targetCamX = -0.92;
+      targetCamY = 0.32;
+      targetCamZ = 2.45;
+      targetLookX = -0.92;
+      targetLookY = 0.32;
     } else if (focusTarget === 'mac') {
       targetCamX = macState.posX + desktopOffset;
-      targetCamY = 0.48;
-      targetCamZ = 2.45;
+      targetCamY = 0.14;
+      targetCamZ = 2.40;
       targetLookX = macState.posX + desktopOffset;
-      targetLookY = 0.55;
+      targetLookY = 0.14;
     }
 
     currentCamPos.x += (targetCamX - currentCamPos.x) * 0.08;
