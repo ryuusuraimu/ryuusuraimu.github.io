@@ -3102,6 +3102,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Cloudee Scene Notification Dispatcher
+  let currentCloudeeScene = '';
+  function notifyCloudeeScene(sceneKey) {
+    if (currentCloudeeScene === sceneKey) return;
+    currentCloudeeScene = sceneKey;
+    window.dispatchEvent(new CustomEvent('cloudee:scene-change', {
+      detail: { scene: sceneKey }
+    }));
+  }
+
   // Master GSAP Timeline synchronized to scroll (ORYZO Darkroom Void-Mode Reveal)
   const tl = gsap.timeline({
     scrollTrigger: {
@@ -3116,26 +3126,32 @@ document.addEventListener('DOMContentLoaded', () => {
           setPanelActive(panelHero);
           updateScreenTexture(textures.lockScreen, 0xffeed8);
           updateActiveNav('#panel-hero');
+          notifyCloudeeScene('hero');
         } else if (p >= 0.25 && p < 0.41) {
           setPanelActive(panelAnchor);
           updateScreenTexture(textures.anchor, 0x82b4ff);
           updateActiveNav('#scroll-stage');
+          notifyCloudeeScene('anchor');
         } else if (p >= 0.41 && p < 0.54) {
           setPanelActive(panelMoftailStorefront);
           updateScreenTexture(textures.shopify, 0x6ee7b7);
           updateActiveNav('#scroll-stage');
+          notifyCloudeeScene('moftail-storefront');
         } else if (p >= 0.54 && p < 0.67) {
           setPanelActive(panelMoftailAds);
           updateScreenTexture(textures.ads, 0x60a5fa);
           updateActiveNav('#scroll-stage');
+          notifyCloudeeScene('moftail-ads');
         } else if (p >= 0.67 && p < 0.80) {
           setPanelActive(panelMoftailPod);
           updateScreenTexture(textures.printify, 0xa5b4fc);
           updateActiveNav('#scroll-stage');
+          notifyCloudeeScene('moftail-pod');
         } else {
           setPanelActive(panelShopifyTheme);
           updateScreenTexture(textures.shopifyTheme, 0x60a5fa);
           updateActiveNav('#scroll-stage');
+          notifyCloudeeScene('shopify-theme');
         }
       }
     }
@@ -3541,11 +3557,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollPos = window.scrollY + window.innerHeight * 0.4;
     const methodSec = document.getElementById('how-i-work');
     const aboutSec = document.getElementById('about');
+    const contactSec = document.getElementById('contact');
 
-    if (aboutSec && scrollPos >= aboutSec.offsetTop) {
+    // Bottom of page (Contact / Footer) check
+    const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 260);
+
+    if (isAtBottom || (contactSec && scrollPos >= contactSec.offsetTop)) {
+      updateActiveNav('mailto:ryu.nakamura.dev@gmail.com');
+      notifyCloudeeScene('contact');
+    } else if (aboutSec && scrollPos >= aboutSec.offsetTop) {
       updateActiveNav('#about');
+      notifyCloudeeScene('about');
     } else if (methodSec && scrollPos >= methodSec.offsetTop) {
       updateActiveNav('#how-i-work');
+      notifyCloudeeScene('how-i-work');
+    } else if (currentCloudeeScene === 'about' || currentCloudeeScene === 'how-i-work' || currentCloudeeScene === 'contact') {
+      currentCloudeeScene = ''; // re-arm for scrollStage updates
     }
   }, { passive: true });
 
@@ -3700,6 +3727,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const dossiers = document.querySelectorAll('.ipad-dossier');
   const openStoryBtns = document.querySelectorAll('.btn-open-story');
 
+  let savedSceneBeforeModal = 'hero';
+
   function switchDossier(targetId) {
     modalTabs.forEach(tab => {
       if (tab.dataset.tab === targetId) tab.classList.add('active');
@@ -3712,16 +3741,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ipadScreenScroll) {
       ipadScreenScroll.scrollTop = 0;
     }
+    notifyCloudeeScene(targetId);
   }
 
   function openModal(targetStoryId) {
     if (!ipadModal) return;
-    if (targetStoryId) {
-      switchDossier(targetStoryId);
-    }
+    savedSceneBeforeModal = currentCloudeeScene || 'hero';
     ipadModal.classList.add('is-open');
     ipadModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+    if (targetStoryId) {
+      switchDossier(targetStoryId);
+    }
   }
 
   function closeModal() {
@@ -3729,7 +3760,14 @@ document.addEventListener('DOMContentLoaded', () => {
     ipadModal.classList.remove('is-open');
     ipadModal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
+    if (savedSceneBeforeModal) {
+      currentCloudeeScene = ''; // Force re-notification
+      notifyCloudeeScene(savedSceneBeforeModal);
+    }
   }
+
+  window.openIpadModal = openModal;
+  window.closeIpadModal = closeModal;
 
   openStoryBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
