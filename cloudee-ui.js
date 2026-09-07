@@ -61,14 +61,63 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentActiveScene = null;
   let sceneDebounceTimer = null;
   const sceneIndices = {};
+  const conversationHistory = [];
+
+  // Dynamic positioning: Anchors the chat panel directly above Cloudee's head
+  function updateFloatingPanelPosition() {
+    if (!floatingPanel || !dockWidget) return;
+
+    const dockRect = dockWidget.getBoundingClientRect();
+    const GAP = 4;
+    const margin = 14;
+
+    const panelWidth = floatingPanel.offsetWidth || Math.min(460, window.innerWidth - 28);
+    const cloudeeCenterX = dockRect.left + dockRect.width / 2;
+    const cloudeeHeadY = dockRect.top;
+    const cloudeeBottomY = dockRect.bottom;
+
+    // Center horizontally above Cloudee, clamped inside viewport
+    let left = cloudeeCenterX - panelWidth / 2;
+    left = Math.max(margin, Math.min(window.innerWidth - panelWidth - margin, left));
+
+    // Calculate pointer tail X relative to the panel
+    const tailX = cloudeeCenterX - left;
+    const clampedTailX = Math.max(26, Math.min(panelWidth - 26, tailX));
+    floatingPanel.style.setProperty("--cloudee-tail-x", `${clampedTailX}px`);
+
+    // Determine vertical orientation: Above head vs Flipped below
+    if (cloudeeHeadY < 260 && (window.innerHeight - cloudeeBottomY) > cloudeeHeadY) {
+      floatingPanel.classList.add("is-flipped-bottom");
+      floatingPanel.style.top = `${Math.round(cloudeeBottomY + GAP)}px`;
+      floatingPanel.style.bottom = "auto";
+      const maxH = Math.floor(window.innerHeight - cloudeeBottomY - GAP - margin);
+      floatingPanel.style.maxHeight = `${Math.max(260, maxH)}px`;
+    } else {
+      floatingPanel.classList.remove("is-flipped-bottom");
+      floatingPanel.style.bottom = `${Math.round(window.innerHeight - cloudeeHeadY + GAP)}px`;
+      floatingPanel.style.top = "auto";
+      const maxH = Math.floor(cloudeeHeadY - GAP - margin);
+      floatingPanel.style.maxHeight = `${Math.max(260, maxH)}px`;
+    }
+
+    floatingPanel.style.left = `${Math.round(left)}px`;
+    floatingPanel.style.right = "auto";
+  }
 
   function openPanel() {
     isOpen = true;
     if (bubbleHideTimer) clearTimeout(bubbleHideTimer);
     if (speechBubble) speechBubble.classList.remove("is-active");
 
+    dockWidget.classList.add("is-panel-open");
+    updateFloatingPanelPosition();
+
     floatingPanel.classList.add("is-active");
     floatingPanel.setAttribute("aria-hidden", "false");
+
+    requestAnimationFrame(() => {
+      updateFloatingPanelPosition();
+    });
 
     if (avatar) {
       avatar.setActive(true);
@@ -82,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function closePanel() {
     isOpen = false;
+    dockWidget.classList.remove("is-panel-open");
     floatingPanel.classList.remove("is-active");
     floatingPanel.setAttribute("aria-hidden", "true");
 
@@ -132,6 +182,12 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       templatesDrawer.setAttribute("hidden", "");
     }
+
+    if (isOpen) {
+      setTimeout(() => {
+        updateFloatingPanelPosition();
+      }, 150);
+    }
   }
 
   if (templatesToggle) {
@@ -176,8 +232,28 @@ document.addEventListener("DOMContentLoaded", () => {
       avatar.setThinking();
     }
 
+    const ipadModalWrap = document.getElementById("ipad-modal-wrap");
+    const isModalOpen = ipadModalWrap && ipadModalWrap.classList.contains("is-active");
+    const activeDossierEl = document.querySelector(".ipad-dossier.is-active");
+
+    const context = {
+      scene: currentActiveScene || "hero",
+      isModalOpen: !!isModalOpen,
+      activeDossier: activeDossierEl ? activeDossierEl.id : null,
+      history: conversationHistory.slice(-4)
+    };
+
     try {
-      const result = await agent.answer(queryText);
+      const result = await agent.answer(queryText, context);
+
+      conversationHistory.push({
+        query: queryText,
+        topic: result.topic || "general",
+        text: result.text
+      });
+      if (conversationHistory.length > 8) {
+        conversationHistory.shift();
+      }
 
       let formatted = escapeHTML(result.text)
         .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
@@ -214,6 +290,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const emotion = result.emotion || "celebrate";
         avatar.triggerReaction(emotion, 2800);
       }
+
+      if (isOpen) {
+        requestAnimationFrame(updateFloatingPanelPosition);
+      }
     } catch (err) {
       console.error("[Cloudee] Query error:", err);
       if (messageBubble) {
@@ -222,6 +302,9 @@ document.addEventListener("DOMContentLoaded", () => {
         messageBubble.style.transform = "translateY(0)";
       }
       if (avatar) avatar.setActive(true);
+      if (isOpen) {
+        requestAnimationFrame(updateFloatingPanelPosition);
+      }
     }
   }
 
@@ -237,8 +320,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Form Submit
+  // Form Submit & Input Engagement
   if (chatForm && chatInput) {
+    chatInput.addEventListener("focus", () => {
+      if (avatar && isOpen) {
+        avatar.triggerReaction("curious-left", 1200);
+      }
+    });
+
     chatForm.addEventListener("submit", (e) => {
       e.preventDefault();
       handleUserQuery(chatInput.value);
@@ -479,7 +568,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 1500);
 
   // =========================================================================
-  // 7. Drag & Drop Mascot Floating System (つままれて運べる機能)
+  // 7. Dynamic Mascot & Chat Floating System (頭上追従＆ドラッグ連動システム)
   // =========================================================================
   let isDragging = false;
   let dragMoved = false;
@@ -491,12 +580,6 @@ document.addEventListener("DOMContentLoaded", () => {
   dockWidget.addEventListener("pointerdown", (e) => {
     if (e.button !== 0 && e.pointerType === "mouse") return;
     if (e.target.closest("#cloudee-floating-panel")) return;
-
-    // Toggle behavior when clicked while panel is open
-    if (isOpen) {
-      closePanel();
-      return;
-    }
 
     const rect = dockWidget.getBoundingClientRect();
     startX = e.clientX;
@@ -510,12 +593,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   dockWidget.addEventListener("pointermove", (e) => {
-    if (!isDragging || isOpen) return;
+    if (!isDragging) return;
 
     const dx = e.clientX - startX;
     const dy = e.clientY - startY;
 
-    if (!dragMoved && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+    if (!dragMoved && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
       dragMoved = true;
       dockWidget.classList.add("is-dragging");
       if (avatar) {
@@ -525,7 +608,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (dragMoved) {
       const size = dockWidget.offsetWidth;
-      const margin = 12;
+      const margin = 10;
       const maxLeft = window.innerWidth - size - margin;
       const maxTop = window.innerHeight - size - margin;
 
@@ -538,6 +621,9 @@ document.addEventListener("DOMContentLoaded", () => {
       dockWidget.style.bottom = "auto";
 
       updateSpeechBubblePosition();
+      if (isOpen) {
+        updateFloatingPanelPosition();
+      }
     }
   });
 
@@ -555,34 +641,117 @@ document.addEventListener("DOMContentLoaded", () => {
         avatar.triggerReaction("playful-right", 1100);
       }
       updateSpeechBubblePosition();
+      if (isOpen) {
+        updateFloatingPanelPosition();
+      }
     } else {
-      openPanel();
+      // Click without drag: Toggle panel open/close
+      if (isOpen) {
+        closePanel();
+      } else {
+        openPanel();
+      }
     }
   };
 
   dockWidget.addEventListener("pointerup", endDrag);
   dockWidget.addEventListener("pointercancel", endDrag);
 
-  // Double Click: Return to Home Position (Right-bottom corner)
+  // Dragging directly from the Chat Panel Header
+  const panelHeader = floatingPanel.querySelector(".cloudee-panel-header");
+  if (panelHeader) {
+    let isHeaderDragging = false;
+    let headerDragMoved = false;
+    let headerStartX = 0;
+    let headerStartY = 0;
+    let headerInitialDockLeft = 0;
+    let headerInitialDockTop = 0;
+
+    panelHeader.addEventListener("pointerdown", (e) => {
+      if (e.target.closest("#cloudee-panel-close")) return;
+      if (e.button !== 0 && e.pointerType === "mouse") return;
+
+      const dockRect = dockWidget.getBoundingClientRect();
+      headerStartX = e.clientX;
+      headerStartY = e.clientY;
+      headerInitialDockLeft = dockRect.left;
+      headerInitialDockTop = dockRect.top;
+      headerDragMoved = false;
+      isHeaderDragging = true;
+
+      panelHeader.setPointerCapture(e.pointerId);
+    });
+
+    panelHeader.addEventListener("pointermove", (e) => {
+      if (!isHeaderDragging) return;
+      const dx = e.clientX - headerStartX;
+      const dy = e.clientY - headerStartY;
+
+      if (!headerDragMoved && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
+        headerDragMoved = true;
+      }
+
+      if (headerDragMoved) {
+        const size = dockWidget.offsetWidth;
+        const margin = 10;
+        const maxLeft = window.innerWidth - size - margin;
+        const maxTop = window.innerHeight - size - margin;
+
+        let newLeft = Math.max(margin, Math.min(maxLeft, headerInitialDockLeft + dx));
+        let newTop = Math.max(margin, Math.min(maxTop, headerInitialDockTop + dy));
+
+        dockWidget.style.left = `${newLeft}px`;
+        dockWidget.style.top = `${newTop}px`;
+        dockWidget.style.right = "auto";
+        dockWidget.style.bottom = "auto";
+
+        updateSpeechBubblePosition();
+        updateFloatingPanelPosition();
+      }
+    });
+
+    const endHeaderDrag = (e) => {
+      if (!isHeaderDragging) return;
+      isHeaderDragging = false;
+      try {
+        panelHeader.releasePointerCapture(e.pointerId);
+      } catch (err) {}
+      if (headerDragMoved && avatar) {
+        avatar.triggerReaction("playful-right", 1000);
+      }
+    };
+
+    panelHeader.addEventListener("pointerup", endHeaderDrag);
+    panelHeader.addEventListener("pointercancel", endHeaderDrag);
+
+    // Double click header to return home
+    panelHeader.addEventListener("dblclick", (e) => {
+      if (e.target.closest("#cloudee-panel-close")) return;
+      resetToHome();
+    });
+  }
+
+  // Double Click Mascot: Return to Home Position (Right-bottom corner)
   dockWidget.addEventListener("dblclick", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (isOpen) {
-      closePanel();
-      return;
-    }
     resetToHome();
   });
 
   function resetToHome() {
-    dockWidget.style.transition = "left 0.4s ease, top 0.4s ease";
+    dockWidget.style.transition = "left 0.4s cubic-bezier(0.16, 1, 0.3, 1), top 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
+    floatingPanel.style.transition = "left 0.4s cubic-bezier(0.16, 1, 0.3, 1), top 0.4s cubic-bezier(0.16, 1, 0.3, 1), bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1)";
     const size = dockWidget.offsetWidth;
-    const margin = window.innerWidth <= 640 ? 18 : 28;
+    const margin = window.innerWidth <= 640 ? 18 : 32;
     const homeLeft = window.innerWidth - size - margin;
     const homeTop = window.innerHeight - size - margin;
 
     dockWidget.style.left = `${homeLeft}px`;
     dockWidget.style.top = `${homeTop}px`;
+
+    if (isOpen) {
+      updateFloatingPanelPosition();
+    }
 
     setTimeout(() => {
       dockWidget.style.transition = "";
@@ -590,10 +759,20 @@ document.addEventListener("DOMContentLoaded", () => {
       dockWidget.style.top = "";
       dockWidget.style.right = "";
       dockWidget.style.bottom = "";
+      floatingPanel.style.transition = "";
       updateSpeechBubblePosition();
+      if (isOpen) updateFloatingPanelPosition();
       if (avatar) avatar.triggerReaction("celebrate", 1000);
     }, 420);
   }
+
+  // Sync on window resize
+  window.addEventListener("resize", () => {
+    updateSpeechBubblePosition();
+    if (isOpen) {
+      updateFloatingPanelPosition();
+    }
+  });
 
   function escapeHTML(str) {
     return str
