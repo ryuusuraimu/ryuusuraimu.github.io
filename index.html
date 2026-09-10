@@ -28,7 +28,7 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/fflate.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FBXLoader.js"></script>
 
-  <link rel="stylesheet" href="./styles.css?v=oryzo-cloudee-dimension-v96" />
+  <link rel="stylesheet" href="./styles.css?v=oryzo-cloudee-dimension-v97" />
 </head>
 
 <body>
@@ -1039,17 +1039,17 @@
 
   </main>
 
-  <!-- Cloudee Floating Dock & AI Search System -->
-  <aside class="cloudee-system-wrap" aria-label="AI Mascot Cloudee">
+  <!-- Cloudee Floating Dock & Interactive Bot System -->
+  <aside class="cloudee-system-wrap" aria-label="Portfolio Guide Bot Cloudee">
     
     <!-- Floating Mascot Entity (No circular frame, pure 3D cloud character) -->
-    <div id="cloudee-dock-widget" class="cloudee-dock-widget" role="button" tabindex="0" aria-label="Cloudee Mascot">
+    <div id="cloudee-dock-widget" class="cloudee-dock-widget" role="button" tabindex="0" aria-label="Cloudee Guide Bot">
       <!-- Live Commentary & Hover Speech Bubble -->
       <div id="cloudee-speech-bubble" class="cloudee-speech-bubble" role="status" aria-live="polite">
-        <span class="bubble-sparkle" id="cloudee-bubble-sparkle">✨</span>
+        <span class="bubble-sparkle" id="cloudee-bubble-sparkle">✦</span>
         <div class="bubble-body">
-          <span class="bubble-text" id="cloudee-bubble-text">この3Dすごくない！？空中浮遊してるよ✨</span>
-          <span class="bubble-subtext" id="cloudee-bubble-subtext">スクロールしてみてね👀</span>
+          <span class="bubble-text" id="cloudee-bubble-text">Three.jsとGSAPによる3D空間演出です</span>
+          <span class="bubble-subtext" id="cloudee-bubble-subtext">スクロールと連動してMacBookが着地します</span>
         </div>
       </div>
       <!-- Pure 3D Canvas Mount -->
@@ -1064,7 +1064,7 @@
           <span class="cloudee-pulse-dot" aria-hidden="true"></span>
           <div class="cloudee-panel-titles">
             <span class="cloudee-panel-title">Cloudee</span>
-            <span class="cloudee-panel-sub">Portfolio AI Companion</span>
+            <span class="cloudee-panel-sub">Portfolio Guide Bot</span>
           </div>
         </div>
         <button id="cloudee-panel-close" class="cloudee-panel-close-btn" type="button" aria-label="Close panel">
@@ -1078,9 +1078,9 @@
       <!-- Message Area (Cloudee speech / answers) -->
       <div id="cloudee-messages-area" class="cloudee-messages-area">
         <div class="cloudee-message-bubble" id="cloudee-message-bubble">
-          やあ！中邨 隆之介のポートフォリオへようこそ ☁️✨<br><br>
-          ぼくは相棒の <strong>Cloudee</strong> だよ。<br>
-          救命アプリ「Anchor」の設計思想やアパレル「Moftail」の検証データ、開発の裏話など何でも気軽に聞いてね。
+          中邨 隆之介のポートフォリオへようこそ。<br><br>
+          当ポートフォリオの制作実績や技術仕様、設計思想をご案内するナビゲーションBotの <strong>Cloudee</strong> です。<br>
+          救命アプリ「Anchor」の設計思想や「Moftail」のデータ検証、開発哲学など、関心のある項目を下記テンプレートまたは入力欄よりお尋ねください。
         </div>
 
         <!-- Dynamic Action Button (e.g. iPad Detailed Document) -->
@@ -1098,7 +1098,7 @@
         <button type="button" class="cloudee-templates-toggle" id="cloudee-templates-toggle" aria-expanded="false" aria-controls="cloudee-templates-drawer">
           <span class="templates-toggle-left">
             <span class="templates-sparkle">✦</span>
-            <span class="templates-toggle-label">質問のヒント（おすすめテンプレート）</span>
+            <span class="templates-toggle-label">質問テンプレート（おすすめの質問項目）</span>
           </span>
           <span class="templates-chevron" id="templates-chevron">▾</span>
         </button>
@@ -1127,7 +1127,7 @@
             <div class="template-chips-grid">
               <button type="button" class="template-chip" data-query="大切にしている技術哲学は？">技術哲学（必要なものを形にする）</button>
               <button type="button" class="template-chip" data-query="技術学習のサイクルについて教えて">学習サイクル (5 Steps)</button>
-              <button type="button" class="template-chip" data-query="隆之介って普段どんな人？裏話教えて！">隆之介のウラ話・人物像</button>
+              <button type="button" class="template-chip" data-query="中邨 隆之介の人物像や経歴について教えてください">中邨 隆之介の人物像・経歴</button>
             </div>
           </div>
         </div>
@@ -1140,7 +1140,7 @@
           type="text"
           id="cloudee-chat-input"
           class="cloudee-chat-input"
-          placeholder="何でも気軽に質問してみて…"
+          placeholder="キーワードや質問項目を入力…"
           autocomplete="off"
         />
         <button type="submit" id="cloudee-chat-send" class="cloudee-chat-send" aria-label="Send query">
@@ -1154,10 +1154,10 @@
 
   </aside>
 
-  <script src="./cloudee-avatar.js?v=oryzo-cloudee-dimension-v95"></script>
-  <script src="./ai-search-agent.js?v=oryzo-cloudee-dimension-v95"></script>
-  <script src="./cloudee-ui.js?v=oryzo-cloudee-dimension-v95"></script>
-  <script src="./script.js?v=oryzo-cloudee-dimension-v95"></script>
+  <script src="./cloudee-avatar.js?v=oryzo-cloudee-dimension-v97"></script>
+  <script src="./ai-search-agent.js?v=oryzo-cloudee-dimension-v97"></script>
+  <script src="./cloudee-ui.js?v=oryzo-cloudee-dimension-v97"></script>
+  <script src="./script.js?v=oryzo-cloudee-dimension-v97"></script>
 </body>
 
 </html>

@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("[Cloudee] Query error:", err);
       if (messageBubble) {
-        messageBubble.innerHTML = "ごめんね、少し考えがまとまらなかったよ。もう一度聞いてみて！☁️";
+        messageBubble.innerHTML = "申し訳ございません。該当する情報の取得に失敗いたしました。恐れ入りますが、再度ご質問いただくか、テンプレート項目をご利用ください。";
         messageBubble.style.opacity = "1";
         messageBubble.style.transform = "translateY(0)";
       }
@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     let typeReactionTimer = null;
-    const typingReactions = ["small-attentive", "curious-left", "attentive-left", "playful-right"];
+    const typingReactions = ["small-attentive", "curious-left", "attentive-left", "small-attentive"];
     let lastReactionIndex = -1;
 
     chatInput.addEventListener("input", () => {
@@ -355,135 +355,135 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================================================================
   const SCENE_COMMENTS = {
     hero: {
-      sparkle: "✨",
-      subtext: "スクロールしてみてね👀",
-      reaction: "wide-excited",
-      promptSuggestion: "この3Dモデルについて教えて！",
+      sparkle: "✦",
+      subtext: "スクロールで連動演出が進行します",
+      reaction: "small-attentive",
+      promptSuggestion: "この3Dモデルについて教えてください",
       comments: [
-        "この3Dすごくない！？空中浮遊してるよ✨",
-        "スクロールするとMacBookが机に降り立つよ👀",
-        "M2 MacBook Airの質感を完全再現してるんだ💻"
+        "Three.jsとGSAPによる3D空間演出です。",
+        "スクロールと連動してM2 MacBook Airが着地します。",
+        "実機のディテールと質感をWeb上で再現しています。"
       ]
     },
     anchor: {
-      sparkle: "💻",
-      subtext: "右側の詳細もぜひ読んでね！",
+      sparkle: "✦",
+      subtext: "右側パネルに技術仕様を掲載しています",
       reaction: "attentive-left",
-      promptSuggestion: "Anchorの実績や背景について教えて",
+      promptSuggestion: "Anchorの実績や背景について教えてください",
       comments: [
-        "パカッと開いた！AnchorのAI検索システムだよ🚀",
-        "右側の詳細もぜひ読んでね！プロンプト設計が満載✨",
-        "OpenAI API連携のこだわりが詰まってるんだ！"
+        "iOS救命支援アプリ『Anchor』の設計記録です。",
+        "有事における決定論的フェイルセーフと暗号化設計を解説しています。",
+        "SwiftUIとNode.jsプロキシによる安全性重視の構成です。"
       ]
     },
     "moftail-storefront": {
-      sparkle: "🐦",
-      subtext: "右側の詳細もぜひ読んでね！",
-      reaction: "curious-left",
-      promptSuggestion: "Moftailのピボットストーリーを教えて",
+      sparkle: "✦",
+      subtext: "右側パネルに詳細を掲載しています",
+      reaction: "attentive-left",
+      promptSuggestion: "Moftailのピボットストーリーを教えてください",
       comments: [
-        "次はMoftail！野鳥×アパレルの世界観だよ✨",
-        "3Dアバター連動のEC！右側の解説も必見👀",
-        "ぼくたちアバター仲間も大活躍してるんだ！"
+        "グローバルD2C事業『Moftail』の検証フェーズです。",
+        "Shopify Liquidのカスタム設計と3Dビューアを統合しています。",
+        "アバター連携による体験設計を検証しています。"
       ]
     },
     "moftail-ads": {
-      sparkle: "📊",
-      subtext: "右側の詳細もぜひ読んでね！",
-      reaction: "playful-right",
-      promptSuggestion: "MoftailでのA/Bテストやデータ検証の工夫を教えて",
+      sparkle: "✦",
+      subtext: "右側パネルに検証数値を掲載しています",
+      reaction: "small-attentive",
+      promptSuggestion: "MoftailでのA/Bテストやデータ検証について教えてください",
       comments: [
-        "広告の検証データ！実測CTR 5.26%を記録したよ📊",
-        "直感じゃなく、数字の検証で主軸クリエイティブを決めたんだ！",
-        "変数を1つに絞ったA/Bテストの工夫、右側の詳細も読んでね！"
+        "実費$597.87を投じたMeta広告の単一変数A/Bテストです。",
+        "仮説検証を経てCTR 5.26%の主軸クリエイティブを特定しました。",
+        "直感に頼らずデータ主導で意思決定を行うプロセスです。"
       ]
     },
     "moftail-pod": {
-      sparkle: "📦",
-      subtext: "右側の詳細もぜひ読んでね！",
+      sparkle: "✦",
+      subtext: "右側パネルにサプライチェーンを掲載しています",
       reaction: "small-attentive",
-      promptSuggestion: "オンデマンド製造やサプライチェーンの仕組みを教えて",
+      promptSuggestion: "オンデマンド製造やサプライチェーンの仕組みを教えてください",
       comments: [
-        "在庫ゼロのオンデマンド製造モデルだよ📦",
-        "海外工場と自動連携する仕組み、右側の詳細も読んでみてね✨",
-        "リスクを最小化する設計思想がポイントなんだ！"
+        "無在庫で展開するオンデマンド製造モデルです。",
+        "海外工場APIと自動連携し、固定費とリスクを極小化しています。",
+        "個人開発でグローバル運用を可能にする仕組みです。"
       ]
     },
     "shopify-theme": {
-      sparkle: "🛠️",
-      subtext: "右側の詳細もぜひ読んでね！",
-      reaction: "joyful-wide",
-      promptSuggestion: "Shopifyカスタムテーマの技術的こだわりを教えて",
+      sparkle: "✦",
+      subtext: "右側パネルにコード詳細を掲載しています",
+      reaction: "attentive-left",
+      promptSuggestion: "Shopifyカスタムテーマの技術的こだわりを教えてください",
       comments: [
-        "3Dビューア搭載のShopifyテーマ！技術満載だよ✨",
-        "コードを極限まで軽量化！右側のこだわりも読んでね",
-        "滑らかなアニメーション、触ってみてね！"
+        "3Dビューアを組み込んだShopifyカスタムテーマです。",
+        "LiquidとバニラJSによる極限までの軽量化を行っています。",
+        "表示速度とインタラクションの両立を追求しています。"
       ]
     },
     "how-i-work": {
-      sparkle: "💡",
-      subtext: "技術学習のサイクルをぜひ読んでね！",
+      sparkle: "✦",
+      subtext: "技術学習の5ステップを掲載しています",
       reaction: "small-attentive",
-      promptSuggestion: "大切にしている技術哲学は？",
+      promptSuggestion: "大切にしている技術哲学について教えてください",
       comments: [
-        "『本当に必要なものを形にするために、技術を学ぶ』技術は作るための手段なんだ💡",
-        "『Problem → Idea → Build → Learn → Improve』の5ステップだよ！",
-        "作るために必要なことを学ぶ、実践型のスタイルなんだ✨"
+        "『本当に必要なものを形にするために、技術を学ぶ』を指針としています。",
+        "Problem → Idea → Build → Learn → Improve の実践的サイクルです。",
+        "作る目的を先に置き、必要な技術をキャッチアップするスタイルです。"
       ]
     },
     about: {
-      sparkle: "☁️",
-      subtext: "ぼくをクリックして何でも聞いてね！",
-      reaction: "celebrate",
-      promptSuggestion: "大切にしている技術哲学は？",
+      sparkle: "✦",
+      subtext: "経歴や開発哲学をご案内いたします",
+      reaction: "attentive-left",
+      promptSuggestion: "大切にしている技術哲学について教えてください",
       comments: [
-        "隆之介のコア哲学『本当に必要なものを形にするために、技術を学ぶ』ぜひ読んでね！",
-        "技術の習得自体がゴールじゃない。誰かの課題を解決するために学ぶんだ☁️",
-        "気になることがあったら、ぼくをクリックして何でも聞いてね✨"
+        "中邨 隆之介のバックグラウンドと開発哲学です。",
+        "技術の習得自体を目的にせず、課題解決のための手段と位置づけています。",
+        "経歴や人物像についてのご質問も承ります。"
       ]
     },
     contact: {
-      sparkle: "💌",
-      subtext: "メールやカジュアル面談いつでも大歓迎！",
-      reaction: "celebrate",
-      promptSuggestion: "連絡先や就職活動について教えて！",
+      sparkle: "✦",
+      subtext: "ご連絡先および面談のご案内です",
+      reaction: "small-attentive",
+      promptSuggestion: "連絡先や面談について教えてください",
       comments: [
-        "最後まで見てくれてありがとう！✨ ぜひ一度お話しさせてください！",
-        "カジュアル面談や技術の相談など、メールでお気軽に連絡してね📩",
-        "ぼくともっとお喋りする？何でも聞いてね☁️"
+        "ご覧いただきありがとうございます。ご連絡は随時歓迎いたします。",
+        "カジュアル面談や技術的なディスカッションもお気軽にご連絡ください。",
+        "制作物に関するご質問は引き続きお答えいたします。"
       ]
     },
     "dossier-anchor": {
-      sparkle: "📖",
-      subtext: "画面をスクロールして全文読めるよ！",
+      sparkle: "✦",
+      subtext: "スクロールして技術仕様書を閲覧いただけます",
       reaction: "attentive-left",
-      promptSuggestion: "なぜ有事にAIを使わないの？",
+      promptSuggestion: "なぜ有事にAIを使わないのですか？",
       comments: [
-        "Anchorの技術解説資料だよ！有事にAIを使わない救命の設計哲学が載ってるよ📖✨",
-        "CryptoKitのローカルキャッシュやVoiceProxyの仕組みも解説してるよ！",
-        "気になる点があったら、ぼくをタップして何でも聞いてね！"
+        "『Anchor』の技術ドシエ（詳細設計書）です。",
+        "有事に生成AIを呼ばない決定論的救命の設計思想を解説しています。",
+        "CryptoKitのローカルキャッシュやVoiceProxyの安全設計を掲載しています。"
       ]
     },
     "dossier-moftail": {
-      sparkle: "📊",
-      subtext: "画面をスクロールして全文読めるよ！",
-      reaction: "playful-right",
-      promptSuggestion: "Moftailのゴールデンサークルについて教えて",
+      sparkle: "✦",
+      subtext: "スクロールして事業戦略資料を閲覧いただけます",
+      reaction: "attentive-left",
+      promptSuggestion: "Moftailのゴールデンサークルについて教えてください",
       comments: [
-        "Moftailの戦略資料だよ！なぜ野鳥観察ニッチへピボットしたかの真実が載ってるよ📊",
-        "PDPバグ発見から時給$30案件獲得につながったエンジニアリング秘話も必見だよ！",
-        "気になる点があったら、ぼくをタップして何でも聞いてね！"
+        "『Moftail』の事業戦略およびピボット検証ドシエです。",
+        "野鳥観察ニッチへの転換理由と市場仮説の検証ログです。",
+        "PDPバグ発見から時給$30の海外案件獲得に至る記録を掲載しています。"
       ]
     },
     "dossier-shopify": {
-      sparkle: "🛠️",
-      subtext: "画面をスクロールして全文読めるよ！",
-      reaction: "joyful-wide",
-      promptSuggestion: "Shopifyテーマのパフォーマンス最適化について教えて",
+      sparkle: "✦",
+      subtext: "スクロールしてコード設計書を閲覧いただけます",
+      reaction: "attentive-left",
+      promptSuggestion: "Shopifyテーマのパフォーマンス最適化について教えてください",
       comments: [
-        "Shopifyテーマの詳細仕様だよ！Tailwind×Liquidの軽量設計だよ🛠️",
-        "3Dモデル連動やパフォーマンス最適化の技術が詰まってるよ！",
-        "気になる点があったら、ぼくをタップして何でも聞いてね！"
+        "Shopifyテーマ開発のコードアーキテクチャ資料です。",
+        "外部ライブラリ依存を排した軽量パッチとパフォーマンス設計です。",
+        "実務で培ったテーマカスタマイズの知見をまとめています。"
       ]
     }
   };
