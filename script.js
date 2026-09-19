@@ -3557,6 +3557,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollPos = window.scrollY + window.innerHeight * 0.4;
     const methodSec = document.getElementById('how-i-work');
     const aboutSec = document.getElementById('about');
+    const skillsSec = document.getElementById('skills');
+    const workspaceSec = document.getElementById('ai-workspace');
     const contactSec = document.getElementById('contact');
 
     // Bottom of page (Contact / Footer) check
@@ -3565,16 +3567,329 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isAtBottom || (contactSec && scrollPos >= contactSec.offsetTop)) {
       updateActiveNav('mailto:ryu.nakamura.dev@gmail.com');
       notifyCloudeeScene('contact');
+    } else if (workspaceSec && scrollPos >= workspaceSec.offsetTop) {
+      updateActiveNav('#ai-workspace');
+      notifyCloudeeScene('ai-workspace');
+    } else if (skillsSec && scrollPos >= skillsSec.offsetTop) {
+      updateActiveNav('#skills');
+      notifyCloudeeScene('skills');
     } else if (aboutSec && scrollPos >= aboutSec.offsetTop) {
       updateActiveNav('#about');
       notifyCloudeeScene('about');
     } else if (methodSec && scrollPos >= methodSec.offsetTop) {
       updateActiveNav('#how-i-work');
       notifyCloudeeScene('how-i-work');
-    } else if (currentCloudeeScene === 'about' || currentCloudeeScene === 'how-i-work' || currentCloudeeScene === 'contact') {
+    } else if (currentCloudeeScene === 'about' || currentCloudeeScene === 'skills' || currentCloudeeScene === 'ai-workspace' || currentCloudeeScene === 'how-i-work' || currentCloudeeScene === 'contact') {
       currentCloudeeScene = ''; // re-arm for scrollStage updates
     }
   }, { passive: true });
+
+  /* ==========================================================================
+     Skills Liquid Accordion Controller (Natural Scroll & Fluid Focus)
+     ========================================================================== */
+  const skillsCards = document.querySelectorAll('.skills-card');
+  if (skillsCards.length > 0) {
+    let clickCooldown = false;
+    let scrollRafId = null;
+
+    function activateCard(targetCard, smoothScroll = false) {
+      if (!targetCard) return;
+      if (targetCard.classList.contains('is-active') && !smoothScroll) return;
+
+      skillsCards.forEach(c => {
+        c.classList.remove('is-active');
+        c.setAttribute('aria-expanded', 'false');
+      });
+      targetCard.classList.add('is-active');
+      targetCard.setAttribute('aria-expanded', 'true');
+
+      if (smoothScroll) {
+        clickCooldown = true;
+        const cRect = targetCard.getBoundingClientRect();
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const focalLine = window.innerHeight * 0.5;
+        // Smoothly center on user click
+        const targetScrollY = Math.round(currentScrollY + cRect.top - (focalLine - 46));
+        
+        window.scrollTo({
+          top: targetScrollY,
+          behavior: 'smooth'
+        });
+
+        setTimeout(() => {
+          clickCooldown = false;
+        }, 2000);
+      }
+    }
+
+    // Accessible attributes and Click / Keyboard selection
+    skillsCards.forEach((card, idx) => {
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'region');
+      card.setAttribute('aria-label', `Skill ${idx + 1}`);
+      card.setAttribute('aria-expanded', card.classList.contains('is-active') ? 'true' : 'false');
+
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('a, button, details')) return;
+        activateCard(card, true);
+      });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activateCard(card, true);
+        }
+      });
+    });
+
+    // Pure natural scroll-triggered activation (NO scroll jacking / NO forced snap)
+    function onSkillsScroll() {
+      if (clickCooldown) return;
+      const skillsSec = document.getElementById('skills');
+      if (!skillsSec) return;
+
+      const secRect = skillsSec.getBoundingClientRect();
+      if (secRect.top > window.innerHeight * 0.85 || secRect.bottom < window.innerHeight * 0.15) return;
+
+      const focalLine = window.innerHeight * 0.5;
+      const activeCard = document.querySelector('.skills-card.is-active');
+      let activeDist = Infinity;
+
+      if (activeCard) {
+        const aRect = activeCard.getBoundingClientRect();
+        activeDist = Math.abs((aRect.top + 46) - focalLine);
+      }
+
+      let bestCandidate = null;
+      let minDistance = Infinity;
+
+      skillsCards.forEach(card => {
+        const cRect = card.getBoundingClientRect();
+        const headerCenter = cRect.top + (card.classList.contains('is-active') ? 46 : 36);
+        const dist = Math.abs(headerCenter - focalLine);
+
+        if (dist < minDistance) {
+          minDistance = dist;
+          bestCandidate = card;
+        }
+      });
+
+      // Natural cushioned activation: switches smoothly when closest to the stationary landmark line
+      if (bestCandidate && bestCandidate !== activeCard) {
+        const overcomesCushion = (minDistance + 45) < activeDist;
+        const isFarAway = activeDist > 160;
+
+        if (overcomesCushion || isFarAway) {
+          activateCard(bestCandidate, false);
+        }
+      }
+    }
+
+    window.addEventListener('scroll', () => {
+      if (scrollRafId) return;
+      scrollRafId = requestAnimationFrame(() => {
+        onSkillsScroll();
+        scrollRafId = null;
+      });
+    }, { passive: true });
+  }
+
+  /* ==========================================================================
+     AI Workspace Curved Arc Deck Controller (Interactive Fan Deck & Tabs)
+     ========================================================================== */
+  const arcDeck = document.getElementById('workspace-arc-deck');
+  if (arcDeck) {
+    const arcCards = Array.from(arcDeck.querySelectorAll('.arc-card'));
+    const arcTabs = document.querySelectorAll('.arc-tab');
+    const btnPrev = document.querySelector('.workspace-arc-controls .btn-prev');
+    const btnNext = document.querySelector('.workspace-arc-controls .btn-next');
+    const dotsContainer = document.querySelector('.arc-dots-indicator');
+
+    let currentFilter = 'workspace';
+    let visibleCards = [];
+    let activeIndex = 2; // Default active card (ChatGPT in center for workspace)
+
+    function updateDots() {
+      if (!dotsContainer) return;
+      dotsContainer.innerHTML = '';
+      visibleCards.forEach((_, idx) => {
+        const dot = document.createElement('span');
+        dot.className = 'arc-dot' + (idx === activeIndex ? ' active' : '');
+        dot.setAttribute('role', 'button');
+        dot.setAttribute('aria-label', `Go to card ${idx + 1}`);
+        dot.addEventListener('click', () => {
+          activeIndex = idx;
+          renderArc();
+        });
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function updateVisibleCards() {
+      if (currentFilter === 'all') {
+        visibleCards = [...arcCards];
+      } else {
+        visibleCards = arcCards.filter(c => c.getAttribute('data-category') === currentFilter);
+      }
+      if (activeIndex >= visibleCards.length) {
+        activeIndex = Math.max(0, visibleCards.length - 1);
+      }
+      updateDots();
+      renderArc();
+    }
+
+    function renderArc() {
+      if (visibleCards.length === 0) return;
+      const isMobile = window.innerWidth <= 768;
+      const xSpacing = isMobile ? 105 : 155;
+      const yArc = isMobile ? 18 : 28;
+      const rotAngle = isMobile ? 5.8 : 7.2;
+
+      arcCards.forEach(card => {
+        if (!visibleCards.includes(card)) {
+          card.style.opacity = '0';
+          card.style.pointerEvents = 'none';
+          card.style.transform = 'translate3d(0, 80px, 0) scale(0.7)';
+          card.classList.remove('is-active');
+        }
+      });
+
+      visibleCards.forEach((card, idx) => {
+        const delta = idx - activeIndex;
+        const absDelta = Math.abs(delta);
+
+        if (delta === 0) {
+          card.classList.add('is-active');
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+          card.style.zIndex = '12';
+          card.style.transform = `translate3d(0px, -24px, 0) rotate(0deg) scale(1.05)`;
+        } else {
+          card.classList.remove('is-active');
+          card.style.opacity = absDelta > 2 ? '0' : '1';
+          card.style.pointerEvents = absDelta > 2 ? 'none' : 'auto';
+          card.style.zIndex = String(10 - absDelta * 2);
+
+          const xPos = delta * xSpacing;
+          const yPos = Math.pow(absDelta, 1.35) * yArc;
+          const rot = delta * rotAngle;
+          const scale = Math.max(0.82, 1 - absDelta * 0.055);
+
+          card.style.transform = `translate3d(${xPos}px, ${yPos}px, 0) rotate(${rot}deg) scale(${scale})`;
+        }
+      });
+
+      // Sync indicator dots
+      if (dotsContainer) {
+        const dots = dotsContainer.querySelectorAll('.arc-dot');
+        dots.forEach((dot, idx) => {
+          if (idx === activeIndex) dot.classList.add('active');
+          else dot.classList.remove('active');
+        });
+      }
+    }
+
+    // Card Hover / Click to focus
+    arcCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.arc-card-link-badge')) return;
+        const targetIdx = visibleCards.indexOf(card);
+        if (targetIdx !== -1 && targetIdx !== activeIndex) {
+          activeIndex = targetIdx;
+          renderArc();
+        }
+      });
+
+      card.addEventListener('mouseenter', () => {
+        if (window.innerWidth > 900) {
+          const targetIdx = visibleCards.indexOf(card);
+          if (targetIdx !== -1 && targetIdx !== activeIndex) {
+            activeIndex = targetIdx;
+            renderArc();
+          }
+        }
+      });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          if (!e.target.closest('.arc-card-link-badge')) {
+            e.preventDefault();
+            const targetIdx = visibleCards.indexOf(card);
+            if (targetIdx !== -1) {
+              activeIndex = targetIdx;
+              renderArc();
+            }
+          }
+        }
+      });
+    });
+
+    // Prev / Next Navigation buttons
+    if (btnPrev) {
+      btnPrev.addEventListener('click', () => {
+        activeIndex = (activeIndex - 1 + visibleCards.length) % visibleCards.length;
+        renderArc();
+      });
+    }
+
+    if (btnNext) {
+      btnNext.addEventListener('click', () => {
+        activeIndex = (activeIndex + 1) % visibleCards.length;
+        renderArc();
+      });
+    }
+
+    // Category Tabs Filtering
+    arcTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        arcTabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        currentFilter = tab.getAttribute('data-filter');
+        if (currentFilter === 'workspace') {
+          activeIndex = 2; // OpenAI CodeX in center of 5 tools
+        } else if (currentFilter === 'ai-research') {
+          activeIndex = 3; // Center of 8 research cards
+        } else if (currentFilter === 'business') {
+          activeIndex = 0; // Dan Martell
+        } else {
+          activeIndex = 2;
+        }
+        updateVisibleCards();
+      });
+    });
+
+    // Touch swipe support on Arc Deck
+    let touchStartX = 0;
+    arcDeck.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+
+    arcDeck.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const diffX = touchStartX - touchEndX;
+      if (Math.abs(diffX) > 45) {
+        if (diffX > 0) {
+          activeIndex = (activeIndex + 1) % visibleCards.length;
+        } else {
+          activeIndex = (activeIndex - 1 + visibleCards.length) % visibleCards.length;
+        }
+        renderArc();
+      }
+    }, { passive: true });
+
+    // Initial render and resize handling
+    updateVisibleCards();
+
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(renderArc, 100);
+    });
+  }
 
   /* ==========================================================================
      6. Mouse Parallax & Render Loop

@@ -442,6 +442,28 @@ document.addEventListener("DOMContentLoaded", () => {
         "経歴や人物像についてのご質問も承ります。"
       ]
     },
+    skills: {
+      sparkle: "✦",
+      subtext: "技術の現在地と学習実践を掲載しています",
+      reaction: "attentive-left",
+      promptSuggestion: "各技術の現在地や学習経験について教えてください",
+      comments: [
+        "これまでに実践してきた技術の現在地と学習経験のインジケーターです。",
+        "Swift、Python、SQL、C、Web技術等の率直な習得状況をまとめています。",
+        "『作るために必要なことを学ぶ』姿勢に基づき、現在進行形で成長を続けています。"
+      ]
+    },
+    "ai-workspace": {
+      sparkle: "✦",
+      subtext: "AIツールと情報収集ストリームです",
+      reaction: "small-attentive",
+      promptSuggestion: "普段使っているAIツールや情報収集の方法について教えてください",
+      comments: [
+        "CursorやClaude 3.5 Sonnetを活用した日々の制作ワークスペースです。",
+        "YouTubeやXの最新リサーチ・知見をインプットし、素早く実験しています。",
+        "カードをクリックすると実際の動画やキュレーションアカウントを確認できます。"
+      ]
+    },
     contact: {
       sparkle: "✦",
       subtext: "ご連絡先および面談のご案内です",

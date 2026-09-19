@@ -55,6 +55,21 @@
       detail:
         "私は、プログラミング言語やフレームワークを習得すること自体をゴールにはしていません。私が重視しているのは、誰かの課題を解決したり、実際に役立つものを形にすることです。作りたいプロダクトを先に考え、その実現に必要な技術を調べ、学び、使う。そのため、私の技術学習は『すべてを学んでから作る』のではなく、『作るために必要なことを学ぶ』という順番です。Problem → Idea → Build → Learn → Improve。Anchor、Moftail、そしてこれまでのプロダクトも、現在持っている技術だけで作れるものを考えたのではありません。実現したい体験や解決したい問題を先に置き、それを形にするために必要な技術を、その都度キャッチアップしてきました。私はまだ技術者として成長途中です。しかし、技術そのものを目的にするのではなく、技術を使って価値を生み出せる人でありたいと考えています。"
     },
+    skills: {
+      title: "LEARNING TRAJECTORY（技術の現在地と学習経験）",
+      sectionId: "skills",
+      items: [
+        { tech: "Swift / SwiftUI", level: "Beginner", practice: "AI・リファレンスを使いながらアプリ制作" },
+        { tech: "Python", level: "Beginner", practice: "大学課題、データ分析、paiza" },
+        { tech: "C", level: "Beginner", practice: "大学で基礎文法〜ポインタ・簡単な制作" },
+        { tech: "SQL / MySQL", level: "Beginner", practice: "基本SQL、ER図、DB設計の基礎" },
+        { tech: "HTML / CSS", level: "Beginner", practice: "Portfolio・Shopifyの修正" },
+        { tech: "JavaScript", level: "Beginner", practice: "Shopifyテーマの調査・修正" },
+        { tech: "Liquid", level: "Beginner", practice: "Shopifyテーマの調査・修正" },
+        { tech: "Git / GitHub", level: "Beginner", practice: "個人制作のバージョン管理" },
+        { tech: "OpenCV / RISC-V / FPGA", level: "Introductory", practice: "大学授業・実験で使用" }
+      ]
+    },
     contact: {
       phrase: "NEXT CHALLENGE. ぜひ一度お話しさせてください。",
       github: "https://github.com/ryuusuraimu",
@@ -77,7 +92,7 @@
       if (!q) {
         return {
           topic: "empty",
-          text: "関心のあるキーワード（例：Anchor, Moftail, 強み, 哲学, 技術スタック, 連絡先）を入力してください。",
+          text: "関心のあるキーワード（例：Anchor, Moftail, 強み, 哲学, 技術スタック, スキル一覧, 連絡先）を入力してください。",
           quickLinks: []
         };
       }
@@ -117,7 +132,8 @@
       let isMoftail = /moftail|bird|野鳥|広告|597|ピボット|balance|ニッチ|d2c/i.test(q);
       let isVision = /vision|v\.i\.s\.i\.o\.n|業務効率|社内ツール|ツール/i.test(q);
       let isMindset = /マインドセット|哲学|モットー|考え方|価値観|信念|build what matters|何のために|目的|サイクル|学習|learn/i.test(q);
-      let isStrength = /強み|得意|スキル|プロフィール|背景|大学|専攻|特徴/i.test(q);
+      let isSkills = /現在地|技術一覧|スキル一覧|スキルセット|学習経験|経験した技術|学習した技術|できること|beginner|introductory|インジケーター|習得状況|^スキル(\?|？|！|!)?$/i.test(q);
+      let isStrength = /強み|得意|プロフィール|背景|大学|専攻|特徴/i.test(q);
       let isTech = /技術|スタック|言語|フレームワーク|プログラミング|python|react|three|typescript|swift|技術力|コード/i.test(q);
       let isContact = /連絡|コンタクト|就活|話したい|面談|採用|メール|github|会いたい/i.test(q);
       let isGreeting = /こんにちは|初めまして|はじめまして|hello|hi|お疲れ様|おはよ|こんばんは/i.test(q);
@@ -138,6 +154,8 @@
           else isMoftailBugOrClientWork = true;
         } else if (lastTopic === "mindset") {
           isMindset = true;
+        } else if (lastTopic === "skills") {
+          isSkills = true;
         }
       }
 
@@ -406,6 +424,20 @@
         };
       }
 
+      // Skills & Learning Trajectory
+      if (isSkills) {
+        return {
+          topic: "skills",
+          text: `【これまでの学習経験と技術の現在地（Learning Trajectory）】\n\n制作者の中邨は「すべてを学んでから作る」のではなく、「作るために必要なことを学ぶ」方針をとっており、技術習得の現在地を誇張なく率直に整理しています。\n\n• **Swift / SwiftUI** ［Beginner］\n  AI・公式リファレンスを活用しながらアプリ制作（Anchor等）を実践\n• **Python** ［Beginner］\n  大学課題、データ分析、paizaでのアルゴリズム実装\n• **C** ［Beginner］\n  大学講義での基礎文法からポインタ操作、簡単な制作\n• **SQL / MySQL** ［Beginner］\n  基本SQL文、ER図作成、データベース論理設計の基礎\n• **HTML / CSS** ［Beginner］\n  ポートフォリオ制作、ShopifyテーマのUI修正・スタイリング\n• **JavaScript** ［Beginner］\n  ShopifyテーマのDOM解析・PDPバリアント選択バグの調査と修正\n• **Liquid** ［Beginner］\n  Shopifyテーマのテンプレート構文調査・修正対応\n• **Git / GitHub** ［Beginner］\n  個人開発プロダクトのバージョン管理・Issue/Commit運用\n• **OpenCV / RISC-V / FPGA** ［Introductory］\n  大学の講義・実験における画像処理やハードウェアアーキテクチャの修得\n\n「私はまだ技術者として成長途中です。しかし、技術を使って価値を生み出せる人でありたい」という哲学のもと、課題解決に向けて継続的に学習を推進しています。`,
+          emotion: "attentive-left",
+          quickLinks: [
+            { label: "スキルインジケーターを見る", targetId: "skills" },
+            { label: "大切にしている技術哲学", query: "大切にしている技術哲学は？" },
+            { label: "Anchorの開発ストーリー", query: "Anchorについて教えて" }
+          ]
+        };
+      }
+
       // Strength & Profile
       if (isStrength) {
         return {
@@ -471,6 +503,7 @@
           text: `【技術スタックおよび技術習得の指針】\n\n中邨の根本的な指針は以下の通りです：\n**「本当に必要なものを形にするために、技術を学ぶ」**\n言語やツールの習得自体を目的にせず、**「誰かの課題を解決するプロダクトを作る」**ために必要な技術を学んで形にするスタイルを貫いています。\n\n• **iOS / Calm Tech（Anchor）**:\n  パニック発作時の沈黙を打破するため、SwiftUI、iOS 17+ Observation、CryptoKit（暗号化オフライン音声キャッシュ）、AVSpeechSynthesizer、Node.js（APIキー隔離VoiceProxy）を習得・実装。\n• **Commerce & Full-Stack（Moftail）**:\n  ニッチコミュニティの検証と完全自動化のため、Shopify、Liquid、Meta広告Graph API、Print on Demand APIを連携。\n• **Frontend & Creative Tech（Portfolio）**:\n  プロダクトの世界観を的確に伝えるため、Three.js、WebGL、GSAPによる3D演出・グラスモーフィズムUIを構築。\n\n**「Problem → Idea → Build → Learn → Improve」** のプロセスに沿って、価値の具現化に取り組んでいます。`,
           emotion: "attentive-left",
           quickLinks: [
+            { label: "技術の現在地（Skills）", targetId: "skills" },
             { label: "大切にしている技術哲学", query: "大切にしている技術哲学は？" },
             { label: "Anchorの技術詳細（iPad）", targetId: "dossier-anchor" }
           ]
@@ -496,6 +529,8 @@
           sceneHint = "「Moftail」の野鳥観察ニッチへのピボット経緯や広告テストの検証データ、海外案件受注の経緯をご案内可能です。";
         } else if (scene === "how-i-work") {
           sceneHint = "「HOW I WORK」セクションに記載の開発プロセス（Problem → Idea → Build → Learn → Improve）についてご案内可能です。";
+        } else if (scene === "skills") {
+          sceneHint = "「LEARNING TRAJECTORY」セクションに記載の9つの技術の現在地（Beginner / Introductory）や学習経験についてご案内可能です。";
         }
 
         return {
@@ -503,6 +538,7 @@
           text: `中邨 隆之介のポートフォリオへようこそ。\n当ポートフォリオの制作実績や技術仕様をご案内するナビゲーションBotの Cloudee です。\n\n${sceneHint}`,
           emotion: "attentive-left",
           quickLinks: [
+            { label: "技術の現在地（Skills）", targetId: "skills" },
             { label: "大切にしている技術哲学", query: "大切にしている技術哲学は？" },
             { label: "救命アプリ「Anchor」について", query: "Anchorについて教えて" },
             { label: "中邨 隆之介の人物像・経歴", query: "中邨 隆之介の人物像や経歴について" }
@@ -572,6 +608,19 @@
           quickLinks: [
             { label: "大切にしている技術哲学", query: "大切にしている技術哲学は？" },
             { label: "人物像・経歴について", query: "中邨 隆之介の人物像や経歴について" }
+          ]
+        };
+      }
+
+      if (scene === "skills") {
+        return {
+          topic: "skills",
+          text: `【LEARNING TRAJECTORY（技術の現在地と学習経験）】セクションをご案内いたします。\n\n『作るために必要なことを学ぶ』姿勢に基づき、各技術の率直な現在地（Beginner / Introductory）と実践内容を一覧で掲載しています。\n\n• **Beginner**: AIやリファレンスを参照しながら自律的に制作・課題解決を行う段階（Swift/SwiftUI, Python, C, SQL/MySQL, HTML/CSS, JS, Liquid, Git/GitHub）\n• **Introductory**: 大学講義・実験で基礎原理を修得した段階（OpenCV, RISC-V, FPGA）\n\n各技術の詳細や制作背景についてお尋ねください。`,
+          emotion: "attentive-left",
+          quickLinks: [
+            { label: "技術一覧を見る", targetId: "skills" },
+            { label: "大切にしている技術哲学", query: "大切にしている技術哲学は？" },
+            { label: "Anchorの技術スタック", query: "Anchorの技術スタックは？" }
           ]
         };
       }
