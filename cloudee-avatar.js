@@ -833,6 +833,14 @@
         this.gaze.normX = Math.max(-1, Math.min(1, dx / spanX));
         this.gaze.normY = Math.max(-1, Math.min(1, dy / spanY));
       });
+      // Pause WebGL rendering loop when tab is in background to save CPU/battery
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden && !this.isLoopRunning) {
+          this.isLoopRunning = true;
+          this.lastFrameTime = performance.now();
+          this.animate();
+        }
+      });
     }
 
     setActive(active) {
@@ -875,9 +883,24 @@
     }
 
     animate() {
+      // Suspend WebGL loop when browser tab is inactive/hidden
+      if (document.hidden) {
+        this.isLoopRunning = false;
+        return;
+      }
+      this.isLoopRunning = true;
       requestAnimationFrame(() => this.animate());
 
-      const delta = this.clock.getDelta();
+      // Frame Rate Throttling: Cap at ~30 FPS (32ms)
+      // On a 92x92px floating avatar widget, 30 FPS is visually indistinguishable from 60/120 FPS
+      // while cutting GPU rasterization & shader load by 50% to 75%.
+      const now = performance.now();
+      if (this.lastFrameTime && (now - this.lastFrameTime) < 32) {
+        return;
+      }
+      this.lastFrameTime = now;
+
+      const delta = Math.min(this.clock.getDelta(), 0.1);
       const elapsed = this.clock.getElapsedTime();
 
       // Target Gaze Weight: 1.0 when active conversation, 0.45 when hovered, 0 otherwise

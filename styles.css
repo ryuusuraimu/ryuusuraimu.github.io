@@ -2049,6 +2049,14 @@ body.modal-open {
 /* ==========================================================================
    Section 2: How I Build / Mindset & Process
    ========================================================================== */
+.section-how-i-build,
+.section-about,
+.section-skills,
+.section-ai-workspace {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
 .section-how-i-build {
   position: relative;
   background: var(--color-walnut-shadow);
