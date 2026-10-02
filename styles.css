@@ -311,6 +311,48 @@ a {
 }
 
 /* ==========================================================================
+   MacBook Sticker Layer
+   ========================================================================== */
+.macbook-sticker-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.mac-sticker {
+  position: absolute;
+  width: 88px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.45));
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  will-change: transform;
+}
+
+/* Founder Mode sticker: right of trackpad, slight counter-clockwise tilt */
+.mac-sticker--founder {
+  bottom: 22%;
+  left: 57%;
+  transform: rotate(-6deg);
+}
+
+/* Shopify sticker: overlaps slightly, clockwise tilt */
+.mac-sticker--shopify {
+  bottom: 20%;
+  left: 64%;
+  transform: rotate(4deg);
+}
+
+/* Fade out stickers on non-hero slides */
+.story-panel:not(.panel-hero):not(.active) ~ .macbook-sticker-layer,
+.scroll-stage[data-panel]:not([data-panel="panel-hero"]) .macbook-sticker-layer {
+  opacity: 0;
+}
+
+
+
+/* ==========================================================================
    Story Content Layer (Void-mode Product Reveal Sections)
    ========================================================================== */
 .story-content-layer {

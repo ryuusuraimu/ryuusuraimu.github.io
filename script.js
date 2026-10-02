@@ -921,6 +921,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let isModelLoaded = false;
   let mixer = null;
   let openAction = null;
+  const stickerPlanes = [];   // lid back-face sticker planes (opacity-controlled)
 
   // Authentic Bead-Blasted Anodized Aluminum Micro-Texture (梨地仕上げ):
   // Recreates the microscopic physical surface roughness and light dispersion of Apple's
@@ -3028,6 +3029,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
       macRoot.add(laptopGroup);
       lidNode = lidGroup;
+
+      // ─────────────────────────────────────────────────────────────────
+      // MacBook Lid Stickers — PlaneGeometry placed on lid back face
+      // Coordinate system: lidGroup local space (CAD units, same as lid meshes)
+      //
+      // Lid back face Z in lidGroup local space ≈ 10.15
+      //   (lid meshes offset by -hingeZ = +10.517; lid thickness ≈ 0.36)
+      // Apple logo center: X ≈ 0, Y ≈ 10.5
+      // Stickers flank the logo: left at X ≈ -8.5, right at X ≈ +8.5
+      // ─────────────────────────────────────────────────────────────────
+      (function attachStickerPlanes() {
+        const texLoader = new THREE.TextureLoader();
+
+        /**
+         * Add a sticker plane to the lid.
+         * @param {number} x   - X in lidGroup local CAD units
+         * @param {number} y   - Y in lidGroup local CAD units
+         * @param {number} z   - Z in lidGroup local CAD units (back face ≈ 10.2)
+         * @param {number} w   - width in CAD units
+         * @param {number} h   - height in CAD units
+         * @param {number} rz  - Z-rotation tilt (radians), for casual look
+         * @param {string} src - texture URL
+         */
+        function addSticker(x, y, z, w, h, rz, src) {
+          texLoader.load(src, (tex) => {
+            tex.encoding = THREE.sRGBEncoding;
+            const geo = new THREE.PlaneGeometry(w, h);
+            const mat = new THREE.MeshBasicMaterial({
+              map: tex,
+              transparent: true,
+              alphaTest: 0.01,
+              depthTest: false,
+              depthWrite: false,
+              side: THREE.DoubleSide,
+            });
+            const plane = new THREE.Mesh(geo, mat);
+            plane.position.set(x, y, z);
+            plane.rotation.set(0, Math.PI, rz);
+            plane.renderOrder = 10;
+            lidGroup.add(plane);
+            stickerPlanes.push(plane);   // track for opacity control
+            requestRenderTick(true);
+          });
+        }
+
+        // ── Founder Mode: left of Apple logo ──
+        addSticker(
+          -8.5,   // X: left of Apple logo (appears on left from outside)
+          13.0,   // Y: Apple logo height
+          -0.5,   // Z: just outside lid back face
+          8.5,    // width (large)
+          8.5,    // height
+          0.16,   // 9° tilt
+          './assets/Founder_Mode_Sticker.png'
+        );
+
+        // ── Shopify: right of Apple logo ──
+        addSticker(
+          8.5,    // X: right of Apple logo
+          13.0,
+          -0.5,
+          8.0,
+          8.0,
+          -0.13,
+          './assets/Shopify_Sticker.png'
+        );
+      })();
+
       requestRenderTick(true);
 
       badgeText.textContent = 'Ready';
@@ -4079,6 +4148,15 @@ document.addEventListener('DOMContentLoaded', () => {
         lidNode.rotation.x = THREE.MathUtils.lerp(closedLidRot, openLidRot, macState.lidOpen);
       } else {
         lidNode.rotation.x = -macState.lidOpen * 2.02;
+      }
+    }
+
+    // Fade stickers out as lid opens (visible only on closed back face)
+    if (stickerPlanes.length > 0) {
+      // Fade from 1 → 0 as lidOpen goes from 0.0 → 0.25
+      const stickerOpacity = Math.max(0, 1 - macState.lidOpen / 0.25);
+      for (const s of stickerPlanes) {
+        if (s.material) s.material.opacity = stickerOpacity;
       }
     }
 
