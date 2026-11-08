@@ -63,7 +63,7 @@ AIをどれだけ深く使えるかではなく、
 ### 🦊 Moftail — Shopify-based POD Brand for the US Market
 
 <a href="MOFTAIL_REPOSITORY_URL">
-  <img src="./assets/Moftail-w.png" alt="Moftail Shopify POD brand preview" width="720">
+  <img src="./assets/Moftail-V2.png" alt="Moftail Shopify POD brand preview" width="720">
 </a>
 
 ShopifyとPrintifyで運営しているPODアパレルブランドです。  
