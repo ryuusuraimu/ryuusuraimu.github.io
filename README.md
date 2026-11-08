@@ -63,7 +63,7 @@ AIをどれだけ深く使えるかではなく、
 ### 🦊 Moftail — Shopify-based POD Brand for the US Market
 
 <a href="MOFTAIL_REPOSITORY_URL">
-  <img src="./assets/Moftail-V2.png" alt="Moftail Shopify POD brand preview" width="720">
+  <img src="./assets/Moftail-V2.png" alt="Moftail Shopify POD brand preview" width="320">
 </a>
 
 ShopifyとPrintifyで運営しているPODアパレルブランドです。  
@@ -87,7 +87,7 @@ ShopifyとPrintifyで運営しているPODアパレルブランドです。
 ### ⚓ Anchor — iOS App for Panic Situations
 
 <a href="https://github.com/ryuusuraimu/Anchor-BuildWeek">
-  <img src="./assets/anchor-logo.png" alt="Anchor iOS app preview" width="720">
+  <img src="./assets/anchor-logo.png" alt="Anchor iOS app preview" width="320">
 </a>
 
 パニック時の判断負荷を減らすために設計したSwiftUI製アプリです。  
@@ -154,7 +154,7 @@ Apple Swift Student Challenge に提出しました。
 
 | Area | Tools |
 |---|---|
-| **Frontend** | HTML / CSS / JavaScript / React / TypeScript |
+| **Frontend** | HTML / CSS|
 | **Mobile** | SwiftUI |
 | **Commerce** | Shopify / Liquid / Printify / Meta Ads |
 | **AI Tools** | Claude / ChatGPT / Cursor / Claude Code / Codex |
@@ -177,5 +177,4 @@ Apple Swift Student Challenge に提出しました。
 
 > 人が情報に迷う瞬間を減らすために、  
 > 検索・UX・情報設計を組み合わせたプロダクトづくりに挑戦しています。
->
-> **Let's build.**
+
